@@ -42,4 +42,25 @@ public class MemberAddress {
         this.state = state;
         this.zipCode = zipCode;
     }
+
+    @Override
+    public boolean equals(Object obj) throws NullPointerException {
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        MemberAddress address = (MemberAddress) obj;
+        if (addressLine2 == null) {
+            return (address.getAddressId() == addressId &&
+                    address.getAddressLine1().equals(addressLine1) &&
+                    address.getCity().equals(city) &&
+                    address.getState().equals(state) &&
+                    address.getZipCode().equals(zipCode));
+        }
+        return (address.getAddressId() == addressId &&
+                address.getAddressLine1().equals(addressLine1) &&
+                address.getAddressLine2().equals(addressLine2) &&
+                address.getCity().equals(city) &&
+                address.getState().equals(state) &&
+                address.getZipCode().equals(zipCode));
+    }
 }

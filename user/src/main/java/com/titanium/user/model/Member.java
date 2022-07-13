@@ -48,4 +48,19 @@ public class Member {
         this.dateOfBirth = dateOfBirth;
         this.socialSecurityNumber = socialSecurityNumber;
     }
+
+    @Override
+    public boolean equals(Object obj) throws NullPointerException {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Member member = (Member) obj;
+        return (member.getMemberId() == memberId &&
+                member.getFirstName().equals(firstName) &&
+                member.getLastName().equals(lastName) &&
+                member.getPhone().equals(phone) &&
+                member.getDateOfBirth().equals(dateOfBirth) &&
+                member.getSocialSecurityNumber().equals(socialSecurityNumber) &&
+                member.getMemberAddress().equals(memberAddress));
+    }
 }

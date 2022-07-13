@@ -32,4 +32,14 @@ public class UserToken {
         this.confirmationToken = confirmationToken;
         this.dateCreated = dateCreated;
     }
+
+    @Override
+    public boolean equals(Object obj) throws NullPointerException {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        UserToken token = (UserToken) obj;
+        return (confirmationToken.equals(token.getConfirmationToken()) &&
+                dateCreated.equals(token.getDateCreated()));
+    }
 }

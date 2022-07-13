@@ -3,8 +3,6 @@ package com.titanium.user.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -46,5 +44,28 @@ public class User {
         this.username = username;
         this.password = password;
         this.enabled = 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) throws NullPointerException {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        if (member != null) {
+            return (user.userId == userId &&
+                    user.getUserType().equals(userType) &&
+                    user.getEmail().equals(email) &&
+                    user.getUsername().equals(username) &&
+                    user.getPassword().equals(password) &&
+                    member.equals(user.getMember()) &&
+                    token.equals(user.getToken()));
+        }
+        return (user.userId == userId &&
+                user.getUserType().equals(userType) &&
+                user.getEmail().equals(email) &&
+                user.getUsername().equals(username) &&
+                user.getPassword().equals(password) &&
+                token.equals(user.getToken()));
     }
 }
