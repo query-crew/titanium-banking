@@ -4,8 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -35,7 +33,7 @@ public class Member {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bankUser", referencedColumnName = "userId")
-    private User bankUser;
+    private BankUser bankUser;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "member")
     private MemberAddress memberAddress;

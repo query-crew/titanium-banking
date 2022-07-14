@@ -4,15 +4,13 @@ import com.titanium.user.dto.MemberRegistration;
 import com.titanium.user.dto.UserRegistration;
 import com.titanium.user.model.Member;
 import com.titanium.user.model.MemberAddress;
-import com.titanium.user.model.User;
+import com.titanium.user.model.BankUser;
 import com.titanium.user.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
@@ -40,8 +38,8 @@ class UserApplicationTests {
 		registration.setEmail("chloejohnsoncodes@gmail.com");
 		registration.setUsername("chloe");
 		registration.setPassword("mypassword");
-	    User actualUser = service.addUser(registration);
-		User expectedUser = new User("member", "chloejohnsoncodes@gmail.com", "chloe", actualUser.getPassword());
+	    BankUser actualUser = service.addUser(registration);
+		BankUser expectedUser = new BankUser("member", "chloejohnsoncodes@gmail.com", "chloe", actualUser.getPassword());
 		expectedUser.setToken(actualUser.getToken());
 		expectedUser.setUserId(actualUser.getUserId());
 		Assertions.assertEquals(expectedUser, actualUser);
@@ -63,7 +61,7 @@ class UserApplicationTests {
 		registration.setState("Idaho");
 		registration.setZipcode("83713");
 		Member actualMember = service.addMember(registration);
-		User user = new User("member", "chloejohnsoncodes@gmail.com", "chloe", actualMember.getBankUser().getPassword());
+		BankUser user = new BankUser("member", "chloejohnsoncodes@gmail.com", "chloe", actualMember.getBankUser().getPassword());
 		user.setUserId(actualMember.getBankUser().getUserId());
 		user.setToken(actualMember.getBankUser().getToken());
 		Member expectedMember = new Member("Chloe", "Johnson", "2089541744", registration.getDateOfBirth(), "503-14-1234");

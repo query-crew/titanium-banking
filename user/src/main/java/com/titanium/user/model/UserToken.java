@@ -1,10 +1,10 @@
 package com.titanium.user.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -25,7 +25,8 @@ public class UserToken {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bankUser", referencedColumnName = "userId")
-    private User bankUser;
+    @JsonBackReference
+    private BankUser bankUser;
 
     public UserToken(String confirmationToken, LocalDateTime dateCreated) {
         super();
