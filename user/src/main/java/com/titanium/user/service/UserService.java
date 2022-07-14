@@ -88,7 +88,7 @@ public class UserService {
             authenticate(login.getUsername(), login.getPassword());
         }
         catch (Exception e) {
-            return "authentication_failed";
+            return e.toString();
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(login.getUsername());
         String token = jwtUtils.generateJwtToken(userDetails);

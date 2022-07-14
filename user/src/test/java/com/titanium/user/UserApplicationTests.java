@@ -1,6 +1,7 @@
 package com.titanium.user;
 
 import com.titanium.user.dto.MemberRegistration;
+import com.titanium.user.dto.UserLogin;
 import com.titanium.user.dto.UserRegistration;
 import com.titanium.user.model.Member;
 import com.titanium.user.model.MemberAddress;
@@ -73,5 +74,67 @@ class UserApplicationTests {
 		user.setMember(expectedMember);
 		expectedMember.setBankUser(user);
 		Assertions.assertEquals(expectedMember, actualMember);
+	}
+
+	@Test
+	void memberLogin() {
+		MemberRegistration registration = new MemberRegistration();
+		UserLogin login = new UserLogin();
+		login.setUsername("chloe");
+		login.setPassword("mypassword");
+		registration.setEmail("chloejohnsoncodes@gmail.com");
+		registration.setUsername("chloe");
+		registration.setPassword("mypassword");
+		registration.setFirstName("Chloe");
+		registration.setLastName("Johnson");
+		registration.setAddressLine1("1337 N Highwood Ave");
+		registration.setPhone("2089541744");
+		registration.setDateOfBirth(LocalDate.now());
+		registration.setSocialSecurityNumber("503-14-1234");
+		registration.setCity("Boise");
+		registration.setState("Idaho");
+		registration.setZipcode("83713");
+		service.addMember(registration);
+		String retString = service.login(login);
+		Assertions.assertFalse(retString == "invalid_username_or_user" || retString == "invalid_password" || retString == "authentication_failed");
+	}
+
+	@Test
+	void userLogin() {
+		UserRegistration registration = new UserRegistration();
+		UserLogin login = new UserLogin();
+		login.setUsername("chloe");
+		login.setPassword("mypassword");
+		registration.setUserType("member");
+		registration.setEmail("chloejohnsoncodes@gmail.com");
+		registration.setUsername("chloe");
+		registration.setPassword("mypassword");
+		service.addUser(registration);
+		String retString = service.login(login);
+		Assertions.assertFalse(retString == "invalid_username_or_user" || retString == "invalid_password" || retString == "authentication_failed");
+	}
+
+	@Test
+	void invalidUserLogin() {
+		UserLogin login = new UserLogin();
+		login.setUsername("invalid");
+		login.setPassword("notmypassword");
+		String retString = service.login(login);
+		Assertions.assertTrue(retString == "invalid_username_or_user");
+	}
+
+	@Test
+	void invalidPasswordLogin() {
+		UserRegistration registration = new UserRegistration();
+		UserLogin login = new UserLogin();
+		login.setUsername("chloe");
+		login.setPassword("notmypassword");
+		registration.setUserType("member");
+		registration.setEmail("chloejohnsoncodes@gmail.com");
+		registration.setUsername("chloe");
+		registration.setPassword("mypassword");
+		service.addUser(registration);
+		String retString = service.login(login);
+		Assertions.assertTrue(retString == "invalid_password");
 	}
 }
