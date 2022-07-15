@@ -1,5 +1,6 @@
 package com.titanium.user.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Table(name="bankUser")
-public class User {
+public class BankUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="userId")
@@ -32,12 +33,14 @@ public class User {
     private int enabled;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankUser")
+    @JsonManagedReference
     private UserToken token;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankUser")
+    @JsonManagedReference
     private Member member;
 
-    public User(String userType, String email, String username, String password) {
+    public BankUser(String userType, String email, String username, String password) {
         super();
         this.userType = userType;
         this.email = email;
@@ -51,7 +54,7 @@ public class User {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        User user = (User) obj;
+        BankUser user = (BankUser) obj;
         if (member != null) {
             return (user.userId == userId &&
                     user.getUserType().equals(userType) &&

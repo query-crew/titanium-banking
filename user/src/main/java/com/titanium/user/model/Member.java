@@ -1,11 +1,11 @@
 package com.titanium.user.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -33,11 +33,13 @@ public class Member {
     @Column(name="socialSecurityNumber")
     private String socialSecurityNumber;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bankUser", referencedColumnName = "userId")
-    private User bankUser;
+    @JsonBackReference
+    private BankUser bankUser;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "member")
+    @JsonManagedReference
     private MemberAddress memberAddress;
 
     public Member(String firstName, String lastName, String phone, LocalDate dateOfBirth, String socialSecurityNumber) {

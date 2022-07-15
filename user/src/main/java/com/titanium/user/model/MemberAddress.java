@@ -1,5 +1,7 @@
 package com.titanium.user.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +34,7 @@ public class MemberAddress {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member", referencedColumnName = "memberId")
+    @JsonBackReference
     private Member member;
 
     public MemberAddress(String addressLine1, String addressLine2, String city, String state, String zipCode) {
