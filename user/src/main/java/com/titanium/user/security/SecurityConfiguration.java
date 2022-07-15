@@ -42,7 +42,7 @@ public class SecurityConfiguration {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers(    "/h2-console/**", "/member", "/user", "/user/login").permitAll()
+                .authorizeRequests().antMatchers(    "/h2-console/**", "/member", "/user", "/user/login", "/v2/api-docs", "/swagger-resources/**", "/webjars/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

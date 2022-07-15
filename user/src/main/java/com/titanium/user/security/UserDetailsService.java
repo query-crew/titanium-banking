@@ -19,7 +19,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     UserDetails user;
     if (userRepository.existsByUsername(username)) {
       BankUser bankUser = userRepository.findByUsername(username);
-      user = User.withUsername(bankUser.getUsername()).password(bankUser.getPassword()).roles(bankUser.getUserType()).build();
+      user = User.withUsername(bankUser.getUsername()).password(bankUser.getPassword()).authorities(bankUser.getUserType()).build();
     }
     else {
       throw new UsernameNotFoundException("User Not Found with username: " + username);

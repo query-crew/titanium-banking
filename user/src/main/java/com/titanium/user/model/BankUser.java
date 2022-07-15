@@ -37,6 +37,7 @@ public class BankUser {
     private UserToken token;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "bankUser")
+    @JsonManagedReference
     private Member member;
 
     public BankUser(String userType, String email, String username, String password) {

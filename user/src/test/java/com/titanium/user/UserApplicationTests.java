@@ -3,10 +3,14 @@ package com.titanium.user;
 import com.titanium.user.dto.MemberRegistration;
 import com.titanium.user.dto.UserLogin;
 import com.titanium.user.dto.UserRegistration;
+import com.titanium.user.exception.InvalidPasswordException;
+import com.titanium.user.exception.InvalidUsernameException;
 import com.titanium.user.model.Member;
 import com.titanium.user.model.MemberAddress;
 import com.titanium.user.model.BankUser;
+import com.titanium.user.security.JwtUtils;
 import com.titanium.user.service.UserService;
+import io.jsonwebtoken.Jwt;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +24,8 @@ class UserApplicationTests {
 
 	@Autowired
 	private UserService service;
+	@Autowired
+	private JwtUtils jwtUtils;
 
 	@BeforeEach
 	void setUp() {
@@ -94,9 +100,9 @@ class UserApplicationTests {
 		registration.setCity("Boise");
 		registration.setState("Idaho");
 		registration.setZipcode("83713");
-		service.addMember(registration);
-		String retString = service.login(login);
-		Assertions.assertFalse(retString == "invalid_username_or_user" || retString == "invalid_password" || retString == "authentication_failed");
+		Member member = service.addMember(registration);
+		service.setEnabled(member.getBankUser().getUserId());
+		Assertions.assertTrue(jwtUtils.validateJwtToken(service.login(login)));
 	}
 
 	@Test
@@ -109,9 +115,9 @@ class UserApplicationTests {
 		registration.setEmail("chloejohnsoncodes@gmail.com");
 		registration.setUsername("chloe");
 		registration.setPassword("mypassword");
-		service.addUser(registration);
-		String retString = service.login(login);
-		Assertions.assertFalse(retString == "invalid_username_or_user" || retString == "invalid_password" || retString == "authentication_failed");
+		BankUser user = service.addUser(registration);
+		service.setEnabled(user.getUserId());
+		Assertions.assertTrue(jwtUtils.validateJwtToken(service.login(login)));
 	}
 
 	@Test
@@ -119,8 +125,8 @@ class UserApplicationTests {
 		UserLogin login = new UserLogin();
 		login.setUsername("invalid");
 		login.setPassword("notmypassword");
-		String retString = service.login(login);
-		Assertions.assertTrue(retString == "invalid_username_or_user");
+		Assertions.assertThrows(InvalidUsernameException.class, () ->
+		{service.login(login);});
 	}
 
 	@Test
@@ -134,7 +140,7 @@ class UserApplicationTests {
 		registration.setUsername("chloe");
 		registration.setPassword("mypassword");
 		service.addUser(registration);
-		String retString = service.login(login);
-		Assertions.assertTrue(retString == "invalid_password");
+		Assertions.assertThrows(InvalidPasswordException.class, () ->
+		{service.login(login);});
 	}
 }

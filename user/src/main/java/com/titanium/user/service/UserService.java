@@ -1,9 +1,7 @@
 package com.titanium.user.service;
 
 import com.titanium.user.dto.*;
-import com.titanium.user.exception.EmailExistsException;
-import com.titanium.user.exception.SocialSecurityNumberExistsException;
-import com.titanium.user.exception.UsernameExistsException;
+import com.titanium.user.exception.*;
 import com.titanium.user.model.Member;
 import com.titanium.user.model.MemberAddress;
 import com.titanium.user.model.BankUser;
@@ -15,8 +13,6 @@ import com.titanium.user.security.JwtUtils;
 import com.titanium.user.security.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,6 +56,10 @@ public class UserService {
     }
 
     public Member addMember(@Valid MemberRegistration registration) {
+        if (userRepo.existsByEmail(registration.getEmail()))
+            throw new EmailExistsException();
+        if (userRepo.existsByUsername(registration.getUsername()))
+            throw new UsernameExistsException();
         if (memberRepo.existsBySocialSecurityNumber(registration.getSocialSecurityNumber()))
             throw new SocialSecurityNumberExistsException();
         BankUser user = new BankUser("member", registration.getEmail(), registration.getUsername(), passwordEncoder().encode(registration.getPassword()));
@@ -78,18 +78,16 @@ public class UserService {
 
     public String login(@Valid UserLogin login) {
         if (!userRepo.existsByUsername(login.getUsername())) {
-            return "invalid_username_or_user";
+            throw new InvalidUsernameException();
         }
         BankUser bankUser = userRepo.findByUsername(login.getUsername());
         if (!passwordEncoder().matches(login.getPassword(), bankUser.getPassword())) {
-            return "invalid_password";
+            throw new InvalidPasswordException();
         }
-        try {
-            authenticate(login.getUsername(), login.getPassword());
+        if (bankUser.getEnabled() == 0) {
+            throw new UserNotVerifiedException();
         }
-        catch (Exception e) {
-            return e.toString();
-        }
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
         UserDetails userDetails = userDetailsService.loadUserByUsername(login.getUsername());
         String token = jwtUtils.generateJwtToken(userDetails);
         return token;
@@ -104,16 +102,6 @@ public class UserService {
         return new UserToken(verifyCode, LocalDateTime.now());
     }
 
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
-
     public boolean userExists() {
         return userRepo.count() != 0;
     }
@@ -124,6 +112,13 @@ public class UserService {
 
     public List<BankUser> getUsers() {
         return userRepo.findAll();
+    }
+
+    public BankUser setEnabled(int id) {
+        BankUser user = userRepo.findByUserId(id);
+        user.setEnabled(1);
+        userRepo.save(user);
+        return user;
     }
 
     private PasswordEncoder passwordEncoder(){

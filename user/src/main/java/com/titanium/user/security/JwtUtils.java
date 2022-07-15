@@ -1,15 +1,15 @@
 package com.titanium.user.security;
-
 import io.jsonwebtoken.*;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
-
+@RequiredArgsConstructor
 @Component
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
@@ -25,11 +25,12 @@ public class JwtUtils {
     UserDetails userPrincipal = user;
 
     return Jwts.builder()
-        .setSubject((userPrincipal.getUsername()))
-        .setIssuedAt(new Date())
-        .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-        .signWith(SignatureAlgorithm.HS512, jwtSecret)
-        .compact();
+            .setSubject((userPrincipal.getUsername()))
+            .setIssuedAt(new Date())
+            .claim("authorities", user.getAuthorities())
+            .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+            .signWith(SignatureAlgorithm.HS512, jwtSecret)
+            .compact();
   }
 
   public String getUserNameFromJwtToken(String token) {
