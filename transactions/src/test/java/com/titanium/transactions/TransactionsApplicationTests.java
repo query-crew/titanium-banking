@@ -3,43 +3,47 @@ package com.titanium.transactions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.titanium.transactions.service.TransactionService;
 import com.titanium.transactions.model.Transaction;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.Map;
 
 @SpringBootTest
 class TransactionsApplicationTests {
-
-/* 	@Test
-	void contextLoads() {
-	} */
 
 	@Autowired
 	private TransactionService transactionService;
 
 	@Test
 	void readTransactionTest() {
-		Transaction transaction = transactionService.getTransaction(1);
-		assertEquals(transaction.getTransactionId(), 1);
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.getTransaction(1);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.OK);
 	}
 
 	@Test
 	void readAllTransactionsTest() {
-		List<Transaction> transactions = transactionService.getAllTransactions();
-		assertEquals(transactions.size(), 4);
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.getAllTransactions();
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.OK);
 	}
 
 	@Test
 	void createTransactionTest() {
-		Transaction transaction = transactionService.getTransaction(1);
-		Transaction addedTransaction = new Transaction(4, 1, transaction.getTransactionDate(), transaction.getDescription(), transaction.getAmount(), transaction.getAccountFromId(), transaction.getAccountToId());
-		transactionService.createTransaction(addedTransaction);
-		Transaction retrievedTransaction = transactionService.getTransaction(4);
-		assertEquals(retrievedTransaction.getTransactionId(), 4);
+		Transaction addedTransaction = new Transaction(
+			4,
+			1,
+			new Timestamp(0),
+			"Test Transaction",
+			100.00f,
+			7,
+			8
+		);
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.createTransaction(addedTransaction);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.CREATED);
 	}
-
 }
