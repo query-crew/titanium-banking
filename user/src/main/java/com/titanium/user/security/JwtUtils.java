@@ -5,9 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -27,7 +33,7 @@ public class JwtUtils {
     return Jwts.builder()
             .setSubject((userPrincipal.getUsername()))
             .setIssuedAt(new Date())
-            .claim("authorities", user.getAuthorities())
+            .claim("authorities", user.getAuthorities().stream().map(s -> s.toString()).collect(Collectors.toList()))
             .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
             .signWith(SignatureAlgorithm.HS512, jwtSecret)
             .compact();
@@ -54,5 +60,28 @@ public class JwtUtils {
     }
 
     return false;
+  }
+
+  public Claims getClaimFromJWTToken(String token) {
+      Claims claims;
+      try {
+        claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+      } catch (Exception e) {
+        logger.error("Could not get all claims Token from passed token");
+        claims = null;
+      }
+      return claims;
+  }
+
+  public List<GrantedAuthority> getUserAuthorityFromClaim(String token) {
+    Claims claims = getClaimFromJWTToken(token);
+    List<String> authoritiesStrings = (List<String>) claims.get("authorities");
+    logger.info(authoritiesStrings.toString());
+    List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesStrings.stream()
+            .collect(Collectors.joining(",")));
+    return authorities;
   }
 }

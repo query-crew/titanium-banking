@@ -63,7 +63,7 @@ public class UserController {
 
     @ApiOperation(value = "Returns all users")
     @GetMapping("/user")
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<List<BankUser>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
