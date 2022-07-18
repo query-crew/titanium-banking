@@ -64,4 +64,61 @@ public class TransactionService {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<Map<String, Object>> retrieveTransactionByAccountFromId(int accountFromId) {
+        try {
+            List<Transaction> transactions = transactionRepository.findByAccountFromId(accountFromId);
+            if(transactions.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            else {
+                Map<String, Object> response = new HashMap<>();
+                response.put("transactions", transactions);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
+        catch(Exception ex) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", ex);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Map<String, Object>> retrieveTransactionByAccountToId(int accountToId) {
+        try {
+            List<Transaction> transactions = transactionRepository.findByAccountToId(accountToId);
+            if(transactions.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            else {
+                Map<String, Object> response = new HashMap<>();
+                response.put("transactions", transactions);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
+        catch(Exception ex) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", ex);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+	public ResponseEntity<Map<String, Object>> retrieveTransactionByType(int transactionType) {
+        try {
+            List<Transaction> transactions = transactionRepository.findByTransactionType(transactionType);
+            if(transactions.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            else {
+                Map<String, Object> response = new HashMap<>();
+                response.put("transactions", transactions);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
+        catch(Exception ex) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", ex);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+	}
 }

@@ -46,4 +46,28 @@ class TransactionsApplicationTests {
 		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.createTransaction(addedTransaction);
 		assertEquals(serviceResponse.getStatusCode(), HttpStatus.CREATED);
 	}
+
+	@Test
+	void readTransactionByAccountFromIdTest() {
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByAccountFromId(1);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.OK);
+	}
+
+	@Test
+	void readTransactionByAccountToIdTest() {
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByAccountToId(2);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.OK);
+	}
+
+	@Test
+	void readTransactionByTypeTest() {
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByType(1);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.OK);
+	}
+
+	@Test
+	void cannotFindTransactionTest() {
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.getTransaction(100);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.NOT_FOUND);
+	}
 }
