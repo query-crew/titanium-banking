@@ -19,22 +19,22 @@ public class Transaction {
     @Column(name = "TRANSACTION_ID")
     private int transactionId;
 
-    @Column(name = "transaction_Type")
+    @Column(name = "TRANSACTION_TYPE")
     private int transactionType;
 
-    @Column(name = "transaction_Date")
+    @Column(name = "TRANSACTION_DATE")
     private Timestamp transactionDate;
 
-    @Column(name = "description")
+    @Column(name = "TRANSACTION_DESCRIPTION")
     private String description;
 
-    @Column(name = "amount")
+    @Column(name = "TRANSACTION_AMOUNT")
     private float amount;
 
-    @Column(name = "account_From_Id")
+    @Column(name = "ACCOUNT_FROM_ID")
     private int accountFromId;
 
-    @Column(name = "account_To_Id")
+    @Column(name = "ACCOUNT_TO_ID")
     private int accountToId;
 
     public Transaction(int _transactionId, int _transactionType, Timestamp _transactionDate, String _description, float _amount, int _accountFromId, int _accountToId) {
