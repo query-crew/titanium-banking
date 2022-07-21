@@ -17,7 +17,7 @@ import lombok.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="account_id")
+    @Column(name="account_id", unique = true, nullable = false)
     private int accountId;
 
     @Column(name="accountName")
@@ -51,8 +51,12 @@ public class Account {
                 return false;
             }
             Account account = (Account) o;
-            return (accountName.equals(account.getAccountName()) &&
-                    accountNumber.equals(account.getAccountNumber()));
+            return (
+                    accountName.equals(account.getAccountName()) &&
+                    accountNumber.equals(account.getAccountNumber()) && 
+                    lastStatementDate.equals(account.getLastStatementDate()) &&
+                    paymentDate.equals(account.getPaymentDate())
+                    );
     }
 
     public Account(String accountName, String accountNumber, int balance, int interest, LocalDate lastStatementDate, LocalDate paymentDate){

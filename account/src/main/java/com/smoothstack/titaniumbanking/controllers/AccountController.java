@@ -4,6 +4,7 @@ import com.smoothstack.titaniumbanking.models.Account;
 import com.smoothstack.titaniumbanking.services.AccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class AccountController {
     
     @Autowired
     AccountService accountService;
 
     //create
+    
     @RequestMapping(value="/accounts", method=RequestMethod.POST)
     public void addNewAccount(@RequestBody Account account) {
         accountService.addAccount(account);;
     }
 
     //read
+   
     @RequestMapping(value="/accounts", method=RequestMethod.GET)
     public List<Account> getAllAccounts(){
         return accountService.getAllAccounts();
