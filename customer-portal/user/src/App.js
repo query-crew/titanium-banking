@@ -4,6 +4,8 @@ import './App.css';
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from './tokenReducer';
+import Account from './components/Account';
+import { BrowserRouter, Route } from 'react-router-dom'
 
 function App() {
 
@@ -34,7 +36,7 @@ function App() {
   }
   
   const showUsers = () => {
-      axios.get("/user", {headers: {"Authorization": `Bearer ${token}`}})
+      axios.get("/user", )
       .then((response) => {
         setUsers(response.data);
         console.log(users);
@@ -42,8 +44,10 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  
   return (
-    <div className="App">
+    <BrowserRouter>
+    {/* <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <button onClick={loginAsAdmin}>Login as admin</button>
@@ -53,19 +57,13 @@ function App() {
         {users.map((user, i) => (
           <p key={i}>{user.username}</p>
         ))}
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      </header> */}
+
+      <Route path='/accounts' exact={true} >
+        <Account />
+      </Route>
+    {/* </div> */}
+    </BrowserRouter>
   );
 }
 
