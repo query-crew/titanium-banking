@@ -2,15 +2,22 @@ package com.smoothstack.titaniumbanking;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.smoothstack.titaniumbanking.models.Account;
 import com.smoothstack.titaniumbanking.services.AccountService;
+
+
+
+import com.smoothstack.titaniumbanking.dto.AccountDto;
 
 @SpringBootTest
 class AccountApplicationTests {
@@ -18,12 +25,12 @@ class AccountApplicationTests {
     @Autowired
     private AccountService service;
 
-    @BeforeEach
-    void setUp(){
-        if(service.accountExists()){
-            service.deleteAllAccounts();
-        }
-    }
+    // @BeforeEach
+    // void setUp(){
+    //     if(service.accountExists()){
+    //         service.deleteAllAccounts();
+    //     }
+    // }
 
     @Test
     void contextLoads(){}
@@ -31,42 +38,66 @@ class AccountApplicationTests {
     
     @Test
     void viewAllAccounts(){
-        Account account = new Account("ONETestAccount", "12345", 9800, 5, LocalDate.now(), LocalDate.now());
+        AccountDto account = new AccountDto();
+        
+        account.setAccountName("ONETestAccount");
+        account.setAccountNumber("12345");
+        account.setBalance(9800);
+        account.setInterest(5);
+        account.setLastStatementDate(LocalDate.now());
+        account.setPaymentDate(LocalDate.now());
         service.addAccount(account);
-        Account accountTwo = new Account("TWOTestAccount", "678910", 1200, 3, LocalDate.now(), LocalDate.now());
-        service.addAccount(accountTwo);
-        List<Account> accounts = service.getAllAccounts();
+        
+       ResponseEntity<Map<String, Object>> accounts = service.getAllAccounts();
 
-        Assertions.assertEquals(2, accounts.size());
+        Assertions.assertEquals(HttpStatus.OK, accounts.getStatusCode());
     }
 
     //add account test
     @Test
     void addAccountTest(){
-        Account testAccount =  new Account("TestAccountName", "12345", 9800, 5, LocalDate.now(), LocalDate.now());
-        Account addedAccount =  service.addAccount(testAccount);
-        Account expectedAccount = new Account("TestAccountName", "12345", 9800, 5, addedAccount.getLastStatementDate(), addedAccount.getPaymentDate());
-        Assertions.assertEquals(expectedAccount, addedAccount);
+        AccountDto testAccount =  new AccountDto();
+        testAccount.setAccountName("ONETestAccount");
+        testAccount.setAccountNumber("12345");
+        testAccount.setBalance(9800);
+        testAccount.setInterest(5);
+        testAccount.setLastStatementDate(LocalDate.now());
+        testAccount.setPaymentDate(LocalDate.now());
+        ResponseEntity<Map <String, Object>> addedAccount =  service.addAccount(testAccount);
+        Assertions.assertEquals(HttpStatus.CREATED, addedAccount.getStatusCode());
     }
     
     //update account test
     @Test
     void updateAccountTest(){
-        Account testAccount = new Account("TestAccountName", "12345", 9800, 5, LocalDate.now(), LocalDate.now());
-        service.addAccount(testAccount);
-        Account newAccount = new Account("ANOTHERTESTACCOUNT", "12345", 9800, 5, LocalDate.now(), LocalDate.now());
-        newAccount.setAccountId(testAccount.getAccountId());
-        service.updateAccountById(newAccount, testAccount.getAccountId());
-        Assertions.assertEquals(newAccount, service.getAccountById(testAccount.getAccountId()));
+        Account testAccount = new Account();
+        testAccount.setAccountName("ONETestAccount");
+        testAccount.setAccountNumber("12345");
+        testAccount.setBalance(9800);
+        testAccount.setInterest(5);
+        testAccount.setLastStatementDate(LocalDate.now());
+        testAccount.setPaymentDate(LocalDate.now());
+        AccountDto testAccountDto = service.convertToDto(testAccount);
+        service.addAccount(testAccountDto);
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println(testAccount.toString());
+        ResponseEntity<Map <String, Object>> updatedAccount = service.updateAccountById(testAccountDto, testAccount.getAccountId());
+        Assertions.assertEquals(HttpStatus.ACCEPTED, updatedAccount.getStatusCode());
     }
 
     //delete account test
     @Test
     void deleteAccountTest(){
-        Account testAccount = new Account("TestAccountName", "12345", 9800, 5, LocalDate.now(), LocalDate.now());
-        Account addedAccount =  service.addAccount(testAccount);
-        service.deleteAccountById(addedAccount.getAccountId());
-        Assertions.assertEquals(0, service.getAllAccounts().size());
+        AccountDto testAccount = new AccountDto();
+        testAccount.setAccountName("ONETestAccount");
+        testAccount.setAccountNumber("12345");
+        testAccount.setBalance(9800);
+        testAccount.setInterest(5);
+        testAccount.setLastStatementDate(LocalDate.now());
+        testAccount.setPaymentDate(LocalDate.now());
+        service.addAccount(testAccount);
+        ResponseEntity<Map <String, Object>> deletedAccount = service.deleteAccountById(testAccount.getAccountId());
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, deletedAccount.getStatusCode());
     }
 
 

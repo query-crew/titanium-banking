@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.smoothstack.titaniumbanking.models.Account;
 
-@Repository
+// @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findByAccountId(int id);
 }
