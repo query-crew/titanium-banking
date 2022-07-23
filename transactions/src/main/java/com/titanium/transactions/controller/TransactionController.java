@@ -2,12 +2,15 @@ package com.titanium.transactions.controller;
 
 import com.titanium.transactions.model.Transaction;
 import com.titanium.transactions.service.TransactionService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.sql.Timestamp;
 import java.util.Map;
 
 @RestController
+@Api( tags = "Transactions" )
 public class TransactionController {
 
     @Autowired
@@ -42,5 +45,9 @@ public class TransactionController {
     public ResponseEntity<Map<String, Object>> retrieveTransactionByType(@PathVariable int transactionType) {
         return transactionService.retrieveTransactionByType(transactionType);
     }
-}
 
+    @RequestMapping(value = "/transaction/date/{transactionDate}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> retrieveTransactionsByDate(@PathVariable Timestamp transactionDate) {
+        return transactionService.retrieveTransactionByDate(transactionDate);
+    }
+}

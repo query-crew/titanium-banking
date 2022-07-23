@@ -54,9 +54,21 @@ class TransactionsApplicationTests {
 	}
 
 	@Test
+	void readTransactionWithInvalidAccountFromIdTest() {
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByAccountFromId(-1);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.NOT_FOUND);
+	}
+
+	@Test
 	void readTransactionByAccountToIdTest() {
 		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByAccountToId(2);
 		assertEquals(serviceResponse.getStatusCode(), HttpStatus.OK);
+	}
+
+	@Test
+	void readTransactionWithInvalidAccountToIdTest() {
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByAccountToId(-1);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.NOT_FOUND);
 	}
 
 	@Test
@@ -66,8 +78,28 @@ class TransactionsApplicationTests {
 	}
 
 	@Test
+	void readTransactionWithInvalidTypeTest() {
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByType(-1);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.NOT_FOUND);
+	}
+
+	@Test
+	void readTransactionByDateTest() {
+		Timestamp time = Timestamp.valueOf("2022-07-13 00:00:00");
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByDate(time);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.OK);
+	}
+
+	@Test
+	void readTransactionWithInvalidDateTest() {
+		Timestamp time = Timestamp.valueOf("2022-07-01 00:00:00");
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.retrieveTransactionByDate(time);
+		assertEquals(serviceResponse.getStatusCode(), HttpStatus.NOT_FOUND);
+	}
+
+	@Test
 	void cannotFindTransactionTest() {
-		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.getTransaction(100);
+		ResponseEntity<Map<String, Object>> serviceResponse = transactionService.getTransaction(-100);
 		assertEquals(serviceResponse.getStatusCode(), HttpStatus.NOT_FOUND);
 	}
 }
