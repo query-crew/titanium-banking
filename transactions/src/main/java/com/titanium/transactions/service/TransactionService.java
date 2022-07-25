@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,4 +123,23 @@ public class TransactionService {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 	}
+
+    public ResponseEntity<Map<String, Object>> retrieveTransactionByDate(Timestamp transactionDate) {
+        try {
+            List<Transaction> transactions =  transactionRepository.findByTransactionDate(transactionDate);
+            if(transactions.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            else {
+                Map<String, Object> response = new HashMap<>();
+                response.put("transactions", transactions);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        }
+        catch(Exception ex) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", ex);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
