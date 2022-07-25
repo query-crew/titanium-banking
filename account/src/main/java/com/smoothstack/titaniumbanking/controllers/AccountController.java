@@ -32,6 +32,11 @@ public class AccountController {
         return accountService.getAllAccounts();
     }
 
+    @RequestMapping(value="/accounts/{accountId}", method=RequestMethod.GET)
+    public ResponseEntity<Map <String, Object>> getAccount(@PathVariable int accountId){
+        return accountService.getAccountById(accountId);
+    }
+
     //update
     @RequestMapping(value="/accounts/{accountId}", method=RequestMethod.PUT)
     public ResponseEntity<Map <String, Object>> updateAccount(@RequestBody AccountDto account, @PathVariable int accountId){

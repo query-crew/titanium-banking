@@ -31,7 +31,7 @@ public class AccountService {
         account.setLastStatementDate(newAccount.getLastStatementDate());
         account.setPaymentDate(newAccount.getPaymentDate());
         try {
-            accountRepo.saveAndFlush(account);
+            accountRepo.save(account);
             Map<String, Object> response = new HashMap<>();
             response.put( "account", HttpStatus.CREATED);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
@@ -85,11 +85,8 @@ public class AccountService {
     //update
     public ResponseEntity<Map<String, Object>> updateAccountById(AccountDto account, int accountId) {
         try {
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            System.out.println(accountId);
-            Account accountToUpdate = getAccount(accountId);  //null
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            System.out.println(accountToUpdate);
+
+            Account accountToUpdate = getAccount(accountId);  
             accountToUpdate.setAccountName(account.getAccountName());
             accountToUpdate.setBalance(account.getBalance());
             accountToUpdate.setInterest(account.getInterest());
@@ -109,6 +106,8 @@ public class AccountService {
         }
     }
 
+    
+
     //delete
     public ResponseEntity<Map<String, Object>> deleteAccountById(int accountId){
         Account account = accountRepo.findByAccountId(accountId);
@@ -124,7 +123,7 @@ public class AccountService {
     //convert to DTO
     public AccountDto convertToDto(Account account) {
         AccountDto accountDto = new AccountDto();
-        accountDto.setAccountId(account.getAccountId());
+        // accountDto.setAccountId(account.getAccountId());
         accountDto.setAccountName(account.getAccountName());
         accountDto.setAccountNumber(account.getAccountNumber());
         accountDto.setBalance(account.getBalance());

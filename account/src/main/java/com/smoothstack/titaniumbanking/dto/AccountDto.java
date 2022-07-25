@@ -4,9 +4,7 @@ import java.time.LocalDate;
 
 import lombok.*;
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 public class AccountDto {
     private int accountId;
