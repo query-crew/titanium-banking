@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
+
 @Entity
 @Getter
 @Setter
@@ -29,7 +29,7 @@ public class Transaction {
     private String description;
 
     @Column(name = "TRANSACTION_AMOUNT")
-    private float amount;
+    private int amount;
 
     @Column(name = "ACCOUNT_FROM_ID")
     private int accountFromId;
@@ -37,7 +37,7 @@ public class Transaction {
     @Column(name = "ACCOUNT_TO_ID")
     private int accountToId;
 
-    public Transaction(int _transactionId, int _transactionType, Timestamp _transactionDate, String _description, float _amount, int _accountFromId, int _accountToId) {
+    public Transaction(int _transactionId, int _transactionType, Timestamp _transactionDate, String _description, int _amount, int _accountFromId, int _accountToId) {
         this.transactionId = _transactionId;
         this.transactionType = _transactionType;
         this.transactionDate = _transactionDate;
