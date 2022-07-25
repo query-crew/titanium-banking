@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from './tokenReducer';
 import Account from './components/Account';
 import { BrowserRouter, Route } from 'react-router-dom'
+import Navbar from './components/Navbar';
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
   
   return (
     <BrowserRouter>
+    <Navbar />
     {/* <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

@@ -1,0 +1,12 @@
+.app-navbar{
+    background-color: #d85c27;
+}
+
+#navbarNav ul li a{
+    color: white;
+}
+
+#navbarNav ul li a:focus{
+    color: #14365d;
+}
+
