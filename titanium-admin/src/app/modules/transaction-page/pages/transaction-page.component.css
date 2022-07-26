@@ -1,0 +1,46 @@
+a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.5rem 0.5rem;
+}
+
+a:hover {
+    color: #14365d;
+}
+
+body {
+    background-color: #14365d;
+}
+
+label {
+    color: #ffffff;
+}
+
+.row {
+    margin: 1.5rem 1.5rem 1.5rem 1.5rem;
+}
+
+.transactions {
+    background-color: #14365d;
+    border: 1px solid #000000;
+    height: 40rem;
+    overflow-y: scroll;
+}
+
+.btn-primary {
+    background-color: #ffffff;
+    color: #222222;
+}
+
+.accountInputRow {
+    color: #eeeeee;
+    padding: 0 0 0 0;
+}
+
+.filter-button {
+    margin-top: 10rem;
+}
+
+.transaction-row {
+    margin: 2rem 2rem 2rem 2rem;
+}

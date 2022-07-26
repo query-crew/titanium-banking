@@ -39,7 +39,7 @@ class TransactionsApplicationTests {
 			1,
 			new Timestamp(0),
 			"Test Transaction",
-			100.00f,
+			10000,
 			7,
 			8
 		);
