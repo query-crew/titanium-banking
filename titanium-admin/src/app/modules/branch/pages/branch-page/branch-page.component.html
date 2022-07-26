@@ -1,0 +1,8 @@
+<div class="bg-white">
+  <div *ngIf="branch === undefined">
+    <div class="spinner-border" role="status"></div>
+  </div>
+  <div *ngIf="branch !== undefined">
+    <div>hi {{ branch.branchName }}</div>
+  </div>
+</div>

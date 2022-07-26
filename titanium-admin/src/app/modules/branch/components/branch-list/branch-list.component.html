@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row" *ngFor="let branch of branches">
+    <app-branch></app-branch>
+  </div>
+  <div *ngIf="branches.length === 0" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status"></div>
+  </div>
+</div>
