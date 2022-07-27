@@ -7,6 +7,7 @@ import { setToken } from './tokenReducer';
 import Account from './components/Account';
 import { BrowserRouter, Route } from 'react-router-dom'
 import Navbar from './components/Navbar';
+import RegisterAccount from './components/RegisterAccount';
 
 function App() {
 
@@ -48,22 +49,30 @@ function App() {
   
   return (
     <BrowserRouter>
-    <Navbar />
+    <div className='App'>
+      <Navbar />
+      
     {/* <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <button onClick={loginAsAdmin}>Login as admin</button>
-        <button onClick={loginAsUser}>Login as user</button>
-        {usersLoading && <p>Loading...</p>}
-        <button onClick={showUsers}>Show Users</button>
-        {users.map((user, i) => (
-          <p key={i}>{user.username}</p>
-        ))}
-      </header> */}
+    <Navbar />
+    <header className="App-header">
+    <img src={logo} className="App-logo" alt="logo" />
+    <button onClick={loginAsAdmin}>Login as admin</button>
+    <button onClick={loginAsUser}>Login as user</button>
+    {usersLoading && <p>Loading...</p>}
+    <button onClick={showUsers}>Show Users</button>
+    {users.map((user, i) => (
+      <p key={i}>{user.username}</p>
+      ))}
+    </header> */}
 
       <Route path='/accounts' exact={true} >
         <Account />
       </Route>
+
+      <Route path='/account/add' exact={true}>
+        <RegisterAccount />
+      </Route>
+    </div>
     {/* </div> */}
     </BrowserRouter>
   );
