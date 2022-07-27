@@ -1,14 +1,7 @@
-<header class = "d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" style = "background-color: #d85c27; color: #ffffff">
-    <h4 class = "bi me-2" style = "margin-left: 2rem">Admin Portal</h4>
-    <ul class = "nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li class = "px-2"><a href="">Home</a></li>
-      <li class = "px-2"><a href="">Log Out</a></li>
-    </ul>
-</header>
 <body>
     <div class = "container">
         <div class = "row">
-            <div class = "col-sm-3" style = "background-color: #d85c27;">
+            <div class = "col-sm-3" style = "background-color: #14365d; border: 1px solid #d85c27">
                 <div class = "container">
                     <div class = "row">
                         <label for = "dateFrom">Date From:</label>
@@ -53,15 +46,25 @@
                     <div class = "col-md-6 ">
                         <label for = "accountInput">Account #: </label>
                         <input type = "text" name = "accountInput" id = "accountNumberInput">
-                        <button type = "button" class = "btn btn-primary" (click) = "getTransactions();">Search</button>
+                        <button type = "button" class = "btn btn-primary" (click)="getTransactions()">Search</button>
                     </div>
                 </div>
                 <div class = "row transactions">
                     <div class = "container">
-                        <div class = "col-12" *ngFor = "let transaction in filteredTransactionsList">
+                        <div *ngFor="let transaction of filteredTransactionsList" class = "col-12">
                             <div class = "row transaction-item">
                                 <div class = "card">
-                                    <h4>Test Transaction</h4>
+                                    <div class = "row">
+                                        <div class = "col-md-6">
+                                            <h4>{{transaction.transactionDate | date: 'yyyy-MM-dd'}}</h4>
+                                            <h4>{{transaction.description}}</h4>
+                                        </div>
+                                        <div class = "col-md-6">
+                                            <h4>{{transaction.amount / 100 | currency: 'USD'}}</h4>
+                                            <h6>From Account: {{transaction.accountFromId}}</h6>
+                                            <h6>To Account: {{transaction.accountToId}}</h6>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
