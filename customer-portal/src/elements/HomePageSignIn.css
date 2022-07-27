@@ -1,0 +1,35 @@
+.sign-in-container {
+    background-color: #a96762;
+    height: 800px;
+}
+
+.sign-in-card {
+    margin-top: 60px;
+}
+
+.cashback-title {
+    margin-top:60px;
+    color: white;
+}
+
+.terms-apply-title {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.cashback-title-container {
+    max-width: 550px;
+}
+
+#override-bootstrap-login-page .learn-more-button {
+    background-color: white;
+    color: #14365d;
+    border-color: #14365d;
+    border-radius: 18px;
+    width: 200px;
+}
+
+#override-bootstrap-login-page .bank-card-col {
+    padding-top: 20px;
+}

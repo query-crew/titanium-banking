@@ -1,0 +1,158 @@
+.expanded-sign-in-description {
+    color: gray;
+    font-size: 14px;
+    text-align: center;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-user-input {
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-user-input:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-user-input:active {
+    border-color: none;
+    box-shadow: none;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-visibility-button {
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+    color: black;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-visibility-button:hover {
+    background-color: transparent;
+    color: black;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-visibility-button:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-visibility-button:active {
+    background-color: transparent;
+    color: black;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-button {
+    background-color: #14365d;
+    border: none;
+    font-weight: bold;
+    width: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-button:hover {
+    text-decoration: underline;
+    background-color: #d85c27;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-button:active {
+    background-color: #b1481b;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-button:focus {
+    box-shadow: none;
+}
+
+@media screen and (max-width: 262px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 77%;
+}}
+
+@media screen and (min-width: 262px) and (max-width: 273px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 78%;
+}}
+
+@media screen and (min-width: 273px) and (max-width: 283px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 79%;
+}}
+
+@media screen and (min-width: 283px) and (max-width: 296px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 80%;
+}}
+
+@media screen and (min-width: 296px) and (max-width: 310px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 81%;
+}}
+
+@media screen and (min-width: 310px) and (max-width: 325px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 82%;
+}}
+
+@media screen and (min-width: 325px) and (max-width: 342px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 83%;
+}}
+
+@media screen and (min-width: 342px) and (max-width: 362px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 84%;
+}}
+
+@media screen and (min-width: 362px) and (max-width: 384px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 85%;
+}}
+
+@media screen and (min-width: 384px) and (max-width: 410px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 86%;
+}}
+
+@media screen and (min-width: 410px) and (max-width: 440px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 87%;
+}}
+
+@media screen and (min-width: 440px) { #expanded-sign-in-override-bootstrap .expanded-sign-in-floating {
+    width: 88%;
+}}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-enroll-button {
+    background-color: transparent;
+    color: black;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-enroll-button:hover {
+    text-decoration: underline;
+}
+
+.expanded-sign-in-forgot-username-password-text {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color:black;
+}
+
+.expanded-sign-in-forgot-username-password-text:hover {
+    text-decoration: underline;
+    color:black;
+}
+
+ .expanded-sign-in-button-container {
+    padding-left: 0px;
+}
+
+.expanded-sign-in-title {
+    text-align: center;
+}
+
+#expanded-sign-in-override-bootstrap .expanded-sign-in-form {
+    width: 410px;
+}
+
+.expanded-sign-in-container {
+    padding-bottom: 20px;
+}
+
+@media screen and (min-width: 769px) { #expanded-sign-in-override-bootstrap {
+    display: none;
+}}
