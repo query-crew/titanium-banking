@@ -1,0 +1,134 @@
+.expanded-sign-in-card-description {
+    color: gray;
+    font-size: 14px;
+    text-align: center;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-user-input {
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-user-input:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-user-input:active {
+    border-color: none;
+    box-shadow: none;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-visibility-button {
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+    color: black;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-visibility-button:hover {
+    background-color: transparent;
+    color: black;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-visibility-button:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-visibility-button:active {
+    background-color: transparent;
+    color: black;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-sign-in-card-button {
+    background-color: #14365d;
+    border: none;
+    font-weight: bold;
+    width: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-sign-in-card-button:hover {
+    text-decoration: underline;
+    background-color: #d85c27;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-sign-in-card-button:active {
+    background-color: #b1481b;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-sign-in-card-button:focus {
+    box-shadow: none;
+}
+
+#expanded-sign-in-card-override-bootstrap {
+    width: 870px;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-floating {
+    width: 88%;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-enroll-button {
+    background-color: transparent;
+    color: black;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-enroll-button:hover {
+    text-decoration: underline;
+}
+
+.expanded-forgot-username-password-text {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color:black;
+}
+
+.expanded-forgot-username-password-text:hover {
+    text-decoration: underline;
+    color:black;
+}
+
+#expanded-sign-in-card-override-bootstrap .card-footer {
+    display: flex;
+    min-height: 60px;
+    align-items: center;
+    background-color: #eddfde;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+@media screen and (max-width: 769px) { #expanded-sign-in-card-override-bootstrap .card {
+    display: none;
+}}
+
+#expanded-sign-in-card-override-bootstrap .card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.40);
+}
+
+ .expanded-button-container {
+    padding-left: 0px;
+}
+
+.expanded-sign-in-card-title {
+    text-align: center;
+}
+
+#expanded-sign-in-card-override-bootstrap .expanded-sign-in-card-form {
+    width: 410px;
+}
+
+.expanded-sign-in-card-container {
+    padding-bottom: 20px;
+}

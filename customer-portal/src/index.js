@@ -4,7 +4,9 @@ import './index.css';
 import App from './App';
 import { store } from './store'
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+import './fonts/BungeeHairline-Regular.ttf';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

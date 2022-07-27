@@ -1,0 +1,67 @@
+.bank-card {
+    background-color: #14365d;
+    width: 400px;
+    border-radius: 25px;
+}
+
+.bank-title {
+    font-family: Rajdhani, serif;
+    font-size: 22px;
+    letter-spacing: 8px;
+    padding-top: 30px;
+    padding-left: 40px;
+}
+
+.white {
+    padding-left: 0px;
+}
+
+.card-chip {
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.wifi-icon {
+    color: white;
+    transform: rotate(90deg);
+}
+
+.card-text {
+    color: white;
+    font-family: Rajdhani, serif;
+    letter-spacing: 6px;
+}
+
+.x-small-card-description {
+    color: white;
+    font-size: 14px;
+}
+
+.visa-logo {
+    height: 20px;
+    width: auto;
+}
+
+#override-bootstrap-bank-card .card-description-row {
+    margin-left:10px;
+    margin-top:50px;
+}
+
+#override-bootstrap-bank-card .wifi-col {
+    margin-left:10px;
+}
+
+#override-bootstrap-bank-card .card-description-text {
+    margin-left: 28px;
+}
+
+.card-description-and-logo {
+    padding-top: 40px;
+    padding-bottom: 20px;
+    padding-right: 10px;
+}
+
+@media screen and (max-width: 992px) { #override-bootstrap-bank-card {
+    display: none;
+}}
