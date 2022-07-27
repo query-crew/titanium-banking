@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { addNewAccount } from "../store";
 import "./RegisterAccount.css"
+
 
 const RegisterAccount = () => {
 

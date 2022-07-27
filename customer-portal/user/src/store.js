@@ -23,7 +23,7 @@ export const store = configureStore({reducer:
             // }
 const ADD_ACCOUNT = 'spots/ADD_SPOT'
 const addAccount = (spot) => ({
-    type: ADD_SPOT,
+    type: ADD_ACCOUNT,
     spot
 })
 
@@ -48,12 +48,12 @@ const initialState = {};
 const accountReducer = (state = initialState, action) => {
     let newState = {...state}
     switch(action.type){
-        case ALL_ACCOUNTS:
-            newState = {}
-            action.accounts.forEach(account => {
-                newState[account.id] = account
-            })
-            return newState
+        // case ALL_ACCOUNTS:
+        //     newState = {}
+        //     action.accounts.forEach(account => {
+        //         newState[account.id] = account
+        //     })
+        //     return newState
 
         case ADD_ACCOUNT:
             newState[action.account.id] = action.account
