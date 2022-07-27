@@ -44,6 +44,7 @@ const Account = () => {
                                 </div>
                             </div>
                         )}
+                        
                 </div>
                     <div className="col-6 align-self-center">
                     <h5>Free Checking</h5>
