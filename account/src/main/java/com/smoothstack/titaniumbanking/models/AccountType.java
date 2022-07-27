@@ -2,6 +2,8 @@ package com.smoothstack.titaniumbanking.models;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.*;
 
 @Entity
@@ -22,7 +24,9 @@ public class AccountType {
     @Column(name="investing")
     private boolean investing;
 
-    @OneToOne(mappedBy = "accountTypeId")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="account", referencedColumnName = "accountTypeId")
+    @JsonBackReference
     private Account account;
 
     public AccountType(boolean savings, boolean investing){

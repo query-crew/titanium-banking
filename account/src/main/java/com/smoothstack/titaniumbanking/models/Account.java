@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.*;
 
 
@@ -41,9 +43,9 @@ public class Account {
     // @ManyToOne(mappedBy="User_Id")
     // private User user;
 
-    // @OneToOne
-    // @JoinColumn(name="accountTypeId")
-    // private AccountType accountType;
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private AccountType accountType;
 
     @Override
     public boolean equals(Object o) {
