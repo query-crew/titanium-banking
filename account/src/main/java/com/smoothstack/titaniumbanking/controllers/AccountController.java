@@ -27,6 +27,7 @@ public class AccountController {
     }
 
     //read
+   
     @RequestMapping(value="/accounts", method=RequestMethod.GET)
     public List<Account> getAllAccounts(){
         return accountService.getAllAccounts();
