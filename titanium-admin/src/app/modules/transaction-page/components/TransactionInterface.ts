@@ -1,11 +1,9 @@
-
 export interface TransactionInterface {
-    TransactionDate: Date;
-    TransactionDescription: String;
-    TransactionNumber: Number;
-    AccountFrom: Number;
-    AccountTo: Number;
-    TransactionAmount: Number;
-    TransactionType: Number;
-    TransactionStatus: Number;
+    accountFromId: number;
+    accountToId: number;
+    amount: number;
+    description: String;
+    transactionDate: Date;
+    transactionId: number;
+    transactionType: number;
 }

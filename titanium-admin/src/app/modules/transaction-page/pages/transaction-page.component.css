@@ -22,7 +22,7 @@ label {
 
 .transactions {
     background-color: #14365d;
-    border: 1px solid #000000;
+    border: 1px solid #d85c27;
     height: 40rem;
     overflow-y: scroll;
 }
