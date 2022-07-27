@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.List;
 
 @RestController
@@ -57,7 +58,7 @@ public class UserController {
             return new ResponseEntity<>(userService.login(userLogin), HttpStatus.CREATED);
         }
         catch (InvalidPasswordException | InvalidUsernameException | UserNotVerifiedException e) {
-            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -1,0 +1,122 @@
+.sign-in-description {
+    color: gray;
+    font-size: 14px;
+}
+
+#sign-in-override-bootstrap .user-input {
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+}
+
+#sign-in-override-bootstrap .user-input:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
+#sign-in-override-bootstrap .user-input:active {
+    border-color: none;
+    box-shadow: none;
+}
+
+#sign-in-override-bootstrap .visibility-button {
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+    color: black;
+}
+
+#sign-in-override-bootstrap .visibility-button:hover {
+    background-color: transparent;
+    color: black;
+}
+
+#sign-in-override-bootstrap .visibility-button:focus {
+    border-color: none;
+    box-shadow: none;
+}
+
+#sign-in-override-bootstrap .visibility-button:active {
+    background-color: transparent;
+    color: black;
+}
+
+#sign-in-override-bootstrap .sign-in-button {
+    background-color: #14365d;
+    border: none;
+    font-weight: bold;
+    width: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px;
+}
+
+#sign-in-override-bootstrap .sign-in-button:hover {
+    text-decoration: underline;
+    background-color: #d85c27;
+}
+
+#sign-in-override-bootstrap .sign-in-button:active {
+    background-color: #b1481b;
+}
+
+#sign-in-override-bootstrap .sign-in-button:focus {
+    box-shadow: none;
+}
+
+#sign-in-override-bootstrap {
+    width: 300px;
+}
+
+#sign-in-override-bootstrap .floating {
+    width: 82%;
+}
+
+#sign-in-override-bootstrap .enroll-button {
+    background-color: transparent;
+    color: black;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+}
+
+#sign-in-override-bootstrap .enroll-button:hover {
+    text-decoration: underline;
+}
+
+.forgot-username-password-text {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color:black;
+}
+
+.forgot-username-password-text:hover {
+    text-decoration: underline;
+    color:black;
+}
+
+#sign-in-override-bootstrap .card-footer {
+    display: flex;
+    min-height: 60px;
+    align-items: center;
+    background-color: #eddfde;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+@media screen and (max-width: 992px) { #sign-in-override-bootstrap .card {
+    display: none;
+}}
+
+#sign-in-override-bootstrap .card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.40);
+}
+
+#sign-in-override-bootstrap .button-container {
+    padding-left: 0px;
+}
