@@ -1,33 +1,36 @@
-// package com.smoothstack.titaniumbanking.models;
+package com.smoothstack.titaniumbanking.models;
 
-// import javax.persistence.*;
+import javax.persistence.*;
 
-// import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-// @Entity
-// @Getter
-// @Setter
-// @NoArgsConstructor
-// @ToString
-// @Table(name="Accounts_Types")
-// public class AccountType {
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     @Column(name="account_type_id")
-//     private int accountTypeId;
+import lombok.*;
 
-//     @Column(name="savings")
-//     private boolean savings;
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@Table(name="Accounts_Types")
+public class AccountType {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="account_type_id")
+    private int accountTypeId;
 
-//     @Column(name="investing")
-//     private boolean investing;
+    @Column(name="savings", nullable = true)
+    private Boolean savings;
 
-//     @OneToOne(mappedBy = "accountTypeId")
-//     private Account account;
+    @Column(name="investing", nullable = true)
+    private Boolean investing;
 
-//     public AccountType(boolean savings, boolean investing){
-//         super();
-//         this.savings = savings;
-//         this.investing = investing;
-//     }
-// }
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "accountType")
+    @JsonBackReference
+    private Account account;
+
+    public AccountType(boolean savings, boolean investing){
+        super();
+        this.savings = savings;
+        this.investing = investing;
+    }
+}

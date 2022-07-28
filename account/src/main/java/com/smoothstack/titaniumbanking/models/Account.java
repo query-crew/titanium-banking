@@ -5,6 +5,9 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.*;
 
 
@@ -14,10 +17,11 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Table(name ="Accounts")
+@JsonInclude(JsonInclude.Include.ALWAYS)
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="account_id")
+    @Column(name="account_id", nullable = false)
     private int accountId;
 
     @Column(name="accountName")
@@ -38,12 +42,16 @@ public class Account {
     @Column(name="paymentDate")
     private LocalDate paymentDate;
 
+    @Column(name="accountTypeId")
+    private Integer accountTypeId;
+
     // @ManyToOne(mappedBy="User_Id")
     // private User user;
 
-    // @OneToOne
-    // @JoinColumn(name="accountTypeId")
-    // private AccountType accountType;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="accountTypeId", referencedColumnName = "account_type_id", insertable = false, updatable = false)
+    @JsonManagedReference
+    private AccountType accountType;
 
     @Override
     public boolean equals(Object o) {
