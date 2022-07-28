@@ -34,7 +34,6 @@ export class AddBranchPageComponent implements OnInit {
   addBranch(branch: Branch) {
     this.branchService.addBranch(branch).subscribe({
       next: (branch) => {
-        console.log(branch);
         this.router.navigate(['/branch']);
       },
       error: (e) => {
@@ -46,7 +45,6 @@ export class AddBranchPageComponent implements OnInit {
 
   onSubmit() {
     const branch: Branch = { ...this.branchForm.value };
-    console.log(branch);
     this.addBranch(branch);
   }
 }
