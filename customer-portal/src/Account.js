@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'; 
-import Navbar from "./Navbar";
+
 
 const Account = () => {
     const [accounts, getAccounts] = useState('')
@@ -10,12 +10,9 @@ const Account = () => {
         style: 'currency',
         currency: 'USD', 
     });
+
     const url = 'http://localhost:8080/accounts'
     
-    useEffect(() => {
-      getAllAccounts()
-    }, []);
-
     const getAllAccounts = () => {
         axios.get(`${url}`)
           .then((response) => {
@@ -25,6 +22,12 @@ const Account = () => {
           })
           .catch((err) => console.log(err));
       }
+
+    useEffect(() => {
+      getAllAccounts()
+    //   console.log('i fire once');
+    }, []);
+
     
     const toRegisterAccountPage = () => {
         let path = '/accounts/add';
@@ -68,7 +71,7 @@ const Account = () => {
                             </li>
                         </ul>
                     </div>
-                    <div className="col border-start border-warning align-self-end">
+                    <div className="col border-start border-info align-self-end">
                         <div className="card-body">
                                 <div className="card" > 
                                     <h6 className="card-title border-bottom mb-4 bg-light text-center p-2" >Actions</h6>

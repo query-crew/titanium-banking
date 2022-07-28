@@ -4,7 +4,7 @@ const Navbar = () => {
 
     return(
         <>
-        <nav className="navbar navbar navbar-expand-sm navbar-light ">
+        <nav className="app-navbar navbar navbar-expand-sm navbar-light ">
             <div className="container-fluid">
                 
                 <div className="collapse navbar-collapse" id="navbarNav">

@@ -16,12 +16,14 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Navbar from './Navbar';
 import RegisterAccount from './RegisterAccount';
+import './App.css';
 
 function App() {
 
   return (
     <Provider store={store}>
       <div className="App">
+        <Navbar />
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<HomePageSignIn/>}/>
