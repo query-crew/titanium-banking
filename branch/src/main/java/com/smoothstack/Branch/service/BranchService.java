@@ -25,6 +25,7 @@ public class BranchService {
     public ResponseEntity<Map<String, Object>> addBranch(BranchDto newBranch) {
         Branch branch = new Branch(newBranch.getBranchName());
         Address newBranchAddress = new Address(newBranch.getAddressLine1(), newBranch.getAddressLine2(), newBranch.getCity(), newBranch.getState(), newBranch.getZipCode());
+        branch.setBranchDetails(newBranch.getBranchDetails());
         newBranchAddress.setBranch(branch);
         branch.setAddress(newBranchAddress);
         try {
@@ -78,6 +79,7 @@ public class BranchService {
         try {
             Branch targetBranch = findBranch(branchId);
             targetBranch.setBranchName(newBranch.getBranchName());
+            targetBranch.setBranchDetails(newBranch.getBranchDetails());
             Address targetAddress = targetBranch.getAddress();
             targetAddress.setAddressLine1(newBranch.getAddressLine1());
             targetAddress.setAddressLine2(newBranch.getAddressLine2());
@@ -111,6 +113,7 @@ public class BranchService {
         BranchDto branchDto = new BranchDto();
         branchDto.setBranchId(branch.getBranchId());
         branchDto.setBranchName(branch.getBranchName());
+        branchDto.setBranchDetails(branch.getBranchDetails());
         branchDto.setAddressLine1(branch.getAddress().getAddressLine1());
         branchDto.setAddressLine2(branch.getAddress().getAddressLine2());
         branchDto.setCity(branch.getAddress().getCity());

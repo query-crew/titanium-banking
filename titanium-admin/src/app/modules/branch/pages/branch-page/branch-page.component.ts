@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Branch } from '../../models/branch';
 import { BranchService } from '../../services/branch.service';
 
@@ -10,12 +11,23 @@ import { BranchService } from '../../services/branch.service';
 export class BranchPageComponent implements OnInit {
   branch!: Branch;
   branchId: any;
-  constructor(private branchService: BranchService) {}
+  errorMessage: any;
+  constructor(
+    private branchService: BranchService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.branchId = 3;
-    this.branchService.getBranch(this.branchId).subscribe((res) => {
-      this.branch = res;
+    this.branchId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.branchService.getBranch(this.branchId).subscribe({
+      next: (res) => {
+        this.branch = res;
+      },
+      error: (e) => {
+        this.errorMessage = e;
+        this.router.navigate(['/500']);
+      },
     });
   }
 }

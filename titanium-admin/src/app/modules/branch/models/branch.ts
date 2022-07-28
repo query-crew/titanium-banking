@@ -6,4 +6,5 @@ export interface Branch {
   city: string;
   state: string;
   zipCode: string;
+  branchDetails: string;
 }

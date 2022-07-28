@@ -24,7 +24,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/scss/custom.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
           },
           "configurations": {
             "production": {

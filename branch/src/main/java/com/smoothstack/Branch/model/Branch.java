@@ -15,6 +15,8 @@ public class Branch {
     private int branchId;
     @Column(name = "branch_name")
     private String branchName;
+    @Column(name = "branch_details")
+    private String branchDetails;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "branch")
     private Address address;
     public Branch (String branchName) {

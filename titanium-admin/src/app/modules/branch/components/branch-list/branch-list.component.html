@@ -1,8 +1,17 @@
 <div class="container">
-  <div class="row" *ngFor="let branch of branches">
-    <app-branch></app-branch>
+  <div *ngIf="!isLoading">
+    <div class="row" *ngFor="let branch of branches">
+      <app-branch [branch]="branch"></app-branch>
+    </div>
+    <div *ngIf="branches.length === 0">
+      <section class="jumbotron text-center">
+        <div class="container">
+          <p>No branches found.</p>
+        </div>
+      </section>
+    </div>
   </div>
-  <div *ngIf="branches.length === 0" class="d-flex justify-content-center">
+  <div *ngIf="isLoading" class="d-flex justify-content-center">
     <div class="spinner-border" role="status"></div>
   </div>
 </div>
