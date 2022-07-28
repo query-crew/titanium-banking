@@ -21,12 +21,13 @@ public class AccountController {
     AccountService accountService;
 
     //create
-    @RequestMapping(value="/accounts", method=RequestMethod.POST)
+    @RequestMapping(value="/accounts/add", method=RequestMethod.POST)
     public void addNewAccount(@RequestBody Account account) {
         accountService.addAccount(account);;
     }
 
     //read
+   
     @RequestMapping(value="/accounts", method=RequestMethod.GET)
     public List<Account> getAllAccounts(){
         return accountService.getAllAccounts();
