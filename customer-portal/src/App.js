@@ -14,6 +14,8 @@ import "@fontsource/bungee-hairline";
 import { store } from "./store";
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { Provider } from 'react-redux';
+import Navbar from './Navbar';
+import RegisterAccount from './RegisterAccount';
 
 function App() {
 
@@ -25,7 +27,8 @@ function App() {
             <Route path='/' element={<HomePageSignIn/>}/>
             <Route path='/signin' element={<SignInPage/>}/>
             <Route path='/enroll' element={<Enroll/>}/>
-            <Route path="/account" element={<Account/>}/>
+            <Route path="/accounts" element={<Account />}/>
+            <Route path="/accounts/add" element={<RegisterAccount />}/>
             <Route path="/password-help" element={<PasswordHelp/>}/>
           </Routes>
         </BrowserRouter>
