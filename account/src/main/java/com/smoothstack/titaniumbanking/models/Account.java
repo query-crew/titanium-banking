@@ -24,10 +24,10 @@ public class Account {
     @Column(name="account_id", unique = true, nullable = false)
     private int accountId;
 
-    @Column(name="accountName")
+    @Column(name="account_name")
     private String accountName;
 
-    @Column(name="accountNumber")
+    @Column(name="account_number")
     private String accountNumber;
 
     @Column(name="balance")
@@ -36,10 +36,10 @@ public class Account {
     @Column(name="interest")
     private int interest;
 
-    @Column(name="lastStatementDate")
+    @Column(name="last_statement_date")
     private LocalDate lastStatementDate;
 
-    @Column(name="paymentDate")
+    @Column(name="payment_date")
     private LocalDate paymentDate;
 
     @Column(name="accountTypeId")
