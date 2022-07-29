@@ -5,32 +5,32 @@
                 <div class = "container">
                     <div class = "row">
                         <label for = "dateFrom">Date From:</label>
-                        <input type = "date" name = "dateFrom">
+                        <input type = "date" name = "dateFrom" id = "dateFrom">
                     </div>
                     <div class = "row">
                         <label for = "dateTo">Date To:</label>
-                        <input type = "date" name = "dateTo">
+                        <input type = "date" name = "dateTo" id = "dateTo">
                     </div>
                     <div class = "row">
                         <label for = "transactionDescription">Description:</label>
-                        <input type = "text" name = "transactionDescription">
+                        <input type = "text" name = "transactionDescription" id = "transactionDescription">
                     </div>
                     <div class = "row">
                         <label for = "transactionType">Transaction Type:</label>
-                        <select name = "transactionType">
-                            <option name = "all">All</option>
-                            <option name = "transfer">Transfer</option>
-                            <option name = "debit">Debit</option>
-                            <option name = "deposit">Deposit</option>
+                        <select name = "transactionType" id = "transactionType">
+                            <option name = "all" value = "0">All</option>
+                            <option name = "debit" value = "1">Debit</option>
+                            <option name = "transfer" value = "2">Transfer</option>
+                            <option name = "deposit" value = "3">Deposit</option>
                         </select>
                     </div>
                     <div class = "row">
                         <label for = "transactionStatus">Transaction Status:</label>
-                        <select name = "transactionStatus">
-                            <option name = "all">All</option>
-                            <option name = "pending">Pending</option>
-                            <option name = "confirmed">Confirmed</option>
-                            <option name = "rejected">Rejected</option>
+                        <select name = "transactionStatus" id = "transactionStatus">
+                            <option name = "all" value = "0">All</option>
+                            <option name = "pending" value = "1">Pending</option>
+                            <option name = "confirmed" value = "2">Confirmed</option>
+                            <option name = "rejected" value = "3">Rejected</option>
                         </select>
                     </div>
                     <div class = "row">
