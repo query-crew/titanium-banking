@@ -9,6 +9,7 @@ import lombok.*;
 public class AccountDto {
     private int accountId;
     private String accountName;
+    private String accountType;
     private String accountNumber;
     private int balance;
     private int interest;

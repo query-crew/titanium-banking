@@ -2,6 +2,7 @@ package com.smoothstack.titaniumbanking.services;
 
 
 import com.smoothstack.titaniumbanking.dto.AccountDto;
+import com.smoothstack.titaniumbanking.exceptions.AccountNotFoundException;
 import com.smoothstack.titaniumbanking.models.Account;
 import com.smoothstack.titaniumbanking.repositories.AccountRepository;
 
@@ -22,116 +23,59 @@ public class AccountService {
     private AccountRepository accountRepo;
 
     //create
-    public ResponseEntity<Map<String, Object>> addAccount(AccountDto newAccount) {
+    public Account addAccount(AccountDto newAccount) {
         Account account = new Account();
         account.setAccountName(newAccount.getAccountName());
+        account.setAccountType(newAccount.getAccountType());
         account.setAccountNumber(newAccount.getAccountNumber());
         account.setBalance(newAccount.getBalance());
         account.setInterest(newAccount.getInterest());
         account.setLastStatementDate(newAccount.getLastStatementDate());
         account.setPaymentDate(newAccount.getPaymentDate());
-        try {
-            accountRepo.save(account);
-            Map<String, Object> response = new HashMap<>();
-            response.put( "account", HttpStatus.CREATED);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-        }
-        catch(Exception ex) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("error", ex);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        accountRepo.save(account);
+        return account;
     }
 
 
     //read
-    public ResponseEntity<Map<String, Object>> getAccountById(int accountId) {
-        try {
-            Account account = accountRepo.findByAccountId(accountId);
-            if(account == null) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            else {
-                Map<String, Object> response = new HashMap<>();
-                response.put("account", account);
-                return new ResponseEntity<>(response, HttpStatus.OK);
-            }
+    public Account getAccountById(int accountId) throws AccountNotFoundException {
+        Account account = accountRepo.findByAccountId(accountId);
+        if(account == null) {
+            throw new AccountNotFoundException();
         }
-        catch(Exception ex) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("error", ex);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return account;
     }
 
-    public ResponseEntity<Map<String, Object>> getAllAccounts(){
-        try {
-            List<Account> accounts = accountRepo.findAll();
-            Map<String, Object> response = new HashMap<>();
-            response.put("accounts", accounts);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-        catch(Exception ex) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("error", ex);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public Account getAccount(int accountId) {
-        return accountRepo.findByAccountId(accountId);
+    public List<Account> getAllAccounts() {
+        List<Account> accounts = accountRepo.findAll();
+        return accounts;
     }
  
     //update
-    public ResponseEntity<Map<String, Object>> updateAccountById(AccountDto account, int accountId) {
-        try {
-
-            Account accountToUpdate = getAccount(accountId);  
-            accountToUpdate.setAccountName(account.getAccountName());
-            accountToUpdate.setBalance(account.getBalance());
-            accountToUpdate.setInterest(account.getInterest());
-            accountToUpdate.setLastStatementDate(account.getLastStatementDate());
-            accountToUpdate.setPaymentDate(account.getPaymentDate());
-            accountRepo.save(accountToUpdate);
-
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("account", convertToDto(getAccount(accountId)));
-
-            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("error", e);
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public Account updateAccountById(AccountDto account, int accountId) throws AccountNotFoundException {
+        Account accountToUpdate = getAccountById(accountId);
+        accountToUpdate.setAccountName(account.getAccountName());
+        accountToUpdate.setAccountType(account.getAccountType());
+        accountToUpdate.setBalance(account.getBalance());
+        accountToUpdate.setInterest(account.getInterest());
+        accountToUpdate.setLastStatementDate(account.getLastStatementDate());
+        accountToUpdate.setPaymentDate(account.getPaymentDate());
+        accountRepo.save(accountToUpdate);
+        return accountToUpdate;
     }
 
     
 
     //delete
-    public ResponseEntity<Map<String, Object>> deleteAccountById(int accountId){
-        Account account = accountRepo.findByAccountId(accountId);
+    public Account deleteAccountById(int accountId) throws AccountNotFoundException {
+        Account account = getAccountById(accountId);
         accountRepo.delete(account);
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        return account;
     }
 
     public void deleteAllAccounts() {
 		accountRepo.deleteAll();
 	}
-
-
-    //convert to DTO
-    public AccountDto convertToDto(Account account) {
-        AccountDto accountDto = new AccountDto();
-        // accountDto.setAccountId(account.getAccountId());
-        accountDto.setAccountName(account.getAccountName());
-        accountDto.setAccountNumber(account.getAccountNumber());
-        accountDto.setBalance(account.getBalance());
-        accountDto.setInterest(account.getInterest());
-        accountDto.setLastStatementDate(account.getLastStatementDate());
-        accountDto.setPaymentDate(account.getPaymentDate());
-        return accountDto;
-    }
 
     //for testing
     public boolean accountExists() {

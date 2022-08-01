@@ -27,31 +27,23 @@ public class Account {
     @Column(name="account_name")
     private String accountName;
 
+    @Column(name="account_type")
+    private String accountType;
+
     @Column(name="account_number")
     private String accountNumber;
 
     @Column(name="balance")
-    private int balance;
+    private Integer balance;
 
     @Column(name="interest")
-    private int interest;
+    private Integer interest;
 
     @Column(name="last_statement_date")
     private LocalDate lastStatementDate;
 
     @Column(name="payment_date")
     private LocalDate paymentDate;
-
-    @Column(name="accountTypeId")
-    private Integer accountTypeId;
-
-    // @ManyToOne(mappedBy="User_Id")
-    // private User user;
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="accountTypeId", referencedColumnName = "account_type_id", insertable = false, updatable = false)
-    @JsonManagedReference
-    private AccountType accountType;
 
     @Override
     public boolean equals(Object o) {
@@ -61,15 +53,17 @@ public class Account {
             Account account = (Account) o;
             return (
                     accountName.equals(account.getAccountName()) &&
-                    accountNumber.equals(account.getAccountNumber()) && 
-                    lastStatementDate.equals(account.getLastStatementDate()) &&
-                    paymentDate.equals(account.getPaymentDate())
+                            accountType.equals(account.getAccountType()) &&
+                    accountNumber.equals(account.getAccountNumber()) &&
+                            balance.equals(account.getBalance()) &&
+                            interest.equals(account.getInterest())
                     );
     }
 
-    public Account(String accountName, String accountNumber, int balance, int interest, LocalDate lastStatementDate, LocalDate paymentDate){
+    public Account(String accountName, String accountType, String accountNumber, Integer balance, Integer interest, LocalDate lastStatementDate, LocalDate paymentDate){
         super();
         this.accountName = accountName;
+        this.accountType = accountType;
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.interest = interest;
