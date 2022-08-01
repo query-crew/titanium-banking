@@ -1,0 +1,16 @@
+#member-registration-card-override-bootstrap .state {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+#member-registration-card-override-bootstrap {
+    width: 1040px;
+}
+
+#member-registration-card-override-bootstrap .address-col {
+    padding-left: 40px;
+}
+
+#member-registration-card-override-bootstrap .user-col {
+    padding-left: 40px;
+}

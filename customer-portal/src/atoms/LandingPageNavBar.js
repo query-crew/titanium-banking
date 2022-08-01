@@ -2,11 +2,11 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import "../bootstrap.css";
-import "./NavBar.css";
+import "../styles/bootstrap.css";
+import "../styles/LandingPageNavBar.css";
 import { useMediaQuery } from 'react-responsive';
 
-function BankNavBar(props) {
+function LandingPageNavBar(props) {
 
   const smallScreen = useMediaQuery({ query: `(max-width: 992px)` });
 
@@ -43,4 +43,4 @@ function BankNavBar(props) {
   );
 }
 
-export default BankNavBar;
+export default LandingPageNavBar;

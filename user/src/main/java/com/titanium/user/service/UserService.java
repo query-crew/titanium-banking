@@ -14,12 +14,13 @@ import com.titanium.user.security.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
-
+import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -90,7 +91,18 @@ public class UserService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
         UserDetails userDetails = userDetailsService.loadUserByUsername(login.getUsername());
         String token = jwtUtils.generateJwtToken(userDetails);
-        return token;
+        return jwtUtils.packageJwtToken(token);
+    }
+
+    public String getUserType(String username) {
+        if (!userRepo.existsByUsername(username)) {
+            throw new InvalidUsernameException();
+        }
+        BankUser bankUser = userRepo.findByUsername(username);
+        if (bankUser.getEnabled() == 0) {
+            throw new UserNotVerifiedException();
+        }
+        return bankUser.getUserType();
     }
 
     private UserToken getUserToken() {

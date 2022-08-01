@@ -1,136 +1,45 @@
-import React, { useState, useEffect } from "react";
-import "./ExpandedSignInCard.css";
+import React, { useState } from "react";
+import "../styles/ExpandedSignInCard.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux';
-import { setToken } from '../tokenReducer';
+import { useDispatch } from 'react-redux';
+import { setToken } from '../redux/tokenReducer';
 import { Link, useNavigate } from "react-router-dom";
+import SignInService from "../services/SignInService";
 
 function ExpandedSignInCard(props) {
+
+// State variables
 const[passwordVisible, setPasswordVisible] = useState(false);
-const[username, setUsername] = useState(getInitialUsername());
+const[username, setUsername] = useState(SignInService.getInitialUsername());
 const[password, setPassword] = useState("");
 const[checked, setChecked] = useState(localStorage.getItem("checked") === "true" ? true : false);
-const[usersLoading, setUsersLoading] = useState(false);
-const token = useSelector((state) => state.token.value)
+
+// React hooks
 const dispatch = useDispatch();
 const navigate = useNavigate();
 
-function login(onSuccess, onError) {
-    const login = { username: username, password: password};
-    setUsersLoading(true);
-    axios.post("/user/login", login)
-    .then(response => { 
-        dispatchToken(response.data)
-        onSuccess();
-    })
-    .catch(({ response }) => onError(response.data));
-}
-
-function getInitialUsername() {
-    const initUsername = localStorage.getItem("username");
-    if (initUsername) {
-        return initUsername;
-    }
-    else {
-        return "";
-    }
-}
-
-const changeVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-}
-
-async function saveUsername() {
-    return new Promise((resolve, reject) => {
-        if(username !== "") {
-            try {
-                localStorage.setItem("username", username);
-                localStorage.setItem("checked", "true");
-                resolve();
-            }
-            catch (err) {
-                reject(err);
-            }
-        }
-        else {
-            reject(new Error("Username is blank."));
-        }
-    });
-}
-
-function clearUsername(onSuccess, onError) {
-    return new Promise((resolve, reject) => {
-        try {
-            localStorage.removeItem("username");
-            localStorage.removeItem("checked");
-            resolve();
-        }
-        catch (err) {
-            reject(err);
-        }
-    });
-}
-
-async function handleRememberMe(onSuccess, onError) {
-    if (checked) {
-        try {
-            await saveUsername();
-            onSuccess();
-        }
-        catch (err) {
-            onError(err);
-        }
-    }
-    else {
-        try {
-            await clearUsername();
-            onSuccess();
-        }
-        catch (err) {
-            onError(err);
-        }
-    }
-}
-
-async function dispatchToken(token) {
-    await dispatch(setToken(token));
-    setUsersLoading(false);
-}
-
-async function handleSubmit(event) {
+// Component functions
+function handleSubmit(event) {
     event.preventDefault();
-    handleRememberMe(function onSuccess() {
-        login(
-            function onSuccess() {
-                navigate('/account');
-            },
-            function onError(err) {
-                if (typeof err == "string") {
-                    alert(err);
-                }
-                else {
-                    let alertMessage = "";
-                    const values = Object.values(err);
-                    for (const value of values) {
-                        alertMessage += value + "\n";
-                    }
-                    alert(alertMessage);
-                }
+    SignInService.signIn(username, password, checked, 
+        function dispatchToken(token) {
+            dispatch(token);
+        },
+        function navigateAfterLogin(path) {
+            navigate(path);
         });
-    },
-    function onError(err) {
-        alert(err.message);
-    })
+}
+
+function handleVisibilityButtonClick(event) {
+    setPasswordVisible(SignInService.toggleVisibility(passwordVisible));
 }
 
   return (
@@ -167,7 +76,7 @@ async function handleSubmit(event) {
                                 onChange={e => setPassword(e.target.value)}
                             />
                         </FloatingLabel>
-                        <Button className="expanded-visibility-button" variant="outline-secondary" id="visibilityToggle" onClick={ changeVisibility }>
+                        <Button className="expanded-visibility-button" variant="outline-secondary" id="visibilityToggle" onClick={ handleVisibilityButtonClick }>
                             {passwordVisible ? <VisibilityIcon/> : <VisibilityOffIcon/>}
                         </Button>
                     </InputGroup>

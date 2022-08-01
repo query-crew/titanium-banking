@@ -34,6 +34,7 @@ class UserApplicationTests {
 		}
 	}
 
+	// Unit tests for the UserService class
 	@Test
 	void contextLoads() {
 	}
@@ -102,7 +103,9 @@ class UserApplicationTests {
 		registration.setZipcode("83713");
 		Member member = service.addMember(registration);
 		service.setEnabled(member.getBankUser().getUserId());
-		Assertions.assertTrue(jwtUtils.validateJwtToken(service.login(login)));
+		String token = service.login(login);
+		token = token.substring(token.indexOf("jwt-token=") + ("jwt-token=").length(), token.indexOf(';'));
+		Assertions.assertTrue(jwtUtils.validateJwtToken(token));
 	}
 
 	@Test
@@ -117,7 +120,9 @@ class UserApplicationTests {
 		registration.setPassword("mypassword");
 		BankUser user = service.addUser(registration);
 		service.setEnabled(user.getUserId());
-		Assertions.assertTrue(jwtUtils.validateJwtToken(service.login(login)));
+		String token = service.login(login);
+		token = token.substring(token.indexOf("jwt-token=") + ("jwt-token=").length(), token.indexOf(';'));
+		Assertions.assertTrue(jwtUtils.validateJwtToken(token));
 	}
 
 	@Test
