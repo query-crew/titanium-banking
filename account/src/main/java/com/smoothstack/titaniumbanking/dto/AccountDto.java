@@ -11,7 +11,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 public class AccountDto {
-    private int accountId;
+    //private int accountId;
     //account name should not be null or empty
     @NotBlank(message = "Account name should not be empty")
     @Size(min = 8, max = 25)

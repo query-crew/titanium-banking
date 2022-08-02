@@ -46,12 +46,15 @@ public class AccountController {
     }
 
     @RequestMapping(value="/accounts/{accountId}", method=RequestMethod.GET)
-    public ResponseEntity<Account> getAccount(@PathVariable int accountId){
+    public ResponseEntity<Map<String, Account>> getAccount(@PathVariable int accountId){
+        HashMap map = new HashMap();
         try {
-            return new ResponseEntity<>(accountService.getAccountById(accountId), HttpStatus.OK);
+            map.put("success", accountService.getAccountById(accountId));
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
         catch (AccountNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            map.put(e.getMessage(), null);
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
 

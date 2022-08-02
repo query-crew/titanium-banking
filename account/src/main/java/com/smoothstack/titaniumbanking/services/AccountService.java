@@ -55,7 +55,6 @@ public class AccountService {
     public Account updateAccountById(AccountDto account, int accountId) throws AccountNotFoundException {
         Account accountToUpdate = getAccountById(accountId);
         accountToUpdate.setAccountName(account.getAccountName());
-        accountToUpdate.setAccountType(account.getAccountType());
         accountToUpdate.setBalance(account.getBalance());
         accountToUpdate.setInterest(account.getInterest());
         accountToUpdate.setLastStatementDate(account.getLastStatementDate());

@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.smoothstack.titaniumbanking.AccountApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 7.797 s <<< FAILURE! - in com.smoothstack.titaniumbanking.AccountApplicationTests
-deleteAccountTest  Time elapsed: 0.16 s  <<< ERROR!
-com.smoothstack.titaniumbanking.exceptions.AccountNotFoundException: Account doesn't exist
-	at com.smoothstack.titaniumbanking.AccountApplicationTests.deleteAccountTest(AccountApplicationTests.java:146)
-
-deleteAccountEmptyTest  Time elapsed: 0.017 s  <<< ERROR!
-com.smoothstack.titaniumbanking.exceptions.AccountNotFoundException: Account doesn't exist
-	at com.smoothstack.titaniumbanking.AccountApplicationTests.deleteAccountEmptyTest(AccountApplicationTests.java:176)
-
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.538 s - in com.smoothstack.titaniumbanking.AccountApplicationTests

@@ -102,27 +102,44 @@
         Assertions.assertEquals(2, service.getAllAccounts().size());
     }
 
-//     //update account test
-    // @Test
-    // void updateAccountTest(){
-    //     AccountDto testAccountDto = new AccountDto();
-    //     testAccountDto.setAccountName("ONEtestAccountDto");
-    //     testAccountDto.setAccountNumber("12345");
-    //     testAccountDto.setBalance(9800);
-    //     testAccountDto.setInterest(5);
-    //     testAccountDto.setLastStatementDate(LocalDate.now());
-    //     testAccountDto.setPaymentDate(LocalDate.now());
-    //     service.addAccount(testAccountDto);
+     //update account test
+     @Test
+     void updateAccountTest(){
+         AccountDto testAccountDto = new AccountDto();
+         testAccountDto.setAccountName("ONEtestAccountDto");
+         testAccountDto.setAccountType("loan");
+         testAccountDto.setAccountNumber("12345");
+         testAccountDto.setBalance(9800);
+         testAccountDto.setInterest(5);
+         testAccountDto.setLastStatementDate(LocalDate.now());
+         testAccountDto.setPaymentDate(LocalDate.now());
+         Account actualAccount = service.addAccount(testAccountDto);
+         int id = actualAccount.getAccountId();
 
-    //     service.updateAccountById(testAccountDto, testAccountDto.getAccountId());
+         AccountDto updatedAccountDto = new AccountDto();
+         updatedAccountDto.setAccountName("UpdatedtestAccountDto");
+         updatedAccountDto.setBalance(980000000);
+         updatedAccountDto.setInterest(26);
+         updatedAccountDto.setLastStatementDate(LocalDate.now());
+         updatedAccountDto.setPaymentDate(LocalDate.now());
 
-    // }
+         Account expectAccount = new Account();
+         expectAccount.setAccountId(id);
+         expectAccount.setAccountName("UpdatedtestAccountDto");
+         expectAccount.setAccountType("loan");
+         expectAccount.setAccountNumber("12345");
+         expectAccount.setBalance(980000000);
+         expectAccount.setInterest(26);
+         expectAccount.setLastStatementDate(LocalDate.now());
+         expectAccount.setPaymentDate(LocalDate.now());
 
-    //delete account test
+         Account actualUpdatedAccount = service.updateAccountById(updatedAccountDto, id);
+         Assertions.assertEquals(expectAccount, actualUpdatedAccount);
+     }
+
     @Test
     void deleteAccountTest(){
         AccountDto testAccount = new AccountDto();
-        testAccount.setAccountId(1);
         testAccount.setAccountName("ONETestAccount");
         testAccount.setAccountType("checking");
         testAccount.setAccountNumber("12345");
@@ -130,10 +147,11 @@
         testAccount.setInterest(5);
         testAccount.setLastStatementDate(LocalDate.now());
         testAccount.setPaymentDate(LocalDate.now());
-        service.addAccount(testAccount);
+        Account actualAccount = service.addAccount(testAccount);
+        int id = actualAccount.getAccountId();
 
         Account expectedAccount = new Account();
-        expectedAccount.setAccountId(1);
+        expectedAccount.setAccountId(id);
          expectedAccount.setAccountName("ONETestAccount");
          expectedAccount.setAccountType("checking");
          expectedAccount.setAccountNumber("12345");
@@ -141,18 +159,15 @@
          expectedAccount.setInterest(5);
          expectedAccount.setLastStatementDate(LocalDate.now());
          expectedAccount.setPaymentDate(LocalDate.now());
-        //  service.addAccount(expectedAccount);
-         System.out.println(testAccount);
-         service.deleteAccountById(1);
+         service.deleteAccountById(id);
 
-         Assertions.assertEquals(expectedAccount, testAccount);
+         Assertions.assertEquals(expectedAccount, actualAccount);
 
     }
 
     @Test
     void deleteAccountEmptyTest(){
         AccountDto testAccount = new AccountDto();
-        testAccount.setAccountId(1);
         testAccount.setAccountName("ONETestAccount");
         testAccount.setAccountType("checking");
         testAccount.setAccountNumber("12345");
@@ -160,22 +175,11 @@
         testAccount.setInterest(5);
         testAccount.setLastStatementDate(LocalDate.now());
         testAccount.setPaymentDate(LocalDate.now());
-        service.addAccount(testAccount);
+        Account actualAccount = service.addAccount(testAccount);
+        int id = actualAccount.getAccountId();
+        service.deleteAccountById(id);
 
-        // Account expectedAccount = new Account();
-        // expectedAccount.setAccountId(1);
-        //  expectedAccount.setAccountName("ONETestAccount");
-        //  expectedAccount.setAccountType("checking");
-        //  expectedAccount.setAccountNumber("12345");
-        //  expectedAccount.setBalance(9800);
-        //  expectedAccount.setInterest(5);
-        //  expectedAccount.setLastStatementDate(LocalDate.now());
-        //  expectedAccount.setPaymentDate(LocalDate.now());
-        //  service.addAccount(expectedAccount);
-         System.out.println(testAccount);
-         service.deleteAccountById(1);
-
-         Assertions.assertEquals(0, service.getAllAccounts().size());
+        Assertions.assertEquals(0, service.getAllAccounts().size());
          
     }
 
