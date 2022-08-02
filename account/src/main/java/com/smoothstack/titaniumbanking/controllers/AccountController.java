@@ -2,6 +2,7 @@ package com.smoothstack.titaniumbanking.controllers;
 
 import com.smoothstack.titaniumbanking.dto.AccountDto;
 import com.smoothstack.titaniumbanking.exceptions.AccountNotFoundException;
+import com.smoothstack.titaniumbanking.exceptions.ValidationHandler;
 import com.smoothstack.titaniumbanking.models.Account;
 import com.smoothstack.titaniumbanking.services.AccountService;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class AccountController {
@@ -26,7 +29,7 @@ public class AccountController {
 
     //create
     @RequestMapping(value="/accounts", method=RequestMethod.POST)
-    public ResponseEntity<String> addNewAccount(@RequestBody AccountDto account) {
+    public ResponseEntity<String> addNewAccount(@Valid @RequestBody AccountDto account) {
         accountService.addAccount(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

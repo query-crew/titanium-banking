@@ -38,7 +38,7 @@ public class AccountService {
 
 
     //read
-    public Account getAccountById(int accountId) throws AccountNotFoundException {
+    public Account getAccountById(int accountId) throws AccountNotFoundException{
         Account account = accountRepo.findByAccountId(accountId);
         if(account == null) {
             throw new AccountNotFoundException();
