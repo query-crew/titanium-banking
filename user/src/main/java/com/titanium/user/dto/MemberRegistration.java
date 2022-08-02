@@ -11,7 +11,7 @@ public class MemberRegistration {
     @Email(message = "Email is not a valid email.")
     private String email;
 
-    @Max(value = 100, message = "Username must be less than 100 characters.")
+    @Size(max = 100, message = "Username must be less than 100 characters.")
     @Pattern(regexp="^[a-zA-Z\\d_.-]+$", message="Username can only contain alphanumeric characters, underscores, dashes, and dots.")
     @NotBlank(message = "Username is required.")
     private String username;
@@ -22,53 +22,53 @@ public class MemberRegistration {
     @NotBlank(message = "Password is required.")
     private String password;
 
-    @Max(value = 200, message="First name must be less than 200 characters.")
-    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>//d]+$", message="First name cannot contain special characters or numbers")
+    @Size(max = 200, message="First name must be less than 200 characters.")
+    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>//d]+$", message="First name cannot contain special characters or numbers.")
     @NotBlank(message = "First name is required.")
     private String firstName;
 
-    @Max(value = 200, message="First name must be less than 200 characters.")
-    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>//d]+$", message="Last name cannot contain special characters or numbers")
+    @Size(max = 200, message="Last name must be less than 200 characters.")
+    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>//d]+$", message="Last name cannot contain special characters or numbers.")
     @NotBlank(message = "Last name is required.")
     private String lastName;
 
     @Size(max = 13, min = 13)
-    @Pattern(regexp="^(\\(\\d{3}\\)\\d{3}-\\d{4})$")
+    @Pattern(regexp="^(\\(\\d{3}\\)\\d{3}-\\d{4})$", message="Phone must be formatted: (###)###-####")
     @NotBlank(message = "Phone is required.")
     private String phone;
 
     // Check date in service to make sure people can't be some crazy age like 300 or -100 or something
     @Size(max = 10, min = 10)
-    @Pattern(regexp="^(\\d{4}-\\d{2}-\\d{2})$")
+    @Pattern(regexp="^(\\d{4}-\\d{2}-\\d{2})$", message = "Date of birth must be formatted: ####-##-##")
     @NotNull(message="Date of birth is required.")
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @Size(max = 11, min = 11)
-    @Pattern(regexp="^\\d{3}-\\d{2}-\\d{4}$")
+    @Pattern(regexp="^\\d{3}-\\d{2}-\\d{4}$", message = "Social security number must be formatted: ###-##-####")
     @NotNull(message="Social security number is required.")
     private String socialSecurityNumber;
 
     @Size(max=46)
-    @Pattern(regexp="^[\\da-z-A-Z.-]+$")
+    @Pattern(regexp="^[\\da-z-A-Z\\s.-]+$", message = "Address must be alphanumeric and can only contain dots and dashes.")
     @NotNull(message="Address line 1 is required.")
     private String addressLine1;
 
     @Size(max=46)
-    @Pattern(regexp="^(?![\\s\\S])|[\\da-z-A-Z.-]+$")
+    @Pattern(regexp="^(?![\\s\\S])|[\\da-z-A-Z.-]+$", message = "Address must be alphanumeric and can only contain dots and dashes.")
     private String addressLine2;
 
     @Size(max=100)
-    @Pattern(regexp = "^[a-zA-Z]+$")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "City must be alphanumeric.")
     @NotNull(message="City is required.")
     private String city;
 
     @Size(max=100)
-    @Pattern(regexp = "^[a-zA-Z]+$")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "State must be alphanumeric.")
     @NotNull(message = "State is required.")
     private String state;
 
     @Size(max=10, min=5)
-    @Pattern(regexp = "^(\\d{5}-\\d{4}|\\d{5}-\\d{0,4})$")
+    @Pattern(regexp = "^(\\d{5}-\\d{4}|\\d{5}-\\d{0,4}|\\d{5})$", message = "Zipcode must be formatted: #####-####")
     @NotNull(message ="Zipcode is required.")
     private String zipcode;
 }

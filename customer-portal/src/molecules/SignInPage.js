@@ -6,7 +6,7 @@ function SignInPage() {
 
     return (
     <div>
-        <LandingPageNavBar signin home={false}/>
+        <LandingPageNavBar enroll={false} signin home={false}/>
         <div className="sign-in-page-container d-flex justify-content-center align-items-center vh-100">
             <ExpandedSignInCard/>
             <ExpandedSignIn/>

@@ -4,6 +4,7 @@ import SignInPage from './molecules/SignInPage'
 import { store } from './store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import RegistrationPage from './molecules/RegistrationPage';
 
 test('renders the landing page', () => {
   render(<App />);
@@ -18,6 +19,16 @@ test('renders the signin page', () => {
     </Provider>
     )
   });
+
+  test('renders the registration page', () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <RegistrationPage />
+        </BrowserRouter>
+      </Provider>
+      )
+    });
 
   test('remember me checkbox is checked on sign in card', () => {
     localStorage.setItem("checked", "true");

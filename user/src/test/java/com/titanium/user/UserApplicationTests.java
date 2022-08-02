@@ -63,7 +63,7 @@ class UserApplicationTests {
 		registration.setLastName("Johnson");
 		registration.setAddressLine1("1337 N Highwood Ave");
 		registration.setPhone("2089541744");
-		registration.setDateOfBirth(LocalDate.now());
+		registration.setDateOfBirth(LocalDate.now().toString());
 		registration.setSocialSecurityNumber("503-14-1234");
 		registration.setCity("Boise");
 		registration.setState("Idaho");
@@ -72,7 +72,7 @@ class UserApplicationTests {
 		BankUser user = new BankUser("member", "chloejohnsoncodes@gmail.com", "chloe", actualMember.getBankUser().getPassword());
 		user.setUserId(actualMember.getBankUser().getUserId());
 		user.setToken(actualMember.getBankUser().getToken());
-		Member expectedMember = new Member("Chloe", "Johnson", "2089541744", registration.getDateOfBirth(), "503-14-1234");
+		Member expectedMember = new Member("Chloe", "Johnson", "2089541744", LocalDate.parse(registration.getDateOfBirth()), "503-14-1234");
 		expectedMember.setMemberId(actualMember.getMemberId());
 		MemberAddress address = new MemberAddress("1337 N Highwood Ave", null, "Boise", "Idaho", "83713");
 		address.setAddressId(actualMember.getMemberAddress().getAddressId());
@@ -96,7 +96,7 @@ class UserApplicationTests {
 		registration.setLastName("Johnson");
 		registration.setAddressLine1("1337 N Highwood Ave");
 		registration.setPhone("2089541744");
-		registration.setDateOfBirth(LocalDate.now());
+		registration.setDateOfBirth(LocalDate.now().toString());
 		registration.setSocialSecurityNumber("503-14-1234");
 		registration.setCity("Boise");
 		registration.setState("Idaho");

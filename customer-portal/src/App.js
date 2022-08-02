@@ -18,6 +18,7 @@ import { Provider } from 'react-redux';
 import AuthorizationService from "./services/AuthorizationService";
 import ProtectedRoute from './molecules/ProtectedRoute';
 import Unauthorized from './molecules/Unauthorized';
+import RegistrationPage from './molecules/RegistrationPage';
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePageSignIn/>}/>
             <Route path='/signin' element={<SignInPage/>}/>
-            <Route path='/enroll' element={<MemberRegistrationCard/>}/>
+            <Route path='/enroll' element={<RegistrationPage/>}/>
             <Route path="/account" element={<ProtectedRoute element={<Account/>} authorities={["member"]}/>}/>
             <Route path="/password-help" element={<PasswordHelp/>}/>
             <Route path="/unauthorized" element={<Unauthorized/>}/>

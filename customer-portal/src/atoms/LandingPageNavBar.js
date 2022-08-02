@@ -25,11 +25,11 @@ function LandingPageNavBar(props) {
           </div>
         </Navbar.Brand>
         {smallScreen && props.signin && <Nav.Link className="enroll-button" href="/enroll">Enroll</Nav.Link>}
-        {smallScreen && props.home && <Nav.Link className="sign-in-button" href="/signin">Sign In</Nav.Link>}
+        {smallScreen && (props.home || props.enroll) && <Nav.Link className="sign-in-button" href="/signin">Sign In</Nav.Link>}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end" style={{width:"100%"}}>
-            {props.signin && <Nav.Link href="/">Home</Nav.Link>}
+            {(props.enroll || props.signin) && <Nav.Link href="/">Home</Nav.Link>}
             {smallScreen && props.home && <Nav.Link className="enroll" href="/enroll">Enroll</Nav.Link>}
             <Nav.Link href="#home">ATMs/Locations</Nav.Link>
             <Nav.Link href="#link">Credit Cards</Nav.Link>
@@ -37,7 +37,7 @@ function LandingPageNavBar(props) {
           </Nav>
         </Navbar.Collapse>
         {!smallScreen && props.signin && <Nav.Link className="enroll-button" href="/enroll">Enroll</Nav.Link>}
-        {!smallScreen && props.home && <Nav.Link className="sign-in-button" href="/signin">Sign In</Nav.Link>}
+        {!smallScreen && (props.home || props.enroll) && <Nav.Link className="sign-in-button" href="/signin">Sign In</Nav.Link>}
       </Container>
     </Navbar>
   );
