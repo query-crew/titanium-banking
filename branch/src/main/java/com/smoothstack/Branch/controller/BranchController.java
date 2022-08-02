@@ -11,6 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class BranchController {
     @Autowired
     BranchService branchService;
