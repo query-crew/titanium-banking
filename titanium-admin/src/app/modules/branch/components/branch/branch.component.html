@@ -1,5 +1,6 @@
 <div class="list-group w-100">
   <div
+    *ngIf="{branch}"
     [routerLink]="['/branch/view/', branch.branchId]"
     class="list-group-item list-group-item-action d-flex gap-3 py-3"
     aria-current="true"
@@ -26,6 +27,7 @@
         </p>
       </div>
       <button
+        *ngIf="{branch}"
         [routerLink]="['/branch/edit/', branch.branchId]"
         type="button"
         class="btn btn-sm btn-secondary"
