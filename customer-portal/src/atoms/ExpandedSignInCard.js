@@ -8,9 +8,6 @@ import Container from 'react-bootstrap/Container';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import InputGroup from 'react-bootstrap/InputGroup';
-import axios from "axios";
-import { useDispatch } from 'react-redux';
-import { setToken } from '../redux/tokenReducer';
 import { Link, useNavigate } from "react-router-dom";
 import SignInService from "../services/SignInService";
 
@@ -23,16 +20,12 @@ const[password, setPassword] = useState("");
 const[checked, setChecked] = useState(localStorage.getItem("checked") === "true" ? true : false);
 
 // React hooks
-const dispatch = useDispatch();
 const navigate = useNavigate();
 
 // Component functions
 function handleSubmit(event) {
     event.preventDefault();
     SignInService.signIn(username, password, checked, 
-        function dispatchToken(token) {
-            dispatch(token);
-        },
         function navigateAfterLogin(path) {
             navigate(path);
         });

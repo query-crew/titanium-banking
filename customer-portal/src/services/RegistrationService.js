@@ -66,14 +66,12 @@ const RegistrationService = {
     },
     registrationErrorToast: function(message) {
         toast.error(message, {
-            className: 'black-background',
             position: "top-right",
-            autoClose: true,
+            autoClose: 2000,
             hideProgressBar: true,
             closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+            pauseOnHover: false,
+            draggable: true
             });
     },
     checkRegistration: function(email, username, password, firstName, lastName, phone, dob, social,
@@ -187,10 +185,8 @@ const RegistrationService = {
             zipcodeValue = zipcodeValue.slice(0,5) + "-" + zipcodeValue.slice(5);
             return zipcodeValue;
         }
-        else {
-            return zipcodeValue;
-        }
         return zipcodeValue;
+
     },
     addBankMember: function(email, username, password, 
         firstName, lastName, phone, dateOfBirth, 

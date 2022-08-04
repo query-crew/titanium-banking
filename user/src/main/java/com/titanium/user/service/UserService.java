@@ -23,7 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
-import javax.servlet.http.Cookie;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

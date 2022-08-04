@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setToken } from '../redux/tokenReducer';
 
 const SignInService = {
     toggleVisibility: function(passwordVisible) {
@@ -14,12 +13,11 @@ const SignInService = {
             return "";
         }
     },
-    signIn: function(username, password, checked, dispatchToken, navigateAfterLogin) {
+    signIn: function(username, password, checked, navigateAfterLogin) {
         handleRememberMe(username, checked, function onSuccess() {
             loginApiCall(
                 {username: username, password: password},
-                function onSuccess(token) {
-                    dispatchToken(token);
+                function onSuccess() {
                     navigateAfterLogin('/account');
                 },
                 function onError(err) {
@@ -45,7 +43,7 @@ const SignInService = {
 function loginApiCall(login, onSuccess, onError) {
     axios.post("/user/login", login)
     .then(response => { 
-        onSuccess(setToken(response.data));
+        onSuccess();
     })
     .catch(({ response }) => onError(response.data));
 }

@@ -12,9 +12,7 @@ import SignInPage from './molecules/SignInPage';
 import React from 'react';
 import "./styles/bootstrap.css";
 import "@fontsource/bungee-hairline";
-import { store } from "./redux/store";
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
-import { Provider } from 'react-redux';
 import AuthorizationService from "./services/AuthorizationService";
 import ProtectedRoute from './molecules/ProtectedRoute';
 import Unauthorized from './molecules/Unauthorized';
@@ -23,7 +21,6 @@ import RegistrationPage from './molecules/RegistrationPage';
 function App() {
 
   return (
-    <Provider store={store}>
       <div className="App">
         <BrowserRouter>
           <Routes>
@@ -36,7 +33,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-    </Provider>
   );
 }
 

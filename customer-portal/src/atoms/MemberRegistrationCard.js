@@ -5,16 +5,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Card from 'react-bootstrap/Card';
-import axios from "axios";
 import "../styles/LandingPageNavBar.css"
 import "../styles/MemberRegistrationCard.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import validator from 'validator';
 import { useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import RegistrationService from '../services/RegistrationService';
-import { SettingsPhoneOutlined } from "@mui/icons-material";
 
 const listOfStates = [{"Alabama": "AL"}, {"Alaska": "AK"}, {"Arizona": "AZ"}, {"Arkansas": "AR"}, {"California": "CA"},
 {"Colorado": "CO"}, {"Connecticut": "CT"}, {"Delaware": "DE"}, {"Florida": "FL"}, {"Georgia": "GA"}, {"Hawaii": "HI"},
@@ -201,10 +198,10 @@ function MemberRegistrationCard() {
             </Card.Body>
             <Card.Footer>
                 <Container fluid className="d-flex justify-content-end" onClick={ checkRegistration }>
-                    <Button className={"submitButton" || (submitDisabled && "disabled")} type="submit">
+                    <Button className={`submitButton ${submitDisabled && "disabled"}`} type="submit">
                         Submit
                     </Button>
-                    <ToastContainer/>
+                    <ToastContainer toastStyle={{ backgroundColor: "black" }}/>
                 </Container>
             </Card.Footer>
             </Form>
