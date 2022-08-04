@@ -64,7 +64,7 @@ export class EditBranchPageComponent implements OnInit {
       city: this.branch.city,
       state: this.branch.state,
       zipCode: this.branch.zipCode,
-      branchDetails: '',
+      branchDetails: this.branch.branchDetails,
     });
   }
   openModal() {
