@@ -44,3 +44,7 @@ label {
 .transaction-row {
     margin: 2rem 2rem 2rem 2rem;
 }
+
+.modal-label {
+    color: #000000;
+}
