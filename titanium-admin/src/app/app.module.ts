@@ -7,8 +7,12 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BranchModule } from './modules/branch/branch.module';
 import { SharedModule } from './shared/shared.module';
+import { TransactionPageModule } from './modules/transaction-page/transaction-page.module';
+import { AuthGuard } from './modules/auth/services/auth-guard.service';
+import { AccountModule } from './modules/account/account.module';
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ],
   //if you have issues with routing not registering... add module import here
   imports: [
     BrowserModule,
@@ -17,8 +21,10 @@ import { SharedModule } from './shared/shared.module';
     BranchModule,
     SharedModule,
     AdminModule,
+    TransactionPageModule,
+    AccountModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
