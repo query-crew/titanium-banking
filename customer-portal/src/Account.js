@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
 
 
 const Account = () => {
     const [accounts, getAccounts] = useState('')
     const navigate = useNavigate();
+    
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD', 
@@ -17,7 +18,7 @@ const Account = () => {
         axios.get(`${url}`)
           .then((response) => {
             const allAccounts = (response.data);
-            console.log(allAccounts);
+            // console.log(allAccounts);
             getAccounts(allAccounts)
           })
           .catch((err) => console.log(err));
@@ -34,21 +35,49 @@ const Account = () => {
         navigate(path)
     }
 
+    // console.log(accounts)
+    
+    let checkingAccounts = Object.values(accounts).filter(account => account.accountType === 'checking')
+    let savingsAccounts = Object.values(accounts).filter(account => account.accountType === 'savings')
+    let investingAccounts = Object.values(accounts).filter(account => account.accountType === 'investing')
+    let loanAccounts = Object.values(accounts).filter(account => account.accountType === 'loan')
+//    console.log(checkingAccounts)
+
     return(
-      <div className="container mt-5 bg-light rounded">
+      <div className="container mt-5 bg-white rounded">
             <h2 className="border-bottom mx-2 p-2">Accounts</h2>
             <div className="container mt">
                 <h6 className="text-black-50">All Accounts</h6>
                 <div className="row">
                     <div className="col border-end border-info align-self-start px-0">
-                        {accounts && accounts.map((account, i) => 
-                            <div className="card-body" key={i}>
-                                <div className="card  rounded-0" >
-                                    <span className="card-title d-flex justify-content-between">{account.accountName} <span className="pe-1">{formatter.format(account.balance)}</span></span>
-                                    <span className="card-subtitle  text-muted">{account.accountNumber}</span>
-                                </div>
+                        <div className="card bg-light">
+                            <div className="card-body">
+                                <h5 className="card-title"> Checking</h5>
+                                <h6 className="card- subtitle mb-2 text-muted">{checkingAccounts.length} Accounts</h6>
                             </div>
-                        )}
+                        </div>
+                        {accounts && checkingAccounts.map((account, i) => {
+                            return(
+                                <ul>
+                                    <li key={i}>{account.accountName} <span>{formatter.format(account.balance)}</span></li>
+                                    <div>{account.accountNumber}</div>
+                                </ul>
+                            );
+                        })}
+                        <div className="card bg-light">
+                            <div className="card-body">
+                                <h5 className="card-title"> Saving</h5>
+                                <h6 className="card- subtitle mb-2 text-muted">{savingsAccounts.length} Accounts</h6>
+                            </div>
+                        </div>
+                        {accounts && savingsAccounts.map((account, i) => {
+                            return(
+                                <ul>
+                                    <li>{account.accountName} <span>{formatter.format(account.balance)}</span></li>
+                                    <div>{account.accountNumber}</div>
+                                </ul>
+                            );
+                        })}
         
                 </div>
                     <div className="col-6 align-self-center">
