@@ -1,6 +1,7 @@
 package com.smoothstack.titaniumbanking.controllers;
 
 import com.smoothstack.titaniumbanking.dto.AccountDto;
+import com.smoothstack.titaniumbanking.exceptions.AccountExistsException;
 import com.smoothstack.titaniumbanking.exceptions.AccountNotFoundException;
 import com.smoothstack.titaniumbanking.exceptions.ValidationHandler;
 import com.smoothstack.titaniumbanking.models.Account;
@@ -30,8 +31,12 @@ public class AccountController {
     //create
     @RequestMapping(value="/accounts", method=RequestMethod.POST)
     public ResponseEntity<String> addNewAccount(@Valid @RequestBody AccountDto account) {
-        accountService.addAccount(account);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try{
+            accountService.addAccount(account);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (AccountExistsException e){
+            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     //read

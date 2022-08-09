@@ -162,7 +162,6 @@
          service.deleteAccountById(id);
 
          Assertions.assertEquals(expectedAccount, actualAccount);
-
     }
 
     @Test
@@ -180,7 +179,35 @@
         service.deleteAccountById(id);
 
         Assertions.assertEquals(0, service.getAllAccounts().size());
-         
+    }
+
+    @Test
+    void accountNumGenerationTest(){
+        AccountDto testAccount = new AccountDto();
+        testAccount.setAccountName("ONETestAccount");
+        testAccount.setAccountType("savings");
+        testAccount.setAccountNumber(service.generateAccountNumber(testAccount.getAccountName(), testAccount.getAccountType()).toString());
+        testAccount.setBalance(9800);
+        testAccount.setInterest(5);
+        testAccount.setLastStatementDate(LocalDate.now());
+        testAccount.setPaymentDate(LocalDate.now());
+        Account actualAccount = service.addAccount(testAccount);
+        String accountNum = actualAccount.getAccountNumber();
+        System.out.println("**************");
+        System.out.println(accountNum);
+
+        AccountDto test2Account = new AccountDto();
+        test2Account.setAccountName("ONETestAccount");
+        test2Account.setAccountType("savings");
+        test2Account.setAccountNumber(service.generateAccountNumber(testAccount.getAccountName(), testAccount.getAccountType()).toString());
+        test2Account.setBalance(9800);
+        test2Account.setInterest(5);
+        test2Account.setLastStatementDate(LocalDate.now());
+        test2Account.setPaymentDate(LocalDate.now());
+        Account actual2Account = service.addAccount(test2Account);
+        String account2Num = actual2Account.getAccountNumber();
+        System.out.println("**************");
+        System.out.println(account2Num);
     }
 
 

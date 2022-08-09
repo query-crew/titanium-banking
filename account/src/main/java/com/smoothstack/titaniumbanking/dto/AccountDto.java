@@ -21,14 +21,14 @@ public class AccountDto {
     private String accountType;
     //account number should not be null or empty
     //account number should have a min of 5 digits and a max of 17 digits
-    @NotBlank(message = "Account number should not be empty")
+    // @NotBlank(message = "Account number should not be empty")
     @Size(min = 5, max = 17)
     private String accountNumber;
     //balance should not be null
-    @NotNull(message = "balance may not be null")
+    // @NotNull(message = "balance may not be null")
     private int balance;
     //interest should not be null
-    @NotNull(message = "interest may not be null")
+    // @NotNull(message = "interest may not be null")
     private int interest;
     private LocalDate lastStatementDate;
     private LocalDate paymentDate;
