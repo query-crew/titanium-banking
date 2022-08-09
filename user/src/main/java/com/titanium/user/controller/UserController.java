@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.nimbus.State;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -67,5 +69,20 @@ public class UserController {
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<List<BankUser>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Confirms bank member info")
+    @PostMapping("/member/confirm")
+    @PreAuthorize("hasAuthority('member')")
+    public ResponseEntity<String> confirmMember(@RequestBody @Valid MemberConfirmation member, Principal principal) {
+        try {
+            return new ResponseEntity<>(userService.confirmMember(principal.getName(), member), HttpStatus.OK);
+        }
+        catch (FirstNameNotFoundException | LastNameNotFoundException | PhoneNotFoundException |
+                SocialSecurityNumberNotFoundException | DateOfBirthNotFoundException | CityNotFoundException |
+                StateNotFoundException | AddressLineOneNotFoundException | AddressLineTwoNotFoundException |
+               ZipcodeNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

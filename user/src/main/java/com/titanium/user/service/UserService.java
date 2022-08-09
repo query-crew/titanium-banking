@@ -93,6 +93,46 @@ public class UserService {
         return token;
     }
 
+    public String confirmMember(String username, MemberConfirmation memberToConfirm) {
+        if (!userRepo.existsByUsername(username)) {
+            throw new InvalidUsernameException();
+        }
+        BankUser bankUser = userRepo.findByUsername(username);
+        Member member = bankUser.getMember();
+        MemberAddress address = member.getMemberAddress();
+        if (!member.getFirstName().equals(memberToConfirm.getFirstName())) {
+            throw new FirstNameNotFoundException();
+        }
+        if (!member.getLastName().equals(memberToConfirm.getLastName())) {
+            throw new LastNameNotFoundException();
+        }
+        if (!member.getPhone().equals(memberToConfirm.getPhone())) {
+            throw new PhoneNotFoundException();
+        }
+        if (!member.getDateOfBirth().equals(memberToConfirm.getDateOfBirth())) {
+            throw new DateOfBirthNotFoundException();
+        }
+        if (!member.getSocialSecurityNumber().equals(memberToConfirm.getSocialSecurityNumber())) {
+            throw new SocialSecurityNumberExistsException();
+        }
+        if (!address.getAddressLine1().equals(memberToConfirm.getAddressLine1())) {
+            throw new AddressLineOneNotFoundException();
+        }
+        if (!address.getAddressLine2().equals(memberToConfirm.getAddressLine2())) {
+            throw new AddressLineTwoNotFoundException();
+        }
+        if (!address.getCity().equals(memberToConfirm.getCity())) {
+            throw new CityNotFoundException();
+        }
+        if (!address.getState().equals(memberToConfirm.getState())) {
+            throw new StateNotFoundException();
+        }
+        if (!address.getZipCode().equals(memberToConfirm.getZipcode())) {
+            throw new ZipcodeNotFoundException();
+        }
+        return "confirmed";
+    }
+
     private UserToken getUserToken() {
         String verifyCode;
         do {

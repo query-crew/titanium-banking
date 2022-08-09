@@ -11,4 +11,5 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     List<Member> findAll();
 
     Member findById(int id);
+
 }
