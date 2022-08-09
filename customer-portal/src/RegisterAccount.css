@@ -1,3 +1,19 @@
 .register-account-btns{
     background-color: #14365d;
 }
+
+.account-type-dropdown{
+    width: 150px;
+}
+
+.account-name{
+    width: 35%;
+}
+
+#inputAddress, #inputAddress2, #city{
+    width: 35%;
+}
+
+#state{
+    width: 62%;
+}
