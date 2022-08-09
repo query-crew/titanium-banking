@@ -129,7 +129,7 @@ public class UserService {
         if (!member.getPhone().equals(memberToConfirm.getPhone())) {
             throw new PhoneNotFoundException();
         }
-        if (!member.getDateOfBirth().equals(memberToConfirm.getDateOfBirth())) {
+        if (!member.getDateOfBirth().toString().equals(memberToConfirm.getDateOfBirth())) {
             throw new DateOfBirthNotFoundException();
         }
         if (!member.getSocialSecurityNumber().equals(memberToConfirm.getSocialSecurityNumber())) {

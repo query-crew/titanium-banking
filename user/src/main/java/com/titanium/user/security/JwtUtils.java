@@ -46,7 +46,7 @@ public class JwtUtils {
     StringBuilder builder = new StringBuilder();
     builder.append("jwt-token=");
     builder.append(token);
-    builder.append("; Max-Age=84000; Path=/user; Secure; HttpOnly; SameSite=Strict;");
+    builder.append("; Max-Age=84000; Path=/; Secure; HttpOnly; SameSite=Strict;");
     return builder.toString();
   }
 

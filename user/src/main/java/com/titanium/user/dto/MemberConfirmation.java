@@ -2,7 +2,6 @@ package com.titanium.user.dto;
 import lombok.Data;
 
 import javax.validation.constraints.*;
-import java.time.LocalDate;
 
 @Data
 public class MemberConfirmation {
@@ -24,7 +23,7 @@ public class MemberConfirmation {
     @Size(max = 10, min = 10)
     @Pattern(regexp="^(\\d{4}-\\d{2}-\\d{2})$", message = "Date of birth must be formatted: ####-##-##")
     @NotNull(message="Date of birth is required.")
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     @Size(max = 11, min = 11)
     @Pattern(regexp="^\\d{3}-\\d{2}-\\d{4}$", message = "Social security number must be formatted: ###-##-####")
