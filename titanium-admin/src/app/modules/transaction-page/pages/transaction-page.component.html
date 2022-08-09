@@ -5,32 +5,32 @@
                 <div class = "container">
                     <div class = "row">
                         <label for = "dateFrom">Date From:</label>
-                        <input type = "date" name = "dateFrom">
+                        <input type = "date" name = "dateFrom" id = "dateFrom">
                     </div>
                     <div class = "row">
                         <label for = "dateTo">Date To:</label>
-                        <input type = "date" name = "dateTo">
+                        <input type = "date" name = "dateTo" id = "dateTo">
                     </div>
                     <div class = "row">
                         <label for = "transactionDescription">Description:</label>
-                        <input type = "text" name = "transactionDescription">
+                        <input type = "text" name = "transactionDescription" id = "transactionDescription">
                     </div>
                     <div class = "row">
                         <label for = "transactionType">Transaction Type:</label>
-                        <select name = "transactionType">
-                            <option name = "all">All</option>
-                            <option name = "transfer">Transfer</option>
-                            <option name = "debit">Debit</option>
-                            <option name = "deposit">Deposit</option>
+                        <select name = "transactionType" id = "transactionType">
+                            <option name = "all" value = "0">All</option>
+                            <option name = "debit" value = "1">Debit</option>
+                            <option name = "transfer" value = "2">Transfer</option>
+                            <option name = "deposit" value = "3">Deposit</option>
                         </select>
                     </div>
                     <div class = "row">
                         <label for = "transactionStatus">Transaction Status:</label>
-                        <select name = "transactionStatus">
-                            <option name = "all">All</option>
-                            <option name = "pending">Pending</option>
-                            <option name = "confirmed">Confirmed</option>
-                            <option name = "rejected">Rejected</option>
+                        <select name = "transactionStatus" id = "transactionStatus">
+                            <option name = "all" value = "0">All</option>
+                            <option name = "pending" value = "1">Pending</option>
+                            <option name = "confirmed" value = "2">Confirmed</option>
+                            <option name = "rejected" value = "3">Rejected</option>
                         </select>
                     </div>
                     <div class = "row">
@@ -70,6 +70,56 @@
                         </div>
                     </div>
                 </div>
+                <button type="button" class="btn btn-primary" (click)="toggleShowCreateTransactionModal()">
+                    Create Transaction
+                </button>
+                  
+                  <div class="modal fade" id = "createTransactionModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="deleteModalTitle">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Create Transaction</h5>
+                          <button type="button" class="close" aria-label="Close" (click)="toggleShowCreateTransactionModal()">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class = "row">
+                                <label class = "modal-label" for = "modalFromAccount">From Account: </label>
+                                <input type = "text" id = "modalFromAccount" name = "modalFromAccount" />
+                            </div>
+                            <div class = "row">
+                                <label class = "modal-label" for = "modalToAccount">To Account: </label>
+                                <input type = "text" id = "modalToAccount" name = "modalToAccount" />
+                            </div>
+                            <div class = "row">
+                                <label class = "modal-label" for = "modalTransactionDate">Date: </label>
+                                <input type = "date" id = "modalTransactionDate" name = "modalTransactionDate" />
+                            </div>
+                            <div class = "row">
+                                <label class = "modal-label" for = "modalTransactionAmount">Amount: </label>
+                                <input type = "text" id = "modalTransactionAmount" name = "modalTransactionAmount" />
+                            </div>
+                            <div class = "row">
+                                <label class = "modal-label" for = "modalTransactionDescription">Description: </label>
+                                <input type = "text" id = "modalTransactionDescription" name = "modalTransactionDescription" />
+                            </div>
+                            <div class = "row">
+                                <label class = "modal-label" for = "modalTransactionType">Transaction Type: </label>
+                                <select name = "modalTransactionType" id = "modalTransactionType">
+                                    <option value = "1">Debit</option>
+                                    <option value = "2">Deposit</option>
+                                    <option value = "3">Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" (click)="toggleShowCreateTransactionModal()">Close</button>
+                          <button type="button" class="btn btn-primary" (click)="postTransactionData()">Post Transaction</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
     </div>

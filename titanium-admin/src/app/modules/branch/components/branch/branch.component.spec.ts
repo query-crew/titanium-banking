@@ -8,9 +8,9 @@ describe('BranchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BranchComponent ]
-    })
-    .compileComponents();
+      imports: [],
+      declarations: [BranchComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BranchComponent);
     component = fixture.componentInstance;

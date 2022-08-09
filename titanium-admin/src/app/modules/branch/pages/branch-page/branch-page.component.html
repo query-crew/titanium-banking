@@ -1,8 +1,31 @@
-<div class="bg-white">
-  <div *ngIf="branch === undefined">
-    <div class="spinner-border" role="status"></div>
-  </div>
-  <div *ngIf="branch !== undefined">
-    <div>hi {{ branch.branchName }}</div>
+<div class="container my-5 mx-10">
+  <div class="row align-items-center rounded-3 border shadow-lg bg-white gy-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="fs-4">View Branch</div>
+      <button
+        [routerLink]="['/branch/edit/', branchId]"
+        class="btn btn-sm btn-primary"
+      >
+        Edit
+      </button>
+    </div>
+    <div
+      *ngIf="branch === undefined"
+      class="d-flex justify-content-center divider"
+    >
+      <div class="spinner-border" role="status"></div>
+    </div>
+    <div *ngIf="branch !== undefined">
+      <h4>{{ branch.branchName }}</h4>
+      <p class="lead">
+        {{ branch.addressLine1 }} {{ branch.addressLine2 }}, {{ branch.city }},
+        {{ branch.state }} {{ branch.zipCode }}
+      </p>
+      <h5>Details:</h5>
+      <p>{{ branch.branchDetails }}</p>
+      <h5>Appointments:</h5>
+      <p></p>
+      <button routerLink="/branch" class="btn btn-secondary">Return</button>
+    </div>
   </div>
 </div>

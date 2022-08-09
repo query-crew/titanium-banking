@@ -2,7 +2,7 @@
   <div class="row align-items-center rounded-3 border shadow-lg bg-white gy-3">
     <div class="row d-flex justify-content-between align-items-center">
       <div class="fs-4">Add Branch</div>
-      <form>
+      <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="inputName">Branch Name</label>
@@ -11,7 +11,24 @@
               class="form-control"
               id="inputName"
               placeholder="Name"
+              formControlName="branchName"
+              [ngClass]="{
+                'is-invalid':
+                  branchForm.controls['branchName'].errors &&
+                  branchForm.controls['branchName'].dirty &&
+                  branchForm.controls['branchName'].errors['required']
+              }"
             />
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                branchForm.controls['branchName'].errors &&
+                branchForm.controls['branchName'].dirty &&
+                branchForm.controls['branchName'].errors['required']
+              "
+            >
+              Branch name is required
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -20,8 +37,26 @@
             type="text"
             class="form-control"
             id="inputAddress"
-            placeholder="1234 Main St"
+            placeholder="Address"
+            formControlName="addressLine1"
+            [ngClass]="{
+              'is-invalid':
+                branchForm.controls['addressLine1'].errors &&
+                branchForm.controls['addressLine1'].dirty &&
+                branchForm.controls['addressLine1'].errors['required']
+            }"
+            addressLine1
           />
+          <div
+            class="invalid-feedback d-block"
+            *ngIf="
+              branchForm.controls['addressLine1'].errors &&
+              branchForm.controls['addressLine1'].dirty &&
+              branchForm.controls['addressLine1'].errors['required']
+            "
+          >
+            Address 1 is required
+          </div>
         </div>
         <div class="form-group">
           <label for="inputAddress2">Address 2</label>
@@ -29,7 +64,8 @@
             type="text"
             class="form-control"
             id="inputAddress2"
-            placeholder="Apartment, studio, or floor"
+            placeholder="Suite number, floor, etc"
+            formControlName="addressLine2"
           />
         </div>
         <div class="form-row">
@@ -40,12 +76,39 @@
               class="form-control"
               id="inputCity"
               placeholder="City"
+              formControlName="city"
+              [ngClass]="{
+                'is-invalid':
+                  branchForm.controls['city'].errors &&
+                  branchForm.controls['city'].dirty &&
+                  branchForm.controls['city'].errors['required']
+              }"
             />
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                branchForm.controls['city'].errors &&
+                branchForm.controls['city'].dirty &&
+                branchForm.controls['city'].errors['required']
+              "
+            >
+              Please enter a city
+            </div>
           </div>
           <div class="form-group col-md-4">
             <label for="inputState">State</label>
-            <select id="inputState" class="form-control">
-              <option selected>Choose...</option>
+            <select
+              id="inputState"
+              class="form-control"
+              formControlName="state"
+              [ngClass]="{
+                'is-invalid':
+                  branchForm.controls['state'].errors &&
+                  branchForm.controls['state'].dirty &&
+                  branchForm.controls['state'].errors['required']
+              }"
+            >
+              <option selected value="">Choose...</option>
               <option value="AK">Alaska</option>
               <option value="AL">Alabama</option>
               <option value="AR">Arkansas</option>
@@ -99,6 +162,16 @@
               <option value="WV">West Virginia</option>
               <option value="WY">Wyoming</option>
             </select>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                branchForm.controls['state'].errors &&
+                branchForm.controls['state'].dirty &&
+                branchForm.controls['state'].errors['required']
+              "
+            >
+              Please select a state
+            </div>
           </div>
           <div class="form-group col-md-2">
             <label for="inputZip">Zipcode</label>
@@ -107,21 +180,62 @@
               class="form-control"
               id="inputZip"
               placeholder="Zipcode"
+              formControlName="zipCode"
+              [ngClass]="{
+                'is-invalid':
+                  branchForm.controls['zipCode'].errors &&
+                  branchForm.controls['zipCode'].dirty &&
+                  branchForm.controls['zipCode'].errors['required']
+              }"
             />
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                branchForm.controls['zipCode'].errors &&
+                branchForm.controls['zipCode'].dirty &&
+                branchForm.controls['zipCode'].errors['required']
+              "
+            >
+              Please enter a zip code
+            </div>
           </div>
-          <label for="inputZip">Zipcode</label>
-          <div class="form-group col-md-2">
+          <label for="inputDetails">Branch Details</label>
+          <div class="form-group">
             <textarea
-              class="form-control is-invalid"
-              id="validationTextarea"
-              placeholder="Required example textarea"
-              required
+              class="form-control"
+              id="inputDetails"
+              placeholder="Details"
+              formControlName="branchDetails"
+              [ngClass]="{
+                'is-invalid':
+                  branchForm.controls['branchDetails'].errors &&
+                  branchForm.controls['branchDetails'].dirty &&
+                  branchForm.controls['branchDetails'].errors['maxlength']
+              }"
             ></textarea>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="
+                branchForm.controls['branchDetails'].errors &&
+                branchForm.controls['branchDetails'].dirty &&
+                branchForm.controls['branchDetails'].errors['maxlength']
+              "
+            >
+              Branch details is too long
+            </div>
           </div>
         </div>
         <div class="py-3">
-          <button type="submit" class="btn btn-primary">Add Branch</button>
-          <button routerLink="/branch" class="btn btn-secondary">Cancel</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="branchForm.invalid"
+          >
+            Add Branch
+          </button>
+          <button routerLink="/branch" class="btn btn-secondary" type="button">
+            Cancel
+          </button>
         </div>
       </form>
     </div>

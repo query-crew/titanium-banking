@@ -1,6 +1,7 @@
 <div class="list-group w-100">
   <div
-    routerLink="/branch/view/1"
+    *ngIf="{branch}"
+    [routerLink]="['/branch/view/', branch.branchId]"
     class="list-group-item list-group-item-action d-flex gap-3 py-3"
     aria-current="true"
     role="button"
@@ -19,13 +20,15 @@
     </svg>
     <div class="d-flex gap-2 w-100 justify-content-between">
       <div>
-        <h6 class="mb-0">Branch Name</h6>
+        <h6 class="mb-0">{{ branch.branchName }}</h6>
         <p class="mb-0 opacity-75">
-          1234 Branch Address, Branch City, BS, 123456
+          {{ branch.addressLine1 }} {{ branch.addressLine2 }},
+          {{ branch.city }}, {{ branch.state }} {{ branch.zipCode }}
         </p>
       </div>
       <button
-        routerLink="/branch/edit/1"
+        *ngIf="{branch}"
+        [routerLink]="['/branch/edit/', branch.branchId]"
         type="button"
         class="btn btn-sm btn-secondary"
       >

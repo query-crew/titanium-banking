@@ -9,7 +9,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -30,13 +32,22 @@ public class JwtUtils {
 
     UserDetails userPrincipal = user;
 
-    return Jwts.builder()
+    String token = Jwts.builder()
             .setSubject((userPrincipal.getUsername()))
             .setIssuedAt(new Date())
             .claim("authorities", user.getAuthorities().stream().map(s -> s.toString()).collect(Collectors.toList()))
             .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
             .signWith(SignatureAlgorithm.HS512, jwtSecret)
             .compact();
+    return token;
+  }
+
+  public String packageJwtToken(String token) {
+    StringBuilder builder = new StringBuilder();
+    builder.append("jwt-token=");
+    builder.append(token);
+    builder.append("; Max-Age=84000; Path=/user; Secure; HttpOnly; SameSite=Strict;");
+    return builder.toString();
   }
 
   public String getUserNameFromJwtToken(String token) {

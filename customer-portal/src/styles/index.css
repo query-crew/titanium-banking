@@ -15,6 +15,6 @@ code {
 @font-face {
   font-family: "Rajdhani";
   src: local("Rajdhani"),
-    url("./fonts/Rajdhani-Light.ttf") format("truetype");
+    url("../fonts/Rajdhani-Light.ttf") format("truetype");
   font-weight: normal;
 }

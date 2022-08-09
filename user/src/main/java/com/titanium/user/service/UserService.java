@@ -9,21 +9,26 @@ import com.titanium.user.model.UserToken;
 import com.titanium.user.repository.MemberRepository;
 import com.titanium.user.repository.UserRepository;
 import com.titanium.user.repository.UserTokenRepository;
+import com.titanium.user.security.AuthTokenFilter;
 import com.titanium.user.security.JwtUtils;
 import com.titanium.user.security.UserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
-
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +43,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
     private final UserDetailsService userDetailsService;
+
 
     public BankUser addUser(@Valid UserRegistration registration) {
         if (userRepo.existsByUsername(registration.getUsername()))
@@ -56,14 +62,17 @@ public class UserService {
     }
 
     public Member addMember(@Valid MemberRegistration registration) {
-        if (userRepo.existsByEmail(registration.getEmail()))
+        if (userRepo.existsByEmail(registration.getEmail())) {
             throw new EmailExistsException();
-        if (userRepo.existsByUsername(registration.getUsername()))
+        }
+        if (userRepo.existsByUsername(registration.getUsername())) {
             throw new UsernameExistsException();
-        if (memberRepo.existsBySocialSecurityNumber(registration.getSocialSecurityNumber()))
+        }
+        if (memberRepo.existsBySocialSecurityNumber(registration.getSocialSecurityNumber())) {
             throw new SocialSecurityNumberExistsException();
+        }
         BankUser user = new BankUser("member", registration.getEmail(), registration.getUsername(), passwordEncoder().encode(registration.getPassword()));
-        Member member = new Member(registration.getFirstName(), registration.getLastName(), registration.getPhone(), registration.getDateOfBirth(), registration.getSocialSecurityNumber());
+        Member member = new Member(registration.getFirstName(), registration.getLastName(), registration.getPhone(), LocalDate.parse(registration.getDateOfBirth()), registration.getSocialSecurityNumber());
         MemberAddress address = new MemberAddress(registration.getAddressLine1(), registration.getAddressLine2(), registration.getCity(), registration.getState(), registration.getZipcode());
         UserToken token = getUserToken();
         address.setMember(member);
@@ -90,7 +99,18 @@ public class UserService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
         UserDetails userDetails = userDetailsService.loadUserByUsername(login.getUsername());
         String token = jwtUtils.generateJwtToken(userDetails);
-        return token;
+        return jwtUtils.packageJwtToken(token);
+    }
+
+    public String getUserType(String username) {
+        if (!userRepo.existsByUsername(username)) {
+            throw new InvalidUsernameException();
+        }
+        BankUser bankUser = userRepo.findByUsername(username);
+        if (bankUser.getEnabled() == 0) {
+            throw new UserNotVerifiedException();
+        }
+        return bankUser.getUserType();
     }
 
     public String confirmMember(String username, MemberConfirmation memberToConfirm) {

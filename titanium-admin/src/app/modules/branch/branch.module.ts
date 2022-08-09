@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddBranchPageComponent } from './pages/add-branch-page/add-branch-page.component';
 import { EditBranchPageComponent } from './pages/edit-branch-page/edit-branch-page.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,13 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     AddBranchPageComponent,
     EditBranchPageComponent,
   ],
-  imports: [CommonModule, HttpClientModule, AppRoutingModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    AppRoutingModule,
+    NgxPaginationModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
 })
 export class BranchModule {}
