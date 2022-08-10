@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @Api( tags = "Users" )
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"https://localhost:3000", "https://localhost:4200"}, allowCredentials = "true")
 @RequiredArgsConstructor
 public class UserController {
 

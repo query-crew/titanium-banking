@@ -1,0 +1,49 @@
+.account-type {
+    text-align: start;
+    color: darkgray;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 100;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.account-owner {
+    text-align: start;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.account-owner-text {
+    margin-left: 10px;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.account-amount {
+    text-align: end;
+    margin: 0px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.account-item {
+    width: 100%;
+    background-color: #e8eaf5;
+    outline: none;
+    border:none;
+}
+
+.account-item:hover {
+    background-color: #d2d6e8;
+}
+
+.account-item:active {
+    border: none;
+    background-color: #f1f3ff;
+}
+
+h5 {
+    text-align: start;
+    margin: 0px;
+}
