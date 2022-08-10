@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import WifiIcon from '@mui/icons-material/Wifi';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import './BankCard.css'
+import '../styles/BankCard.css'
 
 function BankCard() {
     
@@ -18,7 +18,7 @@ function BankCard() {
         <Container>
             <Row className="card-description-row">
                 <Col md={1} className="d-flex align-items-center">
-                    <img className="card-chip" src={require('../chip.png')}/>
+                    <img className="card-chip" src={require('../chip.png')} alt="card chip"/>
                 </Col>
                 <Col md={3} className="d-flex align-items-center wifi-col">
                     <WifiIcon className="wifi-icon"/>
@@ -39,7 +39,7 @@ function BankCard() {
                 </Row>
                 <Row>
                     <Col className="d-flex justify-content-end">
-                        <img className="visa-logo" src={require('../visa.png')}/>
+                        <img className="visa-logo" src={require('../visa.png')} alt="visa logo"/>
                     </Col>
                 </Row>
             </div>
