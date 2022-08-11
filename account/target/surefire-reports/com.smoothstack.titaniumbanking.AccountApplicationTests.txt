@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: com.smoothstack.titaniumbanking.AccountApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.437 s - in com.smoothstack.titaniumbanking.AccountApplicationTests
+Tests run: 7, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 7.034 s <<< FAILURE! - in com.smoothstack.titaniumbanking.AccountApplicationTests
+viewAllAccounts  Time elapsed: 0.626 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <[Account(accountId=0, accountName=ONETestAccount, accountType=checking, accountNumber=12345, balance=9800, interest=5, lastStatementDate=2022-08-10, paymentDate=2022-08-10), Account(accountId=0, accountName=TWOTestAccount, accountType=loan, accountNumber=123456, balance=9900, interest=6, lastStatementDate=2022-08-10, paymentDate=2022-08-10), Account(accountId=0, accountName=THREETestAccount, accountType=investing, accountNumber=1234567, balance=1000, interest=9, lastStatementDate=2022-08-10, paymentDate=2022-08-10)]> but was: <[Account(accountId=1, accountName=ONETestAccount, accountType=checking, accountNumber=00000000432004197, balance=0, interest=0, lastStatementDate=2022-08-10, paymentDate=2022-08-10), Account(accountId=2, accountName=TWOTestAccount, accountType=loan, accountNumber=00000001912014459, balance=0, interest=15, lastStatementDate=2022-08-10, paymentDate=2022-08-10), Account(accountId=3, accountName=THREETestAccount, accountType=investing, accountNumber=00000000402129758, balance=0, interest=0, lastStatementDate=2022-08-10, paymentDate=2022-08-10)]>
+	at com.smoothstack.titaniumbanking.AccountApplicationTests.viewAllAccounts(AccountApplicationTests.java:78)
+
+updateAccountTest  Time elapsed: 0.059 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Account(accountId=4, accountName=UpdatedtestAccountDto, accountType=loan, accountNumber=12345, balance=980000000, interest=26, lastStatementDate=2022-08-10, paymentDate=2022-08-10)> but was: <Account(accountId=4, accountName=UpdatedtestAccountDto, accountType=loan, accountNumber=00000000362459242, balance=980000000, interest=26, lastStatementDate=2022-08-10, paymentDate=2022-08-10)>
+	at com.smoothstack.titaniumbanking.AccountApplicationTests.updateAccountTest(AccountApplicationTests.java:137)
+
+deleteAccountTest  Time elapsed: 0.024 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Account(accountId=7, accountName=ONETestAccount, accountType=checking, accountNumber=12345, balance=9800, interest=5, lastStatementDate=2022-08-10, paymentDate=2022-08-10)> but was: <Account(accountId=7, accountName=ONETestAccount, accountType=checking, accountNumber=00000000432736479, balance=0, interest=0, lastStatementDate=2022-08-10, paymentDate=2022-08-10)>
+	at com.smoothstack.titaniumbanking.AccountApplicationTests.deleteAccountTest(AccountApplicationTests.java:164)
+
