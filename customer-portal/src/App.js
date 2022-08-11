@@ -13,17 +13,13 @@ import React from 'react';
 import "./styles/bootstrap.css";
 import "@fontsource/bungee-hairline";
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
-<<<<<<< HEAD
 import { Provider } from 'react-redux';
 import Navbar from './Navbar';
 import RegisterAccount from './RegisterAccount';
-import './App.css';
-=======
 import AuthorizationService from "./services/AuthorizationService";
 import ProtectedRoute from './molecules/ProtectedRoute';
 import Unauthorized from './molecules/Unauthorized';
 import RegistrationPage from './molecules/RegistrationPage';
->>>>>>> features
 
 function App() {
 

@@ -25,6 +25,22 @@ const RegisterAccount = () => {
     const [validationErrors, setValidationErrors] = useState([])
 
     console.log("&*&(*&(&(*&*(&(*&(*", accountType);
+    
+    const addAccount = async() => {
+
+        const accountData = {
+            "accountType": accountType,
+            "accountName": accountName
+        }
+
+        const addAccount = "/accounts";
+        await axios.post(`${addAccount}`, accountData)
+        .then((response) => {
+            console.log(response.data);
+            })
+            .catch((err) => console.log(err));
+    }
+
 
 const handleSubmit = async(e) => {
         e.preventDefault();
@@ -32,8 +48,8 @@ const handleSubmit = async(e) => {
         let formData = new FormData(e.target)
         const errors = [];
 
-        if(accountType === "Account") errors.push("Please select an account type")
-        if(!firstName.trim().length) errors.push("Please enter your first name")
+        // if(accountType === "Account") errors.push("Please select an account type")
+        // if(!firstName.trim().length) errors.push("Please enter your first name")
         if(!lastName.trim().length) errors.push("Please enter your last name")
         if(!phoneNumber.trim().length) errors.push("Please enter your phone number")
         if(!dateOfBirth.trim().length) errors.push("Please enter your date of birth")
@@ -48,33 +64,35 @@ const handleSubmit = async(e) => {
         if (errors.length){
             setValidationErrors(errors)
         } else {
-            const url = 'http://localhost:8080/accounts'
+            const url = '/member/confirm'
             // const config = { headers: {
             //     'Content-Type': 'multipart/form-data'
             // }}
 
             
             const form = {
-                "accountType": accountType,
-                "accountName": accountName,
-                // "firstName": firstName,
-                // "lastName": lastName,
-                // "phoneNumber": phoneNumber,
-                // "dateOfBirth": dateOfBirth,
-                // "ssn": ssn,
-                // "addressOne": addressOne,
-                // "addressTwo": addressTwo,
-                // "city": city,
-                // "state": state,
-                // "zipcode": zipcode,
+                "firstName": firstName,
+                "lastName": lastName,
+                "phone": phoneNumber,
+                "dateOfBirth": dateOfBirth,
+                "socialSecurityNumber": ssn,
+                "addressLine1": addressOne,
+                "addressLine2": addressTwo,
+                "city": city,
+                "state": state,
+                "zipcode": zipcode,
             }
 
            
                 await axios.post(`${url}`, form)
                         .then((response) => {
+                        addAccount()
                         console.log(response.data);
                         })
                         .catch((err) => console.log(err));
+
+                        
+            
             
         }
 }
@@ -94,15 +112,15 @@ const handleSubmit = async(e) => {
        <section className='container border border-danger register-account-section'>
             <div className='row'>
                 <span className='register-account-header fs-1 mt-4 bg-light rounded-top'>
-                    Register for Account
-                </span>  
+                    Register For Account
+                </span> 
             <div className='form-errors'>
             {validationErrors.map((error, i) => (
                 <div key={i}>{error}</div>
                 ))}
             </div>
-           <form className='register-account-form bg-white'
-                 onSubmit={handleSubmit}>
+           <form className='register-account-form bg-white' onSubmit={handleSubmit}>
+            <div className="row"> 
                 <h6 className="mt-3 mx-3">Account Type</h6>
                 <select className="account-type-dropdown col-9 form-select mx-3" aria-label="Default select example" onChange={e => setAccountType(e.target.value)}>
                     <option defaultValue="Account">Account</option>
@@ -113,9 +131,11 @@ const handleSubmit = async(e) => {
                 </select>
                 <label> Account Name </label>
                 <input className="account-name col-4 mt-3" value={accountName} onChange={e => setAccountName(e.target.value)}></input>
+            </div>
+            <div className="row">
                 <h5 className="mt-5"> Confirm Personal Information</h5>
                     <label className="mx-3"> Name </label>
-                <div className="col-4">
+                <div className="col-6">
                     <input className="p-1 " name='firstName' placeholder='First Name'  type='text' required={true} value={firstName} onChange={ e => setFirstName(e.target.value)}/>
                     <input className="p-1" name='lastName' placeholder='Last Name'  type='text' required={true} value={lastName} onChange={ e => setLastName(e.target.value)}/>
                     <label> Phone 
@@ -129,104 +149,80 @@ const handleSubmit = async(e) => {
                     </label>
                 </div>
                 <h5> Confirm Address</h5>
-                <div class="col-12">
-                    <label for="inputAddress" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Street Address" />
+                <div className="col-9">
+                    <label htmlFor="inputAddress" className="form-label">Address</label>
+                    <input type="text" className="form-control" id="inputAddress" placeholder="Street Address" value={addressOne} onChange={ e => setAddressOne(e.target.value)}/>
                 </div>
-                <div class="col-12">
-                    <label for="inputAddress2" class="form-label">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Street Address 2" />
+                <div className="col-12">
+                    <label htmlFor="inputAddress2" className="form-label">Address 2</label>
+                    <input type="text" className="form-control" id="inputAddress2" placeholder="Street Address 2" />
                 </div>
-                <div class="col-md-6">
-                    <label for="inputCity" class="form-label">City</label>
-                    <input type="text" class="form-control" id="city" />
+                <div className="col-md-6">
+                    <label htmlFor="inputCity" className="form-label">City</label>
+                    <input type="text" className="form-control" id="city" value={city} onChange={ e => setCity(e.target.value)} />
                 </div>
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">State</label>
-                    <select id="state" class="form-select">
-                    <option selected>Choose...</option>
-                    <option value="AL">...</option>
-                    <option value="AK">...</option>
-                    <option value="AZ">...</option>
-                    <option value="AR">...</option>
-                    <option value="AS">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                    <option value="">...</option>
-                     
+                <div className="col-md-4">
+                    <label htmlFor="inputState" className="form-label">State</label>
+                    <select id="state" className="form-select" value={state} onChange={ e => setState(e.target.value)}>
+                    <option defaultValue="choose">Choose...</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District of Colombia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>     
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Zip</label>
-                    <input type="text" class="form-control" id="inputZip" />
+                <div className="col-md-2">
+                    <label htmlFor="inputZip" className="form-label">Zip</label>
+                    <input type="text" className="form-control" id="inputZip" value={zipcode} onChange={ e => setZipcode(e.target.value)} />
                 </div>
+            </div>
                 <div className='register-account-btns mt-3 border-top register-form-btns bg-light rounded'> 
                     <button className='go-back  text-white btn btn-primary btn-lg ' type='click' onClick={handleCancel}>Go Back</button>
                     <button className='register-account-submit float-end text-white btn btn-primary btn-lg ' type="submit">Register</button>
