@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import BankNavBar from '../atoms/BankNavBar';
+import React from "react";
+import LandingPageNavBar from '../atoms/LandingPageNavBar';
 import SignInCard from '../atoms/SignInCard';
 import BankCard from '../atoms/BankCard';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Button from "react-bootstrap/Button";
-import './HomePageSignIn.css'
+import '../styles/HomePageSignIn.css'
 
 function HomePageSignIn() {
     
     return (
       <div id="override-bootstrap-login-page" className="sign-in-container">
-          <BankNavBar home signin={false}/>
+          <LandingPageNavBar home signin={false}/>
           <Container>
             <Row>
                 <Col md={4}>
