@@ -1,4 +1,6 @@
 package com.titanium.user.security;
+import org.h2.server.web.WebServlet;
+
 
 import com.titanium.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -42,7 +44,7 @@ public class SecurityConfiguration {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/h2-console/**", "/member", "/user", "/user/login", "/v2/api-docs", "/swagger-resources/**", "/webjars/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                .authorizeRequests().antMatchers("/member", "/user", "/user/login", "/v2/api-docs", "/swagger-resources/**", "/webjars/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -52,5 +54,10 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers("/h2-console/**");
     }
 }

@@ -150,7 +150,9 @@ public class UserService {
         if (!address.getZipCode().equals(memberToConfirm.getZipcode())) {
             throw new ZipcodeNotFoundException();
         }
-        return "confirmed";
+        StringBuilder sb = new StringBuilder();
+        sb.append(member.getMemberId());
+        return sb.toString();
     }
 
     private UserToken getUserToken() {
