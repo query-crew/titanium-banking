@@ -22,4 +22,12 @@ export class AccountService {
     const retNum = paddedNum.replaceAll(regex, "");
     return retNum;
   }
+
+  titleCase(str: string): string {
+    let strArr: string[] = str.toLowerCase().split(' ');
+    for (var i = 0; i < strArr.length; i++) {
+      strArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1); 
+    }
+    return strArr.join(' ');
+  }
 }

@@ -27,21 +27,11 @@ export class AccountsPageComponent implements OnInit {
     this.getAccounts();
   }
 
-  private titleCase(str: string): string {
-    let strArr: string[] = str.toLowerCase().split(' ');
-    for (var i = 0; i < strArr.length; i++) {
-      strArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].slice(1); 
-    }
-    return strArr.join(' ');
-  }
-
-
-
-  getAccounts(): void {
+  private getAccounts(): void {
     this.accountService.getAccounts(this.page, this.pageSize).subscribe({
       next: (res) => {
         this.accounts = res.map((account) => {
-          account.accountName = this.titleCase(account.accountName);
+          account.accountName = this.accountService.titleCase(account.accountName);
           account.accountNumber = this.accountService.removePaddingZeros(account.accountNumber);
           return account;
         });
@@ -68,7 +58,7 @@ export class AccountsPageComponent implements OnInit {
     this.accountService.getAccounts(this.page, this.pageSize).subscribe({
       next: (res: Account[]) => {
         const formattedAccounts: Account[] = res.map((account) => {
-          account.accountName = this.titleCase(account.accountName);
+          account.accountName = this.accountService.titleCase(account.accountName);
           account.accountNumber = this.accountService.removePaddingZeros(account.accountNumber);
           return account;
         })
