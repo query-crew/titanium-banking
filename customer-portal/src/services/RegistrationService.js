@@ -56,7 +56,7 @@ const RegistrationService = {
         return false;
     },
     isCity: function(city) {
-        if(/^[a-zA-Z]+$/.test(city)) {
+        if(/^[a-zA-Z ]+$/.test(city)) {
             return true;
         }
         return false;
@@ -192,7 +192,7 @@ const RegistrationService = {
         firstName, lastName, phone, dateOfBirth, 
         socialSecurityNumber, addressLine1, addressLine2, 
         city, state, zipcode, onSuccess, onError) {
-            axios.post("/member", {email: email, username: username, 
+            axios.post(this.addMemberApiPath, {email: email, username: username, 
                 password: password, firstName: firstName, lastName: lastName,
             phone: phone, dateOfBirth: dateOfBirth, socialSecurityNumber: socialSecurityNumber, 
             addressLine1: addressLine1, addressLine2: addressLine2, city: city,
@@ -213,7 +213,7 @@ const RegistrationService = {
                 }
                 RegistrationService.registrationErrorToast(alertMessage);
             });
-        }
+        },
+        addMemberApiPath: process.env.REACT_APP_USER_API + "/member",
 }
-
 export default RegistrationService;

@@ -58,7 +58,7 @@ public class MemberRegistration {
     private String addressLine2;
 
     @Size(max=100)
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "City must be alphanumeric.")
+    @Pattern(regexp = "^[a-zA-Z ]+$", message = "City must be alphanumeric.")
     @NotNull(message="City is required.")
     private String city;
 
