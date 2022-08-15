@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.401038ee.css",
+    "main.js": "/static/js/main.c51f6efc.js",
+    "static/media/Rajdhani-Light.ttf": "/static/media/Rajdhani-Light.7f948ddb3029f1193092.ttf",
+    "static/media/bungee-hairline-all-400-normal.woff": "/static/media/bungee-hairline-all-400-normal.2386eaa54597de14fd77.woff",
+    "static/media/bungee-hairline-latin-400-normal.woff2": "/static/media/bungee-hairline-latin-400-normal.0989ef9112c2bce3ff35.woff2",
+    "static/media/visa.png": "/static/media/visa.b994986bc0fd723967ef.png",
+    "static/media/bungee-hairline-latin-ext-400-normal.woff2": "/static/media/bungee-hairline-latin-ext-400-normal.23cafbc60f9186dfb672.woff2",
+    "static/media/bungee-hairline-vietnamese-400-normal.woff2": "/static/media/bungee-hairline-vietnamese-400-normal.ede2c4948d7cb6234c48.woff2",
+    "index.html": "/index.html",
+    "main.401038ee.css.map": "/static/css/main.401038ee.css.map",
+    "main.c51f6efc.js.map": "/static/js/main.c51f6efc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.401038ee.css",
+    "static/js/main.c51f6efc.js"
+  ]
+}

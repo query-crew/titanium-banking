@@ -41,7 +41,7 @@ const SignInService = {
 }
 
 function loginApiCall(login, onSuccess, onError) {
-    axios.post("/user/login", login)
+    axios.post(loginApiPath, login, { withCredentials: true })
     .then(response => { 
         onSuccess();
     })
@@ -99,5 +99,7 @@ function handleRememberMe(username, checked, onSuccess, onError) {
         }
     }
 }
+
+const loginApiPath = process.env.REACT_APP_USER_API + "/user/login";
 
 export default SignInService;

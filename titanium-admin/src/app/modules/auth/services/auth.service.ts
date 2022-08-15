@@ -5,9 +5,10 @@ import { catchError, retry } from 'rxjs/operators';
 import { Auth } from '../models/auth';
 import { Router } from '@angular/router';
 import { Text } from '@angular/compiler';
+import { environment } from 'src/environments/environment';
 
-const loginUrl = 'https://localhost:8443/user/login';
-const authUrl = 'https://localhost:8443/user/authorize';
+const loginUrl = environment.userApiPath + '/user/login';
+const authUrl = environment.userApiPath + '/user/authorize';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class AuthService {
   }
 
   authorize(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.authorizeRequest().subscribe({
         next: (res) => {
           if (res === "admin") {

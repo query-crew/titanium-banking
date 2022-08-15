@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Account } from '../../models/account';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-account-list-item',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountListItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
+
+  @Input() account!: Account;
+  hasMember: boolean = true;
 
   ngOnInit(): void {
+    this.setHasMember();
   }
 
+  setHasMember(): void {
+    if (this.account.memberId === 0) {
+      this.hasMember = false;
+    }
+  }
 }

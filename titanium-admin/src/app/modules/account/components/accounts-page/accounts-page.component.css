@@ -1,3 +1,40 @@
 #override-bootstrap-account-page .card {
     margin-top: 80px;
 }
+
+#override-bootstrap-account-page .dropdown-menu {
+    max-height: 400px;
+    padding-left: 10px;
+}
+
+#override-bootstrap-account-page .form-check-label {
+    padding-right: 10px;
+}
+
+#override-bootstrap-account-page .form-check-input {
+    margin-right: 4px;
+}
+
+.spinner {
+    width: 100px;
+    height: 100px;
+}
+
+.form-check-label {
+    text-transform: capitalize;
+}
+
+#override-bootstrap-account-page .card-body {
+    padding-top: 20px;
+}
+
+.account-container {
+    height: 500px;
+    overflow: scroll;
+}
+
+.account-name-dropcol {
+    display: flex;
+    justify-content: end;
+}
+

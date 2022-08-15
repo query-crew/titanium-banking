@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgxPaginationModule,
     ReactiveFormsModule,
     FormsModule,
+    InfiniteScrollModule,
+    ScrollingModule
   ],
 })
 export class AccountModule {}
