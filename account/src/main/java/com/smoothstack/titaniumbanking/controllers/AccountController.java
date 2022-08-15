@@ -22,7 +22,7 @@ import java.util.*;
 import javax.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://localhost:3000")
 public class AccountController {
     
     @Autowired
