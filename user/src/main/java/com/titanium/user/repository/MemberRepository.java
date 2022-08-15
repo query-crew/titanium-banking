@@ -12,4 +12,5 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
 
     Member findById(int id);
 
+    List<Member> findAllByFirstNameAndLastName(String firstName, String lastName);
 }

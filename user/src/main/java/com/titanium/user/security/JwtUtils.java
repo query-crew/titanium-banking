@@ -90,7 +90,6 @@ public class JwtUtils {
   public List<GrantedAuthority> getUserAuthorityFromClaim(String token) {
     Claims claims = getClaimFromJWTToken(token);
     List<String> authoritiesStrings = (List<String>) claims.get("authorities");
-    logger.info(authoritiesStrings.toString());
     List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesStrings.stream()
             .collect(Collectors.joining(",")));
     return authorities;

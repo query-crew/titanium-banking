@@ -2,6 +2,7 @@ package com.smoothstack.titaniumbanking.controllers;
 
 import com.smoothstack.titaniumbanking.dto.AccountDto;
 import com.smoothstack.titaniumbanking.exceptions.AccountExistsException;
+import com.smoothstack.titaniumbanking.exceptions.AccountHasNoOwnerException;
 import com.smoothstack.titaniumbanking.exceptions.AccountNotFoundException;
 import com.smoothstack.titaniumbanking.exceptions.ValidationHandler;
 import com.smoothstack.titaniumbanking.models.Account;
@@ -16,13 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.*;
 
 import javax.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = {"https://localhost:3000", "https://localhost:4200"}, allowCredentials = "true")
 public class AccountController {
     
     @Autowired
@@ -40,10 +44,11 @@ public class AccountController {
     }
 
     //read
+    @PreAuthorize("hasAuthority('admin')")
     @RequestMapping(value="/accounts", method=RequestMethod.GET)
-    public ResponseEntity<List<Account>> getAllAccounts(){
+    public ResponseEntity<List<Account>> getAllAccounts(@RequestParam int pageNo, @RequestParam int pageSize){
         try {
-            return new ResponseEntity<>(accountService.getAllAccounts(), HttpStatus.OK);
+            return new ResponseEntity<>(accountService.getAllAccounts(pageNo, pageSize), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

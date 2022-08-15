@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.*;
 
 
 @Service
@@ -165,6 +166,23 @@ public class UserService {
         userInfo.add(member.getMemberAddress().getZipCode());
         return userInfo.toString();
     }
+    
+    public String getMemberId(String username) {
+        if (!userRepo.existsByUsername(username)) {
+            throw new InvalidUsernameException();
+        }
+        BankUser bankUser = userRepo.findByUsername(username);
+        if (bankUser.getEnabled() == 0) {
+            throw new UserNotVerifiedException();
+        }
+        Member member = bankUser.getMember();
+        if (member == null) {
+            throw new MemberNotFoundException();
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(member.getMemberId());
+        return builder.toString();
+    }
 
     private UserToken getUserToken() {
         String verifyCode;
@@ -194,7 +212,57 @@ public class UserService {
         return user;
     }
 
+    public Member getMemberById(int memberId) throws MemberNotFoundException{
+        Member member = memberRepo.findById(memberId);
+        if (member == null) {
+            throw new MemberNotFoundException();
+        }
+        return member;
+    }
+
+    public List<Member> getMembers() {
+        List<Member> members = memberRepo.findAll();
+        return members;
+    }
+
+    public List<Map<Integer, String>> getMemberNames() {
+        List<Member> members = memberRepo.findAll();
+        List<Map<Integer, String>> memberNames = new ArrayList<>();
+        for (Member member : members) {
+            HashMap<Integer, String> map = new HashMap();
+            StringBuilder builder = new StringBuilder();
+            builder.append(member.getFirstName());
+            builder.append(" ");
+            builder.append(member.getLastName());
+            map.put(member.getMemberId(), builder.toString());
+            memberNames.add(map);
+        }
+        return memberNames;
+    }
+
+    public String getMemberNameById(int memberId) throws MemberNotFoundException{
+        Member member = memberRepo.findById(memberId);
+        if (member == null) {
+            throw new MemberNotFoundException();
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(member.getFirstName());
+        builder.append(" ");
+        builder.append(member.getLastName());
+        return builder.toString();
+    }
+
+    public List<Integer> getMemberIdByFullName(String firstName, String lastName) throws MemberNotFoundException {
+        List<Member> members = memberRepo.findAllByFirstNameAndLastName(firstName, lastName);
+        List<Integer> memberIds = new ArrayList<>();
+        for (Member member : members) {
+            memberIds.add(member.getMemberId());
+        }
+        return memberIds;
+    }
+
     private PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

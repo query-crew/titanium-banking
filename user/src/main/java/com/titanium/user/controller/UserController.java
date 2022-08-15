@@ -2,6 +2,7 @@ package com.titanium.user.controller;
 
 import com.titanium.user.dto.*;
 import com.titanium.user.exception.*;
+import com.titanium.user.model.Member;
 import com.titanium.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,11 +25,13 @@ import javax.swing.plaf.nimbus.State;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Api( tags = "Users" )
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = {"https://localhost:3000", "https://localhost:4200"}, allowCredentials = "true")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -74,20 +77,30 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    
 
-    @ApiOperation(value = "Confirms bank member info")
-    @GetMapping("/member/{id}")
-    @PreAuthorize("hasAuthority('member')")
-    public ResponseEntity<String> confirmMember(@RequestBody @Valid MemberConfirmation member,@PathVariable int id, Principal principal) {
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<Map<String, Object>> getMemberById(@PathVariable int memberId) {
+        HashMap<String, Object> map = new HashMap();
         try {
-            return new ResponseEntity<>(userService.getMember(principal.getName(), id , member), HttpStatus.OK);
+            map.put("member", userService.getMemberById(memberId));
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (MemberNotFoundException e) {
+            map.put("error", e.getMessage());
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
-        catch (FirstNameNotFoundException | LastNameNotFoundException | PhoneNotFoundException |
-            DateOfBirthNotFoundException | CityNotFoundException |
-                StateNotFoundException | AddressLineOneNotFoundException | AddressLineTwoNotFoundException |
-               ZipcodeNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/member")
+    public ResponseEntity<Map<String, Object>> getMembers() {
+        HashMap<String, Object> map = new HashMap();
+        try {
+            map.put("members", userService.getMembers());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            map.put("error", e.getMessage());
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
 }

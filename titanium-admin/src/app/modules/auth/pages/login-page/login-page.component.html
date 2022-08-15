@@ -4,25 +4,29 @@
 
 <div class="container my-5 mx-10">
   <div class="row align-items-center rounded-3 border shadow-lg bg-white">
-    <form class="form-signin text-center">
+    <form class="form-signin text-center" (submit)="onSubmit()">
       <div class="fs-1">Bank Logo</div>
       <h1 class="h4 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
+      <label for="inputUsername" class="sr-only">Username</label>
       <input
-        type="email"
-        id="inputEmail"
+        type="text"
+        id="inputUsername"
+        name="username"
         class="form-control"
-        placeholder="Email address"
+        placeholder="Username"
         required
         autofocus
+        [(ngModel)]="auth.username"
       />
       <label for="inputPassword" class="sr-only">Password</label>
       <input
         type="password"
         id="inputPassword"
+        name="password"
         class="form-control"
         placeholder="Password"
         required
+        [(ngModel)]="auth.password"
       />
       <div class="checkbox mb-3">
         <label>

@@ -45,6 +45,9 @@ public class Account {
     @Column(name="payment_date")
     private LocalDate paymentDate;
 
+    @Column(name="member_id")
+    private int memberId;
+
     @Override
     public boolean equals(Object o) {
             if(getClass() != o.getClass()){
@@ -53,10 +56,11 @@ public class Account {
             Account account = (Account) o;
             return (
                     accountName.equals(account.getAccountName()) &&
+                            accountNumber.equals(account.getAccountNumber()) &&
                             accountType.equals(account.getAccountType()) &&
-                    accountNumber.equals(account.getAccountNumber()) &&
                             balance.equals(account.getBalance()) &&
-                            interest.equals(account.getInterest())
+                            interest.equals(account.getInterest()) &&
+                            memberId == account.getMemberId()
                     );
     }
 

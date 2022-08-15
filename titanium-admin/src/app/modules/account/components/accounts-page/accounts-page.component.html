@@ -1,0 +1,75 @@
+<div id="override-bootstrap-account-page" *ngIf="!isLoading">
+    <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-7">
+              <h4>Accounts</h4>
+            </div>
+            <div class="col-lg-3 account-name-dropcol">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Account Name
+                </button>
+                <ul class="dropdown-menu overflow-auto">
+                  <li *ngFor="let accountName of accountNames">
+                    <input class="form-check-input" type="checkbox" value="">
+                    <label class="form-check-label">
+                      <span class="d-inline-block text-truncate" style="max-width: 115px;">{{accountName}}</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Account Type
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <input class="form-check-input" type="checkbox" value="">
+                    <label class="form-check-label">
+                      Checking
+                    </label>
+                  </li>
+                  <li>
+                    <input class="form-check-input" type="checkbox" value="">
+                    <label class="form-check-label">
+                      Savings
+                    </label>
+                  </li>
+                  <li>
+                    <input class="form-check-input" type="checkbox" value="">
+                    <label class="form-check-label">
+                      Investment
+                    </label>
+                  </li>
+                  <li>
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label">
+                      Loan
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="account-container"
+          infinite-scroll
+          [infiniteScrollDistance]="2"
+          [infiniteScrollThrottle]="50"
+          [scrollWindow]="false"
+          (scrolled)="onScroll()"
+        >
+            <app-account-list-item *ngFor="let account of accounts"
+              [account]="account">
+            </app-account-list-item>
+          </div>
+        </div>
+      </div>
+</div>
+<div class="d-flex vh-100 align-items-center justify-content-center" *ngIf="isLoading">
+  <div class="spinner-border spinner" role="status"></div>
+</div>

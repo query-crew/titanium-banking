@@ -30,6 +30,7 @@ public class AccountDto {
     //interest should not be null
     // @NotNull(message = "interest may not be null")
     private int interest;
-    private LocalDate lastStatementDate;
-    private LocalDate paymentDate;
+    private String lastStatementDate;
+    private String paymentDate;
+    private int memberId;
 }

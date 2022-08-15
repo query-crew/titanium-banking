@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Auth } from '../../models/auth';
 
 @Component({
   selector: 'app-login-page',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
+
+  auth: Auth = { 
+    username: '',
+    password: ''
+   }
 
   ngOnInit(): void {
   }
 
+  onSubmit() {
+    this.authService.navigateToHome(this.auth);
+  }
 }

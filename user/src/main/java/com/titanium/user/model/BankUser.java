@@ -46,7 +46,10 @@ public class BankUser {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.enabled = 0;
+
+        // If enabled is 0, user is not enabled. If enable is 1, user is enabled.
+        // TODO: Change this default value to 0 after implementing user verification @alexdong
+        this.enabled = 1;
     }
 
     @Override
