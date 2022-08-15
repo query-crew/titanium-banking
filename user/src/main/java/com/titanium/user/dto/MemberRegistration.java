@@ -23,12 +23,12 @@ public class MemberRegistration {
     private String password;
 
     @Size(max = 200, message="First name must be less than 200 characters.")
-    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>//d]+$", message="First name cannot contain special characters or numbers.")
+    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>\\d]+$", message="First name cannot contain special characters or numbers.")
     @NotBlank(message = "First name is required.")
     private String firstName;
 
     @Size(max = 200, message="Last name must be less than 200 characters.")
-    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>//d]+$", message="Last name cannot contain special characters or numbers.")
+    @Pattern(regexp="^[^!@#$%^&*(),.?\":{}|<>\\d]+$", message="Last name cannot contain special characters or numbers.")
     @NotBlank(message = "Last name is required.")
     private String lastName;
 
