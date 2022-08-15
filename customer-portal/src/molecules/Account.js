@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Account = () => {
+    const path = process.env.REACT_APP_ACCOUNT_API;
     const [accounts, getAccounts] = useState('')
     const navigate = useNavigate();
     
@@ -12,13 +13,12 @@ const Account = () => {
         currency: 'USD', 
     });
 
-    const url = 'http://localhost:8080/accounts'
+    const url = '/accounts'
     
     const getAllAccounts = () => {
-        axios.get(`${url}`)
+        axios.get(path + url)
           .then((response) => {
             const allAccounts = (response.data);
-            // console.log(allAccounts);
             getAccounts(allAccounts)
           })
           .catch((err) => console.log(err));
@@ -26,7 +26,6 @@ const Account = () => {
 
     useEffect(() => {
       getAllAccounts()
-    //   console.log('i fire once');
     }, []);
 
     
@@ -34,14 +33,12 @@ const Account = () => {
         let path = '/accounts/add';
         navigate(path)
     }
-
-    // console.log(accounts)
     
     let checkingAccounts = Object.values(accounts).filter(account => account.accountType === 'checking')
     let savingsAccounts = Object.values(accounts).filter(account => account.accountType === 'savings')
     let investingAccounts = Object.values(accounts).filter(account => account.accountType === 'investing')
     let loanAccounts = Object.values(accounts).filter(account => account.accountType === 'loan')
-//    console.log(checkingAccounts)
+
 
     return(
       <div className="container mt-5 bg-white rounded">
@@ -74,6 +71,34 @@ const Account = () => {
                             return(
                                 <ul>
                                     <li>{account.accountName} <span>{formatter.format(account.balance)}</span></li>
+                                    <div>{account.accountNumber}</div>
+                                </ul>
+                            );
+                        })}
+                        <div className="card bg-light">
+                            <div className="card-body">
+                                <h5 className="card-title"> Investing </h5>
+                                <h6 className="card- subtitle mb-2 text-muted">{investingAccounts.length} Accounts</h6>
+                            </div>
+                        </div>
+                        {accounts && investingAccounts.map((account, i) => {
+                            return(
+                                <ul>
+                                    <li key={i}>{account.accountName} <span>{formatter.format(account.balance)}</span></li>
+                                    <div>{account.accountNumber}</div>
+                                </ul>
+                            );
+                        })}
+                        <div className="card bg-light">
+                            <div className="card-body">
+                                <h5 className="card-title"> Loan </h5>
+                                <h6 className="card- subtitle mb-2 text-muted">{loanAccounts.length} Accounts</h6>
+                            </div>
+                        </div>
+                        {accounts && loanAccounts.map((account, i) => {
+                            return(
+                                <ul>
+                                    <li key={i}>{account.accountName} <span>{formatter.format(account.balance)}</span></li>
                                     <div>{account.accountNumber}</div>
                                 </ul>
                             );

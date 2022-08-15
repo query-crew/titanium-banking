@@ -1,4 +1,4 @@
-.register-account-btns{
+.register-account-submit, .go-back{
     background-color: #14365d;
 }
 
@@ -16,4 +16,16 @@
 
 #state{
     width: 62%;
+}
+
+.form-errors{
+    color: red;
+}
+
+.form-control, .form-select{
+    border-radius: 10px;
+}
+
+.input-group.input-space{
+    padding-left: 30px;
 }

@@ -20,7 +20,7 @@ import AuthorizationService from "./services/AuthorizationService";
 import ProtectedRoute from './molecules/ProtectedRoute';
 import Unauthorized from './molecules/Unauthorized';
 import RegistrationPage from './molecules/RegistrationPage';
-
+import "./App.css"
 function App() {
 
   return (
