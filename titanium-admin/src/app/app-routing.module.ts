@@ -11,6 +11,7 @@ import { InternalServerErrorPageComponent } from './shared/pages/internal-server
 import { NotFoundPageComponent } from './shared/pages/not-found-page/not-found-page.component';
 import { AuthGuard } from './modules/auth/services/auth-guard.service';
 import { AccountsPageComponent } from './modules/account/components/accounts-page/accounts-page.component';
+import { UnauthorizedPageComponent } from './shared/pages/unauthorized-page/unauthorized-page.component';
 
 //{ path: '', redirectTo: '/login', pathMatch: 'full' },
 //may need to change this when auth is implemented.
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'account', component: AccountsPageComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginPageComponent },
   { path: 'home', component: MenuPageComponent, canActivate: [AuthGuard]},
-  { path: '401', component: NotFoundPageComponent },
+  { path: '401', component: UnauthorizedPageComponent },
   { path: '404', component: NotFoundPageComponent },
   { path: '500', component: InternalServerErrorPageComponent },
   { path: '**', component: NotFoundPageComponent },
