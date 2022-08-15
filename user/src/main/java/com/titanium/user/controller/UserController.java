@@ -74,16 +74,17 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    
 
     @ApiOperation(value = "Confirms bank member info")
-    @PostMapping("/member/confirm")
+    @GetMapping("/member/{id}")
     @PreAuthorize("hasAuthority('member')")
-    public ResponseEntity<String> confirmMember(@RequestBody @Valid MemberConfirmation member, Principal principal) {
+    public ResponseEntity<String> confirmMember(@RequestBody @Valid MemberConfirmation member,@PathVariable int id, Principal principal) {
         try {
-            return new ResponseEntity<>(userService.confirmMember(principal.getName(), member), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getMember(principal.getName(), id , member), HttpStatus.OK);
         }
         catch (FirstNameNotFoundException | LastNameNotFoundException | PhoneNotFoundException |
-                SocialSecurityNumberNotFoundException | DateOfBirthNotFoundException | CityNotFoundException |
+            DateOfBirthNotFoundException | CityNotFoundException |
                 StateNotFoundException | AddressLineOneNotFoundException | AddressLineTwoNotFoundException |
                ZipcodeNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

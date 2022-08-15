@@ -25,9 +25,9 @@ public class MemberConfirmation {
     @NotNull(message="Date of birth is required.")
     private String dateOfBirth;
 
-    @Size(max = 11, min = 11)
-    @Pattern(regexp="^\\d{3}-\\d{2}-\\d{4}$", message = "Social security number must be formatted: ###-##-####")
-    @NotNull(message="Social security number is required.")
+    // @Size(max = 11, min = 11)
+    // @Pattern(regexp="^\\d{3}-\\d{2}-\\d{4}$", message = "Social security number must be formatted: ###-##-####")
+    // @NotNull(message="Social security number is required.")
     private String socialSecurityNumber;
 
     @Size(max=46)

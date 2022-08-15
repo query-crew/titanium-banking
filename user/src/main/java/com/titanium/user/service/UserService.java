@@ -26,6 +26,7 @@ import org.modelmapper.ModelMapper;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -113,46 +114,56 @@ public class UserService {
         return bankUser.getUserType();
     }
 
-    public String confirmMember(String username, MemberConfirmation memberToConfirm) {
+
+    public String getMember(String username, int id, MemberConfirmation user) {
         if (!userRepo.existsByUsername(username)) {
             throw new InvalidUsernameException();
         }
-        BankUser bankUser = userRepo.findByUsername(username);
+        BankUser bankUser = userRepo.findByUserId(id);
         Member member = bankUser.getMember();
         MemberAddress address = member.getMemberAddress();
-        if (!member.getFirstName().equals(memberToConfirm.getFirstName())) {
+        if (!member.getFirstName().equals(user.getFirstName())) {
             throw new FirstNameNotFoundException();
         }
-        if (!member.getLastName().equals(memberToConfirm.getLastName())) {
+        if (!member.getLastName().equals(user.getLastName())) {
             throw new LastNameNotFoundException();
         }
-        if (!member.getPhone().equals(memberToConfirm.getPhone())) {
+        if (!member.getPhone().equals(user.getPhone())) {
             throw new PhoneNotFoundException();
         }
-        if (!member.getDateOfBirth().toString().equals(memberToConfirm.getDateOfBirth())) {
+        if (!member.getDateOfBirth().toString().equals(user.getDateOfBirth())) {
             throw new DateOfBirthNotFoundException();
         }
-        if (!member.getSocialSecurityNumber().equals(memberToConfirm.getSocialSecurityNumber())) {
-            throw new SocialSecurityNumberExistsException();
-        }
-        if (!address.getAddressLine1().equals(memberToConfirm.getAddressLine1())) {
+        // if (!member.getSocialSecurityNumber().equals(user.getSocialSecurityNumber())) {
+        //     throw new SocialSecurityNumberExistsException();
+        // }
+        if (!address.getAddressLine1().equals(user.getAddressLine1())) {
             throw new AddressLineOneNotFoundException();
         }
-        if (!address.getAddressLine2().equals(memberToConfirm.getAddressLine2())) {
+        if (!address.getAddressLine2().equals(user.getAddressLine2())) {
             throw new AddressLineTwoNotFoundException();
         }
-        if (!address.getCity().equals(memberToConfirm.getCity())) {
+        if (!address.getCity().equals(user.getCity())) {
             throw new CityNotFoundException();
         }
-        if (!address.getState().equals(memberToConfirm.getState())) {
+        if (!address.getState().equals(user.getState())) {
             throw new StateNotFoundException();
         }
-        if (!address.getZipCode().equals(memberToConfirm.getZipcode())) {
+        if (!address.getZipCode().equals(user.getZipcode())) {
             throw new ZipcodeNotFoundException();
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append(member.getMemberId());
-        return sb.toString();
+        List<String> userInfo = new ArrayList<String>();
+        // userInfo.add(String(member.getMemberId()));
+        userInfo.add(member.getFirstName());
+        userInfo.add(member.getLastName());
+        userInfo.add(member.getPhone());
+        userInfo.add(member.getDateOfBirth().toString());
+        userInfo.add(member.getMemberAddress().getAddressLine1());
+        userInfo.add(member.getMemberAddress().getAddressLine2());
+        userInfo.add(member.getMemberAddress().getCity());
+        userInfo.add(member.getMemberAddress().getState());
+        userInfo.add(member.getMemberAddress().getZipCode());
+        return userInfo.toString();
     }
 
     private UserToken getUserToken() {
