@@ -1,7 +1,7 @@
-import BankNavBar from "../atoms/BankNavBar";
+import BankNavBar from "../atoms/LandingPageNavBar";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import "./BranchPage.css";
+import "../styles/BranchPage.css";
 import { useEffect, useState } from "react";
 import { Card } from "@mui/material";
 import Modal from 'react-bootstrap/Modal';
@@ -11,11 +11,37 @@ function BranchPage() {
     const [branchList, setBranches] = useState([]);
     const [showModal, setShow] = useState(false);
     const [modalBranchDetails, setModalBranchDetails] = useState({});
+    const [cityOptions, setCityOptions] = useState([]);
+    const [stateOptions, setStateOptions] = useState([]);
     const closeModal = () => setShow(false);
     const openModal = () => setShow(true);
 
+    function populateCitiesAndStates() {
+        BranchViewService.searchBranches( (response) => {
+            
+            const branchResponse = response;
+            let cities = [];
+            let states = [];
+
+            cities.push("All");
+            states.push("All");     
+
+            for(let x in branchResponse) {
+                if(cities.includes(branchResponse[x].city) === false) {
+                    cities.push(branchResponse[x].city)
+                }
+                if(states.includes(branchResponse[x].state) === false) {
+                    states.push(branchResponse[x].state)
+                }
+            }
+            setCityOptions(cities);
+            setStateOptions(states);
+        });
+    }
+
     function branchHelper() {
         BranchViewService.searchBranches( (response) => {
+
             const branchNameInput = document.getElementById("branchName-input").value;
             const citySelect = document.getElementById("city-select").value;
             const stateSelect = document.getElementById("state-select").value;
@@ -25,15 +51,14 @@ function BranchPage() {
             if(branchNameInput !== "") {
                 searchCriteria.branchName = branchNameInput;
             }
-            if(citySelect !== "all") {
+            if(citySelect !== "All") {
                 searchCriteria.city = citySelect;
             }
-            if(stateSelect !== "all") {
+            if(stateSelect !== "All") {
                 searchCriteria.state = stateSelect;
             }
             
             const filteredBranches = BranchViewService.filterBranches(response, searchCriteria);
-            console.log(filteredBranches);
             setBranches(filteredBranches);
         }, (error) => {
             console.log(error);
@@ -41,6 +66,7 @@ function BranchPage() {
     }
     
     useEffect(() => {
+        populateCitiesAndStates();
         branchHelper();
     }, []);
 
@@ -60,23 +86,21 @@ function BranchPage() {
                         <Col>
                             <label htmlFor = "city">City</label>
                             <select name = "city" id = "city-select" data-testid="branch-search-city">
-                                <option value = "all">All</option>
-                                <option value = "San Francisco">San Francisco</option>
-                                <option value = "Los Angeles">Los Angeles</option>
-                                <option value = "Fresno">Fresno</option>
-                                <option value = "Reno">Reno</option>
-                                <option value = "Las Vegas">Las Vegas</option>
-                                <option value = "Phoenix">Phoenix</option>
-                                <option value = "Tuscon">Tuscon</option>
+                                {
+                                    cityOptions.map( (city) => {
+                                        return <option key = {city} value = {city}>{city}</option>
+                                    })
+                                }
                             </select>
                         </Col>
                         <Col>
                             <label htmlFor = "state">State</label>
                             <select name = "state" id = "state-select" data-testid="branch-search-state">
-                                <option value = "all">All</option>
-                                <option value = "California">California</option>
-                                <option value = "Arizona">Arizona</option>
-                                <option value = "Nevada">Nevada</option>
+                                {
+                                    stateOptions.map( (statesInList) => {
+                                        return <option key = {statesInList} value = {statesInList}>{statesInList}</option>
+                                    })
+                                }
                             </select>
                         </Col>
                         <Col>
@@ -93,7 +117,7 @@ function BranchPage() {
                                             <Row>
                                                 <Col>
                                                     <h4>{branch.branchName}</h4>
-                                                    <h4>{branch.branchDetails}</h4>
+                                                    <h4>{branch.addressLine1}, {branch.city}, {branch.state} {branch.zipCode}</h4>
                                                 </Col>
                                                 <Col>
                                                     <button className = "btn btn-primary branchDetailsButton" onClick = {() => {
