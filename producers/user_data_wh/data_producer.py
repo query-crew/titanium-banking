@@ -141,7 +141,9 @@ class DataProducer:
 
 
 def phn():
-    """ Nice XXX-XXX-XXXX phone number gen I lifted off of stack overflow """
+    """ Nice XXX-XXX-XXXX phone number gen I lifted off of stack overflow
+    https://stackoverflow.com/questions/26226801/making-random-phone-number-xxx-xxx-xxxx
+    """
     num = "0000000000"
     while "9" in num[3:6] or num[3:6] == "000" or num[6] == num[7] == num[8] == num[9]:
         num = str(random.randint(10 ** 9, 10 ** 10 - 1))
