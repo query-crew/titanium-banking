@@ -1,6 +1,16 @@
 # Data Producer - User
 A dummy data generator that will insert and n number of records into a remote or local database.
 
+## Virtual Env Installation
+using python venv is recommend way to ensure same dependency versioning and such
+```bash
+# create virtual env in producer path
+python3 -m venv myenv
+
+source myenv/bin/activate
+
+pip install -r requirements.txt
+```
 
 ## Installation
 
@@ -15,8 +25,9 @@ run this command to generate a .pem cert file. keep note of its full directory p
 ```bash 
 openssl pkcs12 -in localhost.p12 -out cert.pem -nodes
 
-pip install -r requirements.txt
+pip install -r requirements.txt # IF NOT USING virtual env
 ```
+
 
 ## Usage
 edit .env file
@@ -33,4 +44,17 @@ CRT_PATH=cert.pem
 ```bash
 python data_producer.py [args]
 
+
+examples:
+
+python data_producer.py member 10
+
+python data_producer.py user 50
+```
+
+
+## Testing
+
+```bash
+pytest test.py
 ```

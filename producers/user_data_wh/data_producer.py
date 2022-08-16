@@ -45,14 +45,13 @@ class DataProducer:
             data = {}
             data["username"] = produced_data["username"]
             data["password"] = produced_data["password"]
-            print(data)
             resp = requests.request("POST", url, json=data, verify=self.crt_path)
-            print(resp.status_code)
+            print(resp.content)
             if resp.status_code != 200:
                 raise requests.exceptions.HTTPError(
                     f"cannot verify user credentials: {data['username']}"
                 )
-            print(resp)
+            return True
 
     def user_generator(self, test=False):
         """ create admin user n_record generator with number of records
@@ -121,17 +120,24 @@ class DataProducer:
 
         url = self.base_url + route
 
-        while True:
-            data = next(generator)
-            if data is not None:
-                print(data, url)
-                resp = requests.request(
-                    "POST", url, headers=headers, json=data, verify=self.crt_path
-                )
-                print(resp.status_code)
-                print(resp.json())
-                continue
-            break
+        try:
+            while True:
+                data = next(generator)
+                if data is not None:
+                    resp = requests.request(
+                        "POST", url, headers=headers, json=data, verify=self.crt_path
+                    )
+                    if resp.status_code != 201:
+                        raise requests.exceptions.HTTPError()
+                    print(f"INSERTED {data['username']} as {self.data_type}")
+                    continue
+                break
+        except requests.exceptions.HTTPError as err:
+            print(err, resp.status_code)
+            if resp.status_code == 400:
+                return True
+            return False
+        return True
 
 
 def phn():
