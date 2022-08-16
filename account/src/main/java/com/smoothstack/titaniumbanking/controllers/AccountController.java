@@ -44,7 +44,7 @@ public class AccountController {
     }
 
     //read
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('member')")
     @RequestMapping(value="/accounts", method=RequestMethod.GET)
     public ResponseEntity<List<Account>> getAllAccounts(@RequestParam int pageNo, @RequestParam int pageSize){
         try {
