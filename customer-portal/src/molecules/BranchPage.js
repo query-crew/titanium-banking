@@ -13,13 +13,33 @@ function BranchPage() {
     const [modalBranchDetails, setModalBranchDetails] = useState({});
     const [cityOptions, setCityOptions] = useState([]);
     const [stateOptions, setStateOptions] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize, setPageSize] = useState("3");
     const closeModal = () => setShow(false);
     const openModal = () => setShow(true);
+    const prevPage = () => {
+        if(currentPage >= 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+    const nextPage = () => {
+        if(currentPage < totalPages - 1) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+
+    function changeSelect() {
+        
+        setPageSize(document.getElementById("results-per-page").value);
+        
+        
+    }
 
     function populateCitiesAndStates() {
-        BranchViewService.searchBranches( (response) => {
+        BranchViewService.searchBranches(currentPage, pageSize, (response) => {
             
-            const branchResponse = response;
+            const branchResponse = response.data.branches;
             let cities = [];
             let states = [];
 
@@ -40,7 +60,9 @@ function BranchPage() {
     }
 
     function branchHelper() {
-        BranchViewService.searchBranches( (response) => {
+        console.log(currentPage);
+        console.log(pageSize);
+        BranchViewService.searchBranches(currentPage, pageSize, (response) => {
 
             const branchNameInput = document.getElementById("branchName-input").value;
             const citySelect = document.getElementById("city-select").value;
@@ -57,9 +79,9 @@ function BranchPage() {
             if(stateSelect !== "All") {
                 searchCriteria.state = stateSelect;
             }
-            
-            const filteredBranches = BranchViewService.filterBranches(response, searchCriteria);
+            const filteredBranches = BranchViewService.filterBranches(response.data.branches, searchCriteria);
             setBranches(filteredBranches);
+            setTotalPages(response.data.totalPages);
         }, (error) => {
             console.log(error);
         });
@@ -68,7 +90,7 @@ function BranchPage() {
     useEffect(() => {
         populateCitiesAndStates();
         branchHelper();
-    }, []);
+    }, [currentPage, pageSize]);
 
     return (
         <div>
@@ -122,7 +144,7 @@ function BranchPage() {
                                                 <Col>
                                                     <button className = "btn btn-primary branchDetailsButton" onClick = {() => {
                                                         BranchViewService.branchDetails(branch.branchId, (response) => {
-                                                            setModalBranchDetails(response);
+                                                            setModalBranchDetails(response.branch);
                                                         }, (err) => {
                                                             console.log(err);
                                                         });
@@ -138,6 +160,27 @@ function BranchPage() {
                             }
                         </div>
                     </Row>
+                    <Row>
+                        <Col xs lg = {2}><h4>Page: {currentPage + 1} / {totalPages}</h4></Col>
+                        <Col xs lg = {2}>
+                            <button className="btn btn-primary" onClick = {() => {
+                                prevPage();
+                            }}>Previous Page</button>
+                            <button className="btn btn-primary" onClick = {() => {
+                                nextPage();
+                            }}>Next Page</button>
+                        </Col>
+                        <Col>
+                            <label htmlFor="results-per-page" >Results Per Page:</label>
+                            <select name = "results-per-page" id = "results-per-page" onChange = {changeSelect}>
+                                <option value = "3">3</option>
+                                <option value = "5">5</option>
+                                <option value = "10">10</option>
+                                <option value = "15">15</option>
+                                <option value = "20">20</option>
+                            </select>
+                        </Col>
+                    </Row>
                 </div>
             </div>
             <Modal show = {showModal} onHide = {closeModal}>
@@ -146,7 +189,15 @@ function BranchPage() {
                         <Modal.Title>{modalBranchDetails.branchName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {modalBranchDetails.branchDetails}
+                        <Row>
+                            {modalBranchDetails.addressLine1}
+                        </Row>
+                        <Row>
+                            {modalBranchDetails.addressLine2}
+                        </Row>
+                        <Row>
+                            {modalBranchDetails.city}, {modalBranchDetails.state}, {modalBranchDetails.zipCode}
+                        </Row>
                     </Modal.Body>
                     <Modal.Footer>
                         <button className = "btn btn-primary">Make Appointment at this Branch</button>
