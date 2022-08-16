@@ -9,6 +9,7 @@ import BankCard from './atoms/BankCard';
 import ExpandedSignIn from './atoms/ExpandedSignIn';
 import ExpandedSignInCard from './atoms/ExpandedSignInCard';
 import SignInPage from './molecules/SignInPage';
+import BranchPage from './molecules/BranchPage';
 import React from 'react';
 import "./styles/bootstrap.css";
 import "@fontsource/bungee-hairline";
@@ -29,6 +30,7 @@ function App() {
             <Route path='/enroll' element={<RegistrationPage/>}/>
             <Route path="/account" element={<ProtectedRoute element={<Account/>} authorities={["member"]}/>}/>
             <Route path="/password-help" element={<PasswordHelp/>}/>
+            <Route path="/branch" element={<BranchPage/>}/>
             <Route path="/unauthorized" element={<Unauthorized/>}/>
           </Routes>
         </BrowserRouter>
