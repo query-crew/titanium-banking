@@ -11,6 +11,7 @@ const RegisterAccount = () => {
     // console.log(userURL);
     // console.log(accountURL);
     const navigate = useNavigate();
+
     const [memberId, setMemberId] = useState(1);
 
     const [accountType, setAccountType] = useState('Account');
@@ -43,17 +44,45 @@ const RegisterAccount = () => {
             .catch((err) => console.log(err));
     }
 
+    const getMemberId = () => {
+        const url = `/member`;
+        axios.get(userURL + url, { withCredentials: true })
+          .then((response) => {
+            console.log(response.data)
+            const { members } = response.data;
+            const [ member ] = members;
+            const {memberId} = member;
+            setMemberId(memberId)
+            console.log(memberId)
+        })
+        .catch((err) => console.log(err));
+    }
+
     const getUserInfo = () => {
         const url = `/member/${memberId}`;
-        axios.get(userURL + url)
+        axios.get(userURL + url, { withCredentials: true })
           .then((response) => {
             console.log(response.data)
             //populate form
+            const { member } = response.data;
+            const { memberId, firstName, lastName, phone, dateOfBirth, socialSecurityNumber, memberAddress } = member;
+            // console.log(memberId, firstName, lastName, phone, dateOfBirth, socialSecurityNumber, memberAddress)
+            // setMemberId(memberId)
+            setFirstName(firstName)
+            setLastName(lastName)
+            setPhoneNumber(phone)
+            setDateOfBirth(dateOfBirth)
+            setAddressOne(memberAddress.addressLine1)
+            setAddressTwo(memberAddress.addressLine2)
+            setCity(memberAddress.city)
+            setState(memberAddress.state)
+            setZipcode(memberAddress.zipCode)
           })
           .catch((err) => console.log(err));
       }
 
     useEffect(() => {
+        getMemberId();
         getUserInfo();
     })
 
@@ -243,7 +272,7 @@ const handleSubmit = async(e) => {
                 
                     <div className='register-account-btns  border-top p-3 register-form-btns bg-light rounded'> 
                         <button className='go-back  text-white  btn-lg ' type='click' onClick={handleCancel}>Go Back</button>
-                        <button className='register-account-submit float-end text-white  btn-lg ' type="submit">Register</button>
+                        <button className='register-account-submit float-end text-white  btn-lg ' type="submit" onSubmit={handleSubmit}>Register</button>
                 </div>
     </div>
    

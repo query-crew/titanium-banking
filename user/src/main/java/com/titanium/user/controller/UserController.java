@@ -78,7 +78,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('member')")
     @GetMapping("/member/{memberId}")
     public ResponseEntity<Map<String, Object>> getMemberById(@PathVariable int memberId) {
         HashMap<String, Object> map = new HashMap();
@@ -91,7 +91,9 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAuthority('admin')")
+    
+
+    @PreAuthorize("hasAuthority('member')")
     @GetMapping("/member")
     public ResponseEntity<Map<String, Object>> getMembers() {
         HashMap<String, Object> map = new HashMap();

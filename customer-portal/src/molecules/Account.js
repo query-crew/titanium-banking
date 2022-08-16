@@ -16,7 +16,7 @@ const Account = () => {
     const url = '/accounts'
     
     const getAllAccounts = () => {
-        axios.get(path + url)
+        axios.get(path + url, { withCredentials: true })
           .then((response) => {
             const allAccounts = (response.data);
             getAccounts(allAccounts)
