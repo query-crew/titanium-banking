@@ -14,5 +14,4 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findByAccountId(int id);
     boolean existsByAccountNumber(String accountNumber);
-
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.plaf.nimbus.State;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.security.Principal;
@@ -77,7 +78,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('member')")
     @GetMapping("/member/{memberId}")
     public ResponseEntity<Map<String, Object>> getMemberById(@PathVariable int memberId) {
         HashMap<String, Object> map = new HashMap();
@@ -90,7 +91,9 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAuthority('admin')")
+    
+
+    @PreAuthorize("hasAuthority('member')")
     @GetMapping("/member")
     public ResponseEntity<Map<String, Object>> getMembers() {
         HashMap<String, Object> map = new HashMap();
