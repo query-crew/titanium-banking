@@ -19,6 +19,7 @@ class TestBranchGenerator:
         data = next(generator)
         assert data["branchName"]
         assert data["addressLine1"]
+        assert data["addressLine2"]
         assert data["city"]
         assert data["state"]
         assert data["zipCode"]

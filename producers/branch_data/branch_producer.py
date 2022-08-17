@@ -43,6 +43,10 @@ class BranchProducer:
             branch_name = fake.last_name() + fake.last_name()
             address = fake.address().split("\n")
             address_line = address[0]
+            address_line_2 = "N/A"
+            if fake.boolean(chance_of_getting_true=25):
+                address_line_2 = "Suite " + fake.building_number()
+
             city = address[1].split(",")[0]
             address_part_2 = address[1].split()
             state = address_part_2[-2]
@@ -52,6 +56,7 @@ class BranchProducer:
             branch_dict = {
                 "branchName": branch_name,
                 "addressLine1": address_line,
+                "addressLine2": address_line_2,
                 "city": city,
                 "state": state,
                 "zipCode": zipcode,
