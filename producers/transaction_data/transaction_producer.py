@@ -109,6 +109,7 @@ class TransactionProducer:
                         raise requests.exceptions.HTTPError(
                             f"Error: Status code {resp.status_code}"
                         )
+                    return True
 
         except requests.exceptions.HTTPError as err:
             print(err)
