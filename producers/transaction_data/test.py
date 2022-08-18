@@ -1,6 +1,5 @@
 import pytest
 import types
-import requests
 from transaction_producer import TransactionProducer
 
 
@@ -57,4 +56,5 @@ class TestRecordsInsert:
     def test_insert(self):
         producer = TransactionProducer(1)
         generator = producer.transaction_generator()
-        assert producer.records_insert(generator)
+        with pytest.raises(StopIteration):
+            assert producer.records_insert(generator)

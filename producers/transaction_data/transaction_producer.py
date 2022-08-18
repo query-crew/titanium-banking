@@ -85,8 +85,6 @@ class TransactionProducer:
                 "accountFromId": from_id,
                 "accountToId": to_id,
             }
-            print(type(date))
-            print(json.dumps(transaction_dict))
             yield transaction_dict
 
     def records_insert(self, generator):
@@ -103,13 +101,13 @@ class TransactionProducer:
             while True:
                 data = next(generator)
                 if data is not None:
-                    print(url)
                     resp = requests.request("POST", url, headers=headers, json=data)
                     if resp.status_code != 201:
                         raise requests.exceptions.HTTPError(
                             f"Error: Status code {resp.status_code}"
                         )
-                    return True
+                    print(f"INSERTED {data['description']} | amount: {data['amount']}")
+            return True
 
         except requests.exceptions.HTTPError as err:
             print(err)
