@@ -5,17 +5,16 @@ const BranchViewService = {
     branchDetails: function(branchId, onSuccess, onError) {
         axios.get("http://localhost:8080/branch/" + branchId).then( (Response) => {
             console.log(Response.data);
-            onSuccess(Response.data.branch);
+            onSuccess(Response.data);
         }).catch(err => {
             onError(err);
         });
     },
 
-    searchBranches: function(onSuccess, onError) {
-        axios.get("http://localhost:8080/branch").then( (Response) => {
-            const newBranchList = Response.data.branches;
+    searchBranches: function(pageNum, pageSize, onSuccess, onError) {
+        axios.get("http://localhost:8080/branch?page=" + pageNum + "&size=" + pageSize).then( (Response) => {
+            const newBranchList = Response;
             onSuccess(newBranchList);
-            
         }).catch(err => {
             onError(err);
         });
