@@ -16,36 +16,31 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name ="Accounts")
-@JsonInclude(JsonInclude.Include.ALWAYS)
+@Table(name="account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="account_id", unique = true, nullable = false)
+    @Column(name="accountId", unique = true, nullable = false)
     private int accountId;
 
-    @Column(name="account_name")
-    private String accountName;
-
-    @Column(name="account_type")
-    private String accountType;
-
-    @Column(name="account_number")
+    @Column(name="accountNumber", unique = true, nullable = false)
     private String accountNumber;
 
     @Column(name="balance")
-    private Integer balance;
+    private Long balance;
 
-    @Column(name="interest")
-    private Integer interest;
-
-    @Column(name="last_statement_date")
+    @Column(name="lastStatementDate")
     private LocalDate lastStatementDate;
 
-    @Column(name="payment_date")
-    private LocalDate paymentDate;
+    @Column(name="enabled")
+    private int enabled;
 
-    @Column(name="member_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "accountType", referencedColumnName = "accountTypeId")
+    @JsonManagedReference
+    private AccountType accountType;
+
+    @Column(name="memberId", nullable=false)
     private int memberId;
 
     @Override
@@ -55,24 +50,21 @@ public class Account {
             }
             Account account = (Account) o;
             return (
-                    accountName.equals(account.getAccountName()) &&
                             accountNumber.equals(account.getAccountNumber()) &&
-                            accountType.equals(account.getAccountType()) &&
                             balance.equals(account.getBalance()) &&
-                            interest.equals(account.getInterest()) &&
-                            memberId == account.getMemberId()
+                                    enabled == account.getEnabled() &&
+                            memberId == account.getMemberId() &&
+                                    accountType.equals(accountType)
                     );
     }
 
-    public Account(String accountName, String accountType, String accountNumber, Integer balance, Integer interest, LocalDate lastStatementDate, LocalDate paymentDate){
+    public Account(String accountNumber, Long balance, LocalDate lastStatementDate, int enabled, int memberId){
         super();
-        this.accountName = accountName;
-        this.accountType = accountType;
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.interest = interest;
         this.lastStatementDate = lastStatementDate;
-        this.paymentDate = paymentDate;
+        this.enabled = enabled;
+        this.memberId = memberId;
     }
 
 }
