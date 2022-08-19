@@ -126,7 +126,7 @@ def main():
         print(err)
 
     finally:
-        if "-l" in sys.argv and producer.verify_records(total_start):
+        if "-l" in sys.argv:
             obj = producer.get_all_branches()
             json_object = json.dumps(obj, indent=4)
             print(json_object)
