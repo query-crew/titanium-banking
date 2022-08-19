@@ -11,8 +11,9 @@ import com.smoothstack.titaniumbanking.models.Account;
 import java.util.List;
 
 // @Repository
+
+// TODO: Add the get account by member id
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findByAccountId(int id);
     boolean existsByAccountNumber(String accountNumber);
-
 }

@@ -1,15 +1,14 @@
 package com.smoothstack.titaniumbanking.dto;
 
-import javax.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import lombok.*;
 
 @Data
 @NoArgsConstructor
-public class AccountDto {
+public class InitialDepositAccountDto {
 
     @NotNull(message="Balance can not be empty.")
     private Long balance;
@@ -18,6 +17,8 @@ public class AccountDto {
     private String lastStatementDate;
 
     private int enabled;
+
+    private String paymentMethodId;
 
     private Integer memberId;
 

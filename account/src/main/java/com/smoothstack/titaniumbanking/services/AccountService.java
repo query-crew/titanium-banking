@@ -1,68 +1,69 @@
 package com.smoothstack.titaniumbanking.services;
 
 
-import com.smoothstack.titaniumbanking.dto.AccountDto;
-import com.smoothstack.titaniumbanking.exceptions.AccountExistsException;
-import com.smoothstack.titaniumbanking.exceptions.AccountHasNoOwnerException;
-import com.smoothstack.titaniumbanking.exceptions.AccountNotFoundException;
+import com.smoothstack.titaniumbanking.dto.*;
+import com.smoothstack.titaniumbanking.exceptions.*;
 import com.smoothstack.titaniumbanking.models.Account;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
+
+import com.smoothstack.titaniumbanking.models.AccountType;
 import com.smoothstack.titaniumbanking.repositories.AccountRepository;
 
+import com.smoothstack.titaniumbanking.repositories.AccountTypeRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigInteger;
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
 
-    @Autowired
-    private AccountRepository accountRepo;
+    private final AccountRepository accountRepo;
+    private final AccountTypeRepository accountTypeRepo;
 
-    //create
-    public Account addAccount(AccountDto newAccount) {
-
-        if(accountRepo.existsByAccountNumber(newAccount.getAccountNumber())){
-            throw new AccountExistsException();
+    public Account addAccount(AccountDto accountDto) throws AccountTypeNotFoundException {
+        AccountType accountType = accountTypeRepo.findByAccountTypeId(accountDto.getAccountTypeId());
+        if (accountType == null) {
+            throw new AccountTypeNotFoundException();
         }
-
-        Account account = new Account();
-        account.setAccountName(newAccount.getAccountName());
-        account.setAccountType(newAccount.getAccountType());
-        account.setAccountNumber(generateAccountNumber(newAccount.getAccountName(), newAccount.getAccountType()));
-        account.setBalance(0);
-
-        if(newAccount.getAccountType() == "checking"){
-            account.setInterest(0);
-        }else if(newAccount.getAccountType() == "savings"){
-            account.setInterest(25);
-        }else if(newAccount.getAccountType() == "investing"){
-            account.setInterest(0);
-        }else account.setInterest(15);
-
-        if (newAccount.getLastStatementDate() != null) {
-            account.setLastStatementDate(LocalDate.parse(newAccount.getLastStatementDate()));
+        if (accountDto.getBalance() < accountType.getBalanceRequirement()) {
+            throw new InitialDepositBelowLimitException();
         }
-        if (newAccount.getPaymentDate() != null) {
-            account.setPaymentDate(LocalDate.parse(newAccount.getPaymentDate()));
-        }
+        Account account = new Account(generateAccountNumber(accountType.getAccountType(), accountDto.getMemberId()), accountDto.getBalance(), LocalDate.parse(accountDto.getLastStatementDate()), accountDto.getEnabled(), accountDto.getMemberId());
+        account.setAccountType(accountType);
         accountRepo.save(account);
         return account;
     }
 
+    public Account addAccountWithInitialDeposit(InitialDepositAccountDto initialDepositAccountDto) throws AccountTypeNotFoundException, StripeException, MemberNotAuthorizedException {
+        initiateInitialDeposit(initialDepositAccountDto.getPaymentMethodId(), initialDepositAccountDto.getBalance());
+        AccountType accountType = accountTypeRepo.findByAccountTypeId(initialDepositAccountDto.getAccountTypeId());
+        if (accountType == null) {
+            throw new AccountTypeNotFoundException();
+        }
+        if (accountType.getLoanId() != 0) {
+            throw new MemberNotAuthorizedException();
+        }
+        if (initialDepositAccountDto.getBalance() < accountType.getBalanceRequirement()) {
+            throw new InitialDepositBelowLimitException();
+        }
+        Account account = new Account(generateAccountNumber(accountType.getAccountType(), initialDepositAccountDto.getMemberId()), initialDepositAccountDto.getBalance(), LocalDate.parse(initialDepositAccountDto.getLastStatementDate()), 0, initialDepositAccountDto.getMemberId());
+        account.setAccountType(accountType);
+        accountRepo.save(account);
+        return account;
+    }
 
-    //read
+    // read
     public Account getAccountById(int accountId) throws AccountNotFoundException{
         Account account = accountRepo.findByAccountId(accountId);
         if(account == null) {
@@ -76,24 +77,38 @@ public class AccountService {
         Page<Account> pagedAccounts = accountRepo.findAll(pageRequest);
         return pagedAccounts.toList();
     }
- 
-    //update
-    public Account updateAccountById(AccountDto account, int accountId) throws AccountNotFoundException {
-        Account accountToUpdate = getAccountById(accountId);
-        accountToUpdate.setAccountName(account.getAccountName());
-        accountToUpdate.setBalance(account.getBalance());
-        accountToUpdate.setInterest(account.getInterest());
-        if (accountToUpdate.getLastStatementDate() != null) {
-            accountToUpdate.setLastStatementDate(LocalDate.parse(account.getLastStatementDate()));
+
+    public Account updateAccountById(int accountId, AccountDto accountDto) throws AccountNotFoundException, AccountTypeNotFoundException, InitialDepositBelowLimitException {
+        AccountType accountType = accountTypeRepo.findByAccountTypeId(accountDto.getAccountTypeId());
+        Account account = getAccountById(accountId);
+        if (accountType == null) {
+            throw new AccountTypeNotFoundException();
         }
-        if (accountToUpdate.getPaymentDate() != null) {
-            accountToUpdate.setPaymentDate(LocalDate.parse(account.getPaymentDate()));
+        if (accountDto.getBalance() < accountType.getBalanceRequirement()) {
+            throw new InitialDepositBelowLimitException();
         }
-        accountRepo.save(accountToUpdate);
-        return accountToUpdate;
+        account.setBalance(accountDto.getBalance());
+        account.setLastStatementDate(LocalDate.parse(accountDto.getLastStatementDate()));
+        account.setAccountType(accountType);
+        account.setEnabled(accountDto.getEnabled());
+        account.setMemberId(accountDto.getMemberId());
+        return account;
     }
 
-    
+    public Account setAccountEnabled(int accountId, AccountEnabledDto accountEnabledDto) throws AccountNotFoundException {
+        Account account = getAccountById(accountId);
+        account.setEnabled(accountEnabledDto.getEnabled());
+        accountRepo.save(account);
+        return account;
+    }
+
+    public Account setAccountBalance(int accountId, AccountBalanceDto accountBalanceDto) throws AccountNotFoundException, AccountTypeNotFoundException, BalanceBelowLimitException {
+        Account account = getAccountById(accountId);
+        account.setBalance(accountBalanceDto.getBalanceAmount());
+        accountRepo.save(account);
+        return account;
+    }
+
     //delete
     public Account deleteAccountById(int accountId) throws AccountNotFoundException {
         Account account = getAccountById(accountId);
@@ -105,34 +120,18 @@ public class AccountService {
 		accountRepo.deleteAll();
 	}
 
-    /**
-     * This method takes an accountId and a memberId as parameters. It finds the account based on the accountId and
-     * adds the memberId to the account. This allows us to form a one to many relationship between the bank member
-     * and the account.
-     * @author chloe johnson
-     * @param memberId
-     * @return an Account
-     */
-    public Account addAccountWithMember(AccountDto accountDto, int memberId) throws AccountExistsException {
-        Account account = addAccount(accountDto);
-        account.setMemberId(memberId);
-        accountRepo.save(account);
-        return account;
-    }
-
     //generate account number
-    public String generateAccountNumber(String name, String type){
+    private String generateAccountNumber(String accountType, int memberId){
         int num = generatePrimeNumber();
-        return String.format("%017d", Math.abs(Objects.hash(num, name, type))) ;
+        return String.format("%017d", Math.abs(Objects.hash(num, accountType, memberId))) ;
     }
 
     //generate prime number used as a salt value
-    public Integer generatePrimeNumber(){
-        int num = 0;
-        Random rand = new Random(); 
+    private Integer generatePrimeNumber(){
+        int num;
+        Random rand = new Random();
         num = rand.nextInt(1000) + 1;
-
-        while (!isPrime(num)) {          
+        while (!isPrime(num)) {
             num = rand.nextInt(1000) + 1;
         }
         return num;
@@ -140,10 +139,10 @@ public class AccountService {
 
     //checks if a number is prime
     private static boolean isPrime(int num){
-        if (num <= 3 || num % 2 == 0) 
+        if (num <= 3 || num % 2 == 0)
             return num == 2 || num == 3; //this returns false if number is <=1 & true if number = 2 or 3
         int divisor = 3;
-        while ((divisor <= Math.sqrt(num)) && (num % divisor != 0)) 
+        while ((divisor <= Math.sqrt(num)) && (num % divisor != 0))
             divisor += 2;                   //iterates through all possible divisors
         return num % divisor != 0;     //returns true/false
     }
@@ -153,4 +152,65 @@ public class AccountService {
         return accountRepo.count() != 0;
     }
 
+    public boolean accountTypeExists() {
+        return accountTypeRepo.count() != 0;
+    }
+
+    public AccountType addAccountType(AccountTypeDto accountTypeDto) throws AccountTypeExistsException {
+        if(accountTypeRepo.existsByAccountType(accountTypeDto.getAccountType())) {
+            throw new AccountTypeExistsException();
+        }
+        AccountType accountType = new AccountType(accountTypeDto.getAccountType(), accountTypeDto.getAccountTypeAbbr(), accountTypeDto.getInterest(), accountTypeDto.getBalanceRequirement());
+        accountTypeRepo.save(accountType);
+        return accountType;
+    }
+
+    public List<AccountType> getAllAccountTypes() {
+        return accountTypeRepo.findAll();
+    }
+
+    public AccountType getAccountTypeById(int accountTypeId) throws AccountTypeNotFoundException {
+        AccountType accountType = accountTypeRepo.findByAccountTypeId(accountTypeId);
+        if (accountType == null) {
+            throw new AccountTypeNotFoundException();
+        }
+        return accountType;
+    }
+
+    public AccountType updateAccountTypeById(int accountTypeId, AccountTypeDto accountTypeDto) throws AccountTypeNotFoundException {
+        AccountType accountTypeToUpdate = getAccountTypeById(accountTypeId);
+        accountTypeToUpdate.setAccountType(accountTypeDto.getAccountType());
+        accountTypeToUpdate.setAccountTypeAbbr(accountTypeDto.getAccountTypeAbbr());
+        accountTypeToUpdate.setInterest(accountTypeDto.getInterest());
+        accountTypeToUpdate.setBalanceRequirement(accountTypeDto.getBalanceRequirement());
+        accountTypeRepo.save(accountTypeToUpdate);
+        return accountTypeToUpdate;
+    }
+
+    public AccountType deleteAccountTypeById(int accountTypeId) throws AccountTypeNotFoundException {
+        AccountType accountTypeToDelete = getAccountTypeById(accountTypeId);
+        accountTypeRepo.delete(accountTypeToDelete);
+        return accountTypeToDelete;
+    }
+
+    public void deleteAllAccountTypes() {
+        accountTypeRepo.deleteAll();
+    }
+
+    public void initiateInitialDeposit(String paymentMethodId, Long balance) throws StripeException, PaymentFailedException {
+        PaymentIntent intent;
+        if (paymentMethodId != null) {
+                PaymentIntentCreateParams createParams = PaymentIntentCreateParams.builder()
+                        .setAmount(balance)
+                        .setCurrency("usd")
+                        .setConfirm(true)
+                        .setPaymentMethod(paymentMethodId)
+                        .setConfirmationMethod(PaymentIntentCreateParams.ConfirmationMethod.MANUAL)
+                        .build();
+                intent = PaymentIntent.create(createParams);
+                if (!intent.getStatus().equals("succeeded")) {
+                    throw new PaymentFailedException();
+                }
+        }
+    }
 }

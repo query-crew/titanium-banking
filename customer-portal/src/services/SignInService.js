@@ -18,7 +18,7 @@ const SignInService = {
             loginApiCall(
                 {username: username, password: password},
                 function onSuccess() {
-                    navigateAfterLogin('/account');
+                    navigateAfterLogin('/accounts');
                 },
                 function onError(err) {
                     if (typeof err == "string") {
