@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <button type="button" class="btn account-item">
+        <div class="row">
+            <div class="col-md-4 justify-content-start">
+                <h5>{{account.accountNumber}}</h5>
+                <p class="account-type">{{account.accountType}}</p>
+                <p class="account-owner" *ngIf="hasMember">Member Id: <span class="account-owner-text">{{account.memberId}}</span></p>
+            </div>
+            <div class="col-md-4 align-self-center">
+                <h4>{{account.accountName}}</h4>
+            </div>
+            <div class="col-md-4 justify-content-end align-self-center">
+                <p class="account-amount">{{account.balance | currency}}</p>
+            </div>
+        </div>
+    </button>
+</div>
