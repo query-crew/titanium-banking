@@ -3,8 +3,7 @@ import axios from "axios";
 const BranchViewService = {
 
     branchDetails: function(branchId, onSuccess, onError) {
-        axios.get("http://localhost:8080/branch/" + branchId).then( (Response) => {
-            console.log(Response.data);
+        axios.get(process.env.REACT_APP_BRANCH_API + branchId).then( (Response) => {
             onSuccess(Response.data);
         }).catch(err => {
             onError(err);
@@ -12,7 +11,7 @@ const BranchViewService = {
     },
 
     searchBranches: function(pageNum, pageSize, onSuccess, onError) {
-        axios.get("http://localhost:8080/branch?page=" + pageNum + "&size=" + pageSize).then( (Response) => {
+        axios.get(process.env.REACT_APP_BRANCH_API + "?page=" + pageNum + "&size=" + pageSize).then( (Response) => {
             const newBranchList = Response;
             onSuccess(newBranchList);
         }).catch(err => {
