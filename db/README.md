@@ -1,4 +1,8 @@
 ## Docker containers individually
+### Prereqs:
+1. Be able to build each micro service locally with maven
+2. have [Docker Engine](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
+
 
 we use create a network, set network to host network
 so that microservices can connect to localhost
@@ -13,14 +17,23 @@ images we create to better connect them with docker swarm or docker-compose
 4. username is root, pass is Wxvm85k1
 5. if using https, must include .p12 file, then compile, and then build docker image
 
-# Build the image, change /user with respective microservice
-An example of how to build the user microservice
+# Build the images
 cd into micro service directory where a Dockerfile will be, run docker build after compiling the microservice. 
 - BUILD each micro service for compose to work
+- tags are 0.1 right now
 ```bash
 cd user
 mvn clean package # if you want to update it or recompile it
 sudo docker build -t titanium/user:0.1 .
+
+cd account 
+sudo docker build -t titanium/account:0.1 .
+
+cd transactions
+sudo docker build -t titanium/transactions:0.1 .
+
+cd branch
+sudo docker build -t titanium/branch:0.1 .
 ```
 
 #  Build the Database

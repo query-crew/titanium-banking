@@ -45,6 +45,17 @@ services:
             #spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
     depends_on:
     - db
+  account:
+    image: titanium/account:0.1
+    ports:
+      - "8444:8444"
+    networks:
+      - db-net
+    environment:
+      spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+    depends_on:
+    - db
+
 
 volumes:
   db_data: 
