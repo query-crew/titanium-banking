@@ -1,7 +1,7 @@
 
-# User Microservice
+# Account Microservice
 
-The User microservice was built to create, obtain, and maintain account and account types data.
+The Account microservice was built to create, obtain, and maintain account and account types data.
 
 ## Installation
 
