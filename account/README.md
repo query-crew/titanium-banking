@@ -48,8 +48,8 @@ Post and put requests must include a user, member, or login object matching the 
 POST:
 
 CRUD Account paths:
-https://localhost:4444/account
-https://localhost:4444/account/{accountId}
+- https://localhost:4444/account
+- https://localhost:4444/account/{accountId}
 
 Account object format:
 {
@@ -61,8 +61,8 @@ Account object format:
 }
 
 CRUD AccountType paths:
-https://localhost:4444/accountType
-https://localhost:4444/accountType/{accountTypeId}
+- https://localhost:4444/accountType
+- https://localhost:4444/accountType/{accountTypeId}
 
 Account type object format:
 {
