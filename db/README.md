@@ -63,6 +63,12 @@ sudo docker run --network=host titanium/transactions:0.1
 sudo docker run --network=host titanium/branch:0.1
 ```
 
+# Changing DB password
+You will want rebuild the images and change the MYSQL_ROOT_PASS variable in the db/Dockerfile.
+- reflect these changes in the Dockerfiles as well
+There's a possibility the MySQL volume will not update as it is stateless, and once initialized it will not look to instantiate a root pass again. consider deleting or reseting the docker volume
+
+
 #  Some Issues
 tests and requests will fail unless proper TLS/SSL is setup.
 Images are built with standardized [application.properties](https://chloejohnson.atlassian.net/wiki/spaces/QUERYCREW/pages/6356998/Main)
