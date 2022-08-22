@@ -20,8 +20,8 @@ before building, you can edit .sql for schema, but for now all we do is create a
 you can edit Dockerfile to change root password or port 
 ```bash
 cd db
-sudo docker build -t titanium-sql:latest .
-sudo docker run --network=host --name=titanium-sql -p 3306:3306 titanium-sql:latest
+sudo docker build -t titanium-sql:0.1 .
+sudo docker run --network=host --name=titanium-sql -p 3306:3306 titanium-sql:0.1
 ```
 
 # Build the image, change /user with respective microservice
@@ -30,8 +30,8 @@ cd into micro service directory where a Dockerfile will be, run docker build aft
 ```bash
 cd user
 mvn clean package # if you want to update it or recompile it
-sudo docker build -t titanium/user:latest .
-sudo docker run --network=host titanium/user:latest
+sudo docker build -t titanium/user:0.1 .
+sudo docker run --network=host titanium/user:0.1
 ```
 
 #  Some Issues
@@ -49,8 +49,19 @@ Why we have [properties.hibernate.dialect](https://github.com/spring-guides/gs-a
 vim Dockerfile # in microservice directory
 ```
 
+# Docker-compose deploy - Recommended
+build all images: db, user, transaction, branch
+you may need to edit environment variables via docker-compose.yml
+right now only a few options: 
+- spring.datasource.url
+```bash
+cd db
+
+sudo docker-compose up
+```
+
+
 
 # To do
 - Get all applications working with https
 - push images to remote repository
-- pull images and set container env variables using docker-compose
