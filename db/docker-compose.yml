@@ -22,6 +22,9 @@ services:
         #restart: unless-stopped
     environment:
       spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+      server.ssl.key-store: "crts/localhost.p12"
+    volumes:
+      - crts:/crts
     depends_on:
     - db
 
@@ -33,6 +36,9 @@ services:
       - db-net
     environment:
       spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+      server.ssl.key-store: "crts/localhost.p12"
+    volumes:
+      - crts:/crts
     depends_on:
     - db
   transactions:
@@ -53,12 +59,20 @@ services:
       - db-net
     environment:
       spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+      server.ssl.key-store: "crts/localhost.p12"
+    volumes:
+      - crts:/crts
     depends_on:
     - db
 
 
 volumes:
   db_data: 
+  crts:
+    driver_opts:
+      type: none
+      device: ./crts
+      o: bind
 
 networks:
   db-net:

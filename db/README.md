@@ -47,6 +47,8 @@ sudo docker build -t titanium-sql:0.1 .
 # Docker-compose deploy - Recommended
 * build all images: db, user, transaction, branch
 you may need to edit environment variables via docker-compose.yml
+- IMPORTANT: put your localhost.p12 in a directory in crts/localhost.p12
+ALL micro services will use this certificate, it makes the client side easier to manage as well.
 right now only a few options: 
 - spring.datasource.url
 ```bash
