@@ -13,24 +13,41 @@ images we create to better connect them with docker swarm or docker-compose
 4. username is root, pass is Wxvm85k1
 5. if using https, must include .p12 file, then compile, and then build docker image
 
+# Build the image, change /user with respective microservice
+An example of how to build the user microservice
+cd into micro service directory where a Dockerfile will be, run docker build after compiling the microservice. 
+- BUILD each micro service for compose to work
+```bash
+cd user
+mvn clean package # if you want to update it or recompile it
+sudo docker build -t titanium/user:0.1 .
+```
 
-# Run the database, necessary for all microservices
+#  Build the Database
 before building, you can edit .sql for schema, but for now all we do is create a db
 you can edit Dockerfile to change root password or port 
 ```bash
 cd db
 sudo docker build -t titanium-sql:0.1 .
-sudo docker run --network=host --name=titanium-sql -p 3306:3306 titanium-sql:0.1
 ```
 
-# Build the image, change /user with respective microservice
-An example of how to build the user microservice
-cd into micro service directory where a Dockerfile will be, run docker build after compiling the microservice. 
+# Docker-compose deploy - Recommended
+* build all images: db, user, transaction, branch
+you may need to edit environment variables via docker-compose.yml
+right now only a few options: 
+- spring.datasource.url
 ```bash
-cd user
-mvn clean package # if you want to update it or recompile it
-sudo docker build -t titanium/user:0.1 .
+cd db
+
+sudo docker-compose up
+```
+
+# Deploy without Compose
+```bash
+sudo docker run --network=host --name=titanium-sql -p 3306:3306 titanium-sql:0.1
 sudo docker run --network=host titanium/user:0.1
+sudo docker run --network=host titanium/transactions:0.1
+sudo docker run --network=host titanium/branch:0.1
 ```
 
 #  Some Issues
@@ -47,19 +64,6 @@ Why we have [properties.hibernate.dialect](https://github.com/spring-guides/gs-a
 ```bash
 vim Dockerfile # in microservice directory
 ```
-
-# Docker-compose deploy - Recommended
-build all images: db, user, transaction, branch
-you may need to edit environment variables via docker-compose.yml
-right now only a few options: 
-- spring.datasource.url
-```bash
-cd db
-
-sudo docker-compose up
-```
-
-
 
 # To do
 - Get all applications working with https
