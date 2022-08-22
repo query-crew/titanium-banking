@@ -5,14 +5,13 @@ so that microservices can connect to localhost
 
 in production, we would not use that. but we can use the
 images we create to better connect them with docker swarm or docker-compose
-BUT for now we're creating and using individual containers without proper networking
 
-# Application.properties
+# Application.properties # can be defined in Dockerfiles
 1. adhere to confluence pre-defined [format](https://chloejohnson.atlassian.net/wiki/spaces/QUERYCREW/pages/6356998/Main)
 2. port must be set that corresponds with micro service from [here](https://chloejohnson.atlassian.net/wiki/spaces/QUERYCREW/pages/6291457/Dev+environment+variables)
 3. database is currently TitaniumBanking, unsure if they should have individual ones
 4. username is root, pass is Wxvm85k1
-5. if using https, must included .p12 file, compile, then build docker image
+5. if using https, must include .p12 file, then compile, and then build docker image
 
 
 # Run the database, necessary for all microservices
