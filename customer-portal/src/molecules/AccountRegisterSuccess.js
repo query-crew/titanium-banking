@@ -7,7 +7,7 @@ const AccountRegisterSuccess = () => {
     const navigate = useNavigate();
 
     const returnHomeClick = () => {
-        navigate('/');
+        navigate(process.env.REACT_APP_HOME_ROUTE);
     }
 
     return (
