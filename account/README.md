@@ -48,7 +48,7 @@ CRUD Account paths:
 - https://localhost:8444/account/{accountId}
 
 GET:
-- https://localhost:8444/account?pageNo=<number>&pageSize=<number>
+- https://localhost:8444/account?pageNo={number}&pageSize={number}
 
 Account object format:
 {
