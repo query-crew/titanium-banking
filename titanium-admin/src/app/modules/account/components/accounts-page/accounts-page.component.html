@@ -8,13 +8,13 @@
             <div class="col-lg-3 account-name-dropcol">
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Account Name
+                  Account Type
                 </button>
                 <ul class="dropdown-menu overflow-auto">
-                  <li *ngFor="let accountName of accountNames">
+                  <li *ngFor="let accountType of accountTypes">
                     <input class="form-check-input" type="checkbox" value="">
-                    <label class="form-check-label">
-                      <span class="d-inline-block text-truncate" style="max-width: 115px;">{{accountName}}</span>
+                    <label class="form-check-label"  data-toggle="tooltip" data-placement="bottom" title={{accountType.accountType}}>
+                      <span class="d-inline-block text-truncate" style="max-width: 148px;">{{accountType.accountType}}</span>
                     </label>
                   </li>
                 </ul>
@@ -23,31 +23,13 @@
             <div class="col-lg-2">
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Account Type
+                  Account Owner
                 </button>
-                <ul class="dropdown-menu">
-                  <li>
+                <ul class="dropdown-menu overflow-auto">
+                  <li *ngFor="let member of members">
                     <input class="form-check-input" type="checkbox" value="">
                     <label class="form-check-label">
-                      Checking
-                    </label>
-                  </li>
-                  <li>
-                    <input class="form-check-input" type="checkbox" value="">
-                    <label class="form-check-label">
-                      Savings
-                    </label>
-                  </li>
-                  <li>
-                    <input class="form-check-input" type="checkbox" value="">
-                    <label class="form-check-label">
-                      Investment
-                    </label>
-                  </li>
-                  <li>
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    <label class="form-check-label">
-                      Loan
+                      <span class="d-inline-block text-truncate" style="max-width: 148px;">{{member.firstName + " " + member.lastName}}</span>
                     </label>
                   </li>
                 </ul>

@@ -46,7 +46,6 @@ public class AccountService {
     }
 
     public Account addAccountWithInitialDeposit(InitialDepositAccountDto initialDepositAccountDto) throws AccountTypeNotFoundException, StripeException, MemberNotAuthorizedException {
-        initiateInitialDeposit(initialDepositAccountDto.getPaymentMethodId(), initialDepositAccountDto.getBalance());
         AccountType accountType = accountTypeRepo.findByAccountTypeId(initialDepositAccountDto.getAccountTypeId());
         if (accountType == null) {
             throw new AccountTypeNotFoundException();
@@ -56,6 +55,9 @@ public class AccountService {
         }
         if (initialDepositAccountDto.getBalance() < accountType.getBalanceRequirement()) {
             throw new InitialDepositBelowLimitException();
+        }
+        if (!initialDepositAccountDto.getAccountTypeId().equals("")) {
+            initiateInitialDeposit(initialDepositAccountDto.getPaymentMethodId(), initialDepositAccountDto.getBalance());
         }
         Account account = new Account(generateAccountNumber(accountType.getAccountType(), initialDepositAccountDto.getMemberId()), initialDepositAccountDto.getBalance(), LocalDate.parse(initialDepositAccountDto.getLastStatementDate()), 0, initialDepositAccountDto.getMemberId());
         account.setAccountType(accountType);

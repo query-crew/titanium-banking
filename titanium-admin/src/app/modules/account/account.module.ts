@@ -8,6 +8,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ReactiveFormsModule,
     FormsModule,
     InfiniteScrollModule,
-    ScrollingModule
+    ScrollingModule,
+    MatTooltipModule,
+    BrowserAnimationsModule
   ],
 })
 export class AccountModule {}

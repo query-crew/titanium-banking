@@ -6,9 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import lombok.*;
 
@@ -40,9 +38,16 @@ public class AccountType {
     @Column(name="loanId")
     private Integer loanId;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "accountId")
-    @JsonBackReference
-    private List<Account> account;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountType")
+    private List<Account> accounts;
+
+    @JsonIgnore
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+    @JsonIgnore List<Account> getAccounts() {
+        return accounts;
+    }
 
     @Override
     public boolean equals(Object o) {

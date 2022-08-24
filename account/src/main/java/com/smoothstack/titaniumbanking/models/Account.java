@@ -5,8 +5,7 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import lombok.*;
 
@@ -37,11 +36,23 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountType", referencedColumnName = "accountTypeId")
-    @JsonManagedReference
     private AccountType accountType;
 
     @Column(name="memberId", nullable=false)
     private int memberId;
+
+    @JsonIgnore
+    public AccountType getAccountType() {
+        return accountType;
+    }
+    @JsonIgnore
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public int getAccountTypeId() {
+        return accountType.getAccountTypeId();
+    }
 
     @Override
     public boolean equals(Object o) {
