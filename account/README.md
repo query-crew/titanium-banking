@@ -69,7 +69,7 @@ Account type object format:
     "accountTypeAbbr": "Savings",
     "interest": 1,
     "balanceRequirement": 500,
-    "loadId": "22"
+    "loanId": "22"
 }
 
 
