@@ -43,13 +43,12 @@ java -jar account-0.0.1-SNAPSHOT.jar
 
 Utilize the REST API with GET, POST, PUT, and DELETE HTTP requests with your respective language.
 
-Post and put requests must include a user, member, or login object matching the specified object format.
-
-POST:
-
 CRUD Account paths:
-- https://localhost:4444/account
-- https://localhost:4444/account/{accountId}
+- https://localhost:8444/account
+- https://localhost:8444/account/{accountId}
+
+GET:
+- https://localhost:8444/account?pageNo=<number>&pageSize=<number>
 
 Account object format:
 {
@@ -61,8 +60,8 @@ Account object format:
 }
 
 CRUD AccountType paths:
-- https://localhost:4444/accountType
-- https://localhost:4444/accountType/{accountTypeId}
+- https://localhost:8444/accountType
+- https://localhost:8444/accountType/{accountTypeId}
 
 Account type object format:
 {
