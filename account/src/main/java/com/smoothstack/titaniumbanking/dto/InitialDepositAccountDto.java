@@ -16,8 +16,6 @@ public class InitialDepositAccountDto {
     @Pattern(regexp="^(\\d{4}-\\d{2}-\\d{2})$", message = "Last statement date must be formatted: YYYY-MM-DD")
     private String lastStatementDate;
 
-    private int enabled;
-
     private String paymentMethodId;
 
     private Integer memberId;

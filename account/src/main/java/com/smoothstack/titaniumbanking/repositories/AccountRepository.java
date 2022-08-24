@@ -12,8 +12,10 @@ import java.util.List;
 
 // @Repository
 
-// TODO: Add the get account by member id
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findByAccountId(int id);
+
+    Page<Account> findAll(Pageable pageable);
+
     boolean existsByAccountNumber(String accountNumber);
 }

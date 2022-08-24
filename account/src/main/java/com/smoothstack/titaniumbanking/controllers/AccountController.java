@@ -53,25 +53,28 @@ public class AccountController {
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping(value="/account")
-    public ResponseEntity<List<Account>> getAllAccounts(@RequestParam int pageNo, @RequestParam int pageSize){
+    public ResponseEntity<Map<String, Object>> getAllAccounts(@RequestParam int pageNo, @RequestParam int pageSize){
+        HashMap<String, Object> map = new HashMap();
         try {
-            return new ResponseEntity<>(accountService.getAllAccounts(pageNo, pageSize), HttpStatus.OK);
+            map.put("accounts", accountService.getAllAccounts(pageNo, pageSize));
+            return new ResponseEntity<>(map, HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            map.put("error", e.getMessage());
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
 
     @PreAuthorize("hasAuthority('member')")
     @GetMapping(value="/account/{accountId}")
-    public ResponseEntity<Map<String, Account>> getAccount(@PathVariable int accountId){
+    public ResponseEntity<Map<String, Object>> getAccount(@PathVariable int accountId){
         HashMap map = new HashMap();
         try {
             map.put("success", accountService.getAccountById(accountId));
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
         catch (AccountNotFoundException e) {
-            map.put(e.getMessage(), null);
+            map.put("error", e.getMessage());
             return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }

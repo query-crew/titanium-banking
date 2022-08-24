@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Obj } from '@popperjs/core';
 import { map } from 'rxjs';
 import { Account } from '../../models/account';
+import { AccountType } from '../../models/account-type';
+import { Member } from '../../models/member';
 import { AccountService } from '../../services/account.service';
 import { AccountListItemComponent } from '../account-list-item/account-list-item.component';
 
@@ -14,10 +16,9 @@ import { AccountListItemComponent } from '../account-list-item/account-list-item
 export class AccountsPageComponent implements OnInit {
 
   isLoading = true;
-  ownersLoading = true;
   accounts: Account[] = [];
-  accountNames: string[] = [];
-  accountCheckedNames: string[] = [];
+  accountTypes: AccountType[] = [];
+  members: Member[] = [];
   page: number = 0;
   pageSize: number = 10;
 
@@ -30,13 +31,44 @@ export class AccountsPageComponent implements OnInit {
   private getAccounts(): void {
     this.accountService.getAccounts(this.page, this.pageSize).subscribe({
       next: (res) => {
-        this.accounts = res.map((account) => {
-          account.accountName = this.accountService.titleCase(account.accountName);
+        this.accounts = res.accounts;
+        this.accounts = this.accounts.map((account) => {
           account.accountNumber = this.accountService.removePaddingZeros(account.accountNumber);
           return account;
         });
+        this.getAccountTypes();
+        this.getMembers();
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
+  }
 
-        this.populateAccountNames();
+  private getAccountTypes(): void {
+    this.accountService.getAccountTypes().subscribe({
+      next: (res) => {
+        this.accountTypes = res.accountTypes;
+        this.accountTypes = this.accountTypes.map((accountType) => {
+          accountType.accountType = this.accountService.titleCase(accountType.accountType);
+          return accountType;
+        });
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
+  }
+
+  private getMembers(): void {
+    this.accountService.getMembers().subscribe({
+      next: (res) => {
+        this.members = res.members;
+        this.members = this.members.map((member) => {
+          member.firstName = this.accountService.titleCase(member.firstName);
+          member.lastName = this.accountService.titleCase(member.lastName);
+          return member;
+        });
         this.isLoading = false;
       },
       error: (e) => {
@@ -45,20 +77,12 @@ export class AccountsPageComponent implements OnInit {
     });
   }
 
-  private populateAccountNames(): void {
-    for (let i = 0; i < this.accounts.length; i++) {
-      if (!this.accountNames.includes(this.accounts[i].accountName)) {
-        this.accountNames.push(this.accounts[i].accountName);
-      }
-    }
-  }
-
   onScroll(): void {
     this.page++;
     this.accountService.getAccounts(this.page, this.pageSize).subscribe({
-      next: (res: Account[]) => {
-        const formattedAccounts: Account[] = res.map((account) => {
-          account.accountName = this.accountService.titleCase(account.accountName);
+      next: (res) => {
+        let formattedAccounts: Account[] = res.accounts;
+        formattedAccounts = formattedAccounts.map((account) => {
           account.accountNumber = this.accountService.removePaddingZeros(account.accountNumber);
           return account;
         })

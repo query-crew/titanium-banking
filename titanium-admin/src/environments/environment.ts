@@ -4,7 +4,12 @@
 
 export const environment = {
   production: false,
-  userApiPath: "https://localhost:8443"
+  userApiPath: "https://localhost:8443",
+  accountApiPath: "https://localhost:8444",
+  transactionsApiPath: "https://localhost:8445",
+  branchApiPath: "https://localhost:8446",
+  cardApiPath: "https://localhost:8447",
+  loanApiPath: "https://localhost:8448"
 };
 
 /*

@@ -5,6 +5,7 @@
 #override-bootstrap-account-page .dropdown-menu {
     max-height: 400px;
     padding-left: 10px;
+    width: 200px;
 }
 
 #override-bootstrap-account-page .form-check-label {
@@ -38,3 +39,6 @@
     justify-content: end;
 }
 
+.dropdown-toggle {
+    width: 200px;
+}
