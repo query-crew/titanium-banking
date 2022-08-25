@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = process.env.REACT_APP_API_URL;
+const url = process.env.REACT_APP_TRANSACTION_API;
 
 const TransactionService = {
   getTransactions: function (
@@ -34,8 +34,11 @@ const TransactionService = {
   },
   getRequestParams: function (description, sortProp, page, size) {
     const params = {
-      description: description && description.length > 0 ? description : null,
-      sortProp: sortProp && sortProp.length > 0 ? sortProp : null,
+      description:
+        description !== undefined && description.length > 0
+          ? description
+          : null,
+      sortProp: sortProp !== undefined && sortProp.length > 0 ? sortProp : null,
       page: page !== undefined ? page : null,
       size: size !== undefined ? size : null,
     };

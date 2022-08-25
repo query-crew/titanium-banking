@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import ActionPanel from "../elements/ActionPanel";
 import AccountMainPanel from "../elements/AccountMainPanel";
 import "./AccountPage.css";
+import AccountListPanel from "../elements/AccountListPanel";
 
 const AccountPage = () => {
   return (
@@ -16,16 +17,18 @@ const AccountPage = () => {
         </div>
         <Container>
           <Row>
-            <Col md={3}>Account panel</Col>
-            <Col md={6}>
+            <Col lg={3}>
+              <AccountListPanel />
+            </Col>
+            <Col lg={6}>
               <AccountMainPanel />
             </Col>
-            <Col md={3}>
+            <Col lg={3}>
               <ActionPanel />
             </Col>
           </Row>
         </Container>
-        <Col md={14} className="bs-linebreak" />
+        <Col lg={14} className="bs-linebreak" />
       </Row>
     </Container>
   );
