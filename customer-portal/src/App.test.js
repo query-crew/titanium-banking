@@ -4,6 +4,8 @@ import SignInPage from './molecules/SignInPage'
 import { BrowserRouter } from 'react-router-dom';
 import RegistrationPage from './molecules/RegistrationPage';
 import RegistrationService from './services/RegistrationService';
+import AccountPage from './molecules/AccountPage';
+import TransactionService from './services/TransactionService';
 import BranchPage from './molecules/BranchPage';
 import BranchViewService from './services/BranchViewService';
 
@@ -154,7 +156,60 @@ test('renders the signin page', () => {
   test('checks to see if form is a valid and returns false', () => {
     expect(RegistrationService.formValid("", "", "", "", "", "", "", "", "", "", "State", "", "")).toEqual(false);
   });
+  //account page
+  test('renders the account page', () => {
+    render(
+      <BrowserRouter>
+        <AccountPage />
+      </BrowserRouter>
+    );
+  })
 
+  test('search bar is displayed', () => {
+    const {container, getByLabelText} = render(<AccountPage/>);
+    const searchInput = getByLabelText('search_transactions');
+    expect(searchInput).toBeDefined;
+    expect(searchInput).toHaveAttribute("placeholder", "Search Transactions");
+  })
+
+  test('account panel is displayed', () => {
+    const {container, getByLabelText} = render(<AccountPage/>);
+    const accountTabs = getByLabelText('account_tabs');
+    expect(accountTabs).toBeDefined;
+    expect(accountTabs).toHaveTextContent("Transactions");
+  })
+
+  test('sort/filter form is displayed', () => {
+    const {container, getByLabelText} = render(<AccountPage/>);
+    const sortForm = getByLabelText('transaction_form');
+    expect(sortForm).toBeDefined;
+  })
+
+  test('transaction params are created properly', () => {
+    const params1 = TransactionService.getRequestParams();
+    expect(params1.description).toBeNull;
+    expect(params1.sortProp).toBeNull;
+    expect(params1.page).toBeNull;
+    expect(params1.size).toBeNull;
+
+    const params2 = TransactionService.getRequestParams("desp", "sort", 0);
+    expect(params2.description).toEqual("desp");
+    expect(params2.sortProp).toEqual("sort");
+    expect(params2.page).toEqual(0);
+    expect(params2.size).toBeNull;
+
+    const params3 = TransactionService.getRequestParams("desp", "sort", 0, 6);
+    expect(params3.description).toEqual("desp");
+    expect(params3.sortProp).toEqual("sort");
+    expect(params3.page).toEqual(0);
+    expect(params3.size).toEqual(6);
+    
+    const params4 = TransactionService.getRequestParams("", "");
+    expect(params4.description).toBeNull;
+    expect(params4.sortProp).toBeNull;
+    expect(params4.page).toBeNull;
+    expect(params4.size).toBeNull;
+  })
    test('checks to see if the branch view page is rendered', () => {
     render (
       <BranchPage />
