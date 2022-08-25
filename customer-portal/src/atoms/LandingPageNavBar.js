@@ -31,7 +31,7 @@ function LandingPageNavBar(props) {
           <Nav className="justify-content-end" style={{width:"100%"}}>
             {(props.enroll || props.signin) && <Nav.Link href="/">Home</Nav.Link>}
             {smallScreen && props.home && <Nav.Link className="enroll" href="/enroll">Enroll</Nav.Link>}
-            <Nav.Link href="#home">ATMs/Locations</Nav.Link>
+            <Nav.Link href="/branch">ATMs/Locations</Nav.Link>
             <Nav.Link href="#link">Credit Cards</Nav.Link>
             <Nav.Link href="#home">Loans</Nav.Link>
           </Nav>

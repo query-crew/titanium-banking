@@ -13,7 +13,7 @@ import { AuthGuard } from './modules/auth/services/auth-guard.service';
 import { AccountModule } from './modules/account/account.module';
 
 @NgModule({
-  declarations: [AppComponent, ],
+  declarations: [AppComponent],
   //if you have issues with routing not registering... add module import here
   imports: [
     BrowserModule,

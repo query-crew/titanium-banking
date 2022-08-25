@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = {"https://localhost:3000", "https://localhost:4200"}, allowCredentials = "true")
 @Api( tags = "Transactions" )
 @CrossOrigin(origins = {"https://localhost:3000", "https://localhost:4200"})
 public class TransactionController {

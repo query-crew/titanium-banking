@@ -162,7 +162,11 @@ public class AccountService {
         if(accountTypeRepo.existsByAccountType(accountTypeDto.getAccountType())) {
             throw new AccountTypeExistsException();
         }
-        AccountType accountType = new AccountType(accountTypeDto.getAccountType(), accountTypeDto.getAccountTypeAbbr(), accountTypeDto.getInterest(), accountTypeDto.getBalanceRequirement());
+        String color = "";
+        if(accountTypeDto.getAccountTypeColor() != null) {
+            color = accountTypeDto.getAccountTypeColor();
+        }
+        AccountType accountType = new AccountType(accountTypeDto.getAccountType(), accountTypeDto.getAccountTypeAbbr(), color, accountTypeDto.getInterest(), accountTypeDto.getBalanceRequirement());
         accountTypeRepo.save(accountType);
         return accountType;
     }

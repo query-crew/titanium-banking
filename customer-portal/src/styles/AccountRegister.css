@@ -1,0 +1,19 @@
+.registerHeader {
+    font-size: 3rem;
+    background-color: #aaaaaa;
+    margin: 2rem 5rem 0rem 5rem;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 1rem 1rem 0rem 0rem;
+}
+
+.registerBody {
+    background-color: #eeeeee;
+    margin: 0rem 5rem 2rem 5rem;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 0rem 0rem 1rem 1rem;
+}
+
+.accountInfoDiv {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}

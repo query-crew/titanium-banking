@@ -25,6 +25,7 @@ export class AccountListItemComponent implements OnInit {
     accountTypeId: 0,
     accountType: "",
     accountTypeAbbr: "",
+    accountColor: "",
     interest: 0,
     balanceRequirement: 0,
     loanId: 0

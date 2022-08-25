@@ -15,8 +15,10 @@ public class AccountTypeDto {
     @NotBlank(message = "Account type can not be empty")
     private String accountType;
 
-    @NotBlank(message = "Account type abbreviation")
+    @NotBlank(message = "Account type abbreviation can not be empty")
     private String accountTypeAbbr;
+
+    private String accountTypeColor;
 
     @NotNull(message = "Interest can not be empty.")
     private Integer interest;

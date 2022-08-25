@@ -11,6 +11,7 @@ import { InternalServerErrorPageComponent } from './shared/pages/internal-server
 import { NotFoundPageComponent } from './shared/pages/not-found-page/not-found-page.component';
 import { AuthGuard } from './modules/auth/services/auth-guard.service';
 import { AccountsPageComponent } from './modules/account/components/accounts-page/accounts-page.component';
+import { AccountDetailsPageComponent } from './modules/account/components/account-details-page/account-details-page.component';
 import { UnauthorizedPageComponent } from './shared/pages/unauthorized-page/unauthorized-page.component';
 
 //{ path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -23,6 +24,8 @@ const routes: Routes = [
   { path: 'branch/edit/:id', component: EditBranchPageComponent, canActivate: [AuthGuard] },
   { path: 'transactions', component: TransactionPageComponent, canActivate: [AuthGuard] },
   { path: 'account', component: AccountsPageComponent, canActivate: [AuthGuard]},
+  { path: 'account/:id/transactions', component: NotFoundPageComponent},
+  { path: 'account/:id/details', component: AccountDetailsPageComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginPageComponent },
   { path: 'home', component: MenuPageComponent, canActivate: [AuthGuard]},
   { path: '401', component: UnauthorizedPageComponent },

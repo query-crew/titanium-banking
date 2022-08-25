@@ -19,6 +19,11 @@ export class AccountService {
     return this.http.get<any>(accountUrl, { withCredentials: true });
   }
 
+  getAccountById(accountId: number): Observable<any> {
+    const accountUrl = environment.accountApiPath + "/account/" + accountId;
+    return this.http.get<any>(accountUrl, { withCredentials: true});
+  }
+
   getAccountTypeById(accountTypeId: number): Observable<any> {
     const accountTypeUrl = environment.accountApiPath + "/accountType/" + accountTypeId;
     return this.http.get<any>(accountTypeUrl, { withCredentials: true});
@@ -38,6 +43,12 @@ export class AccountService {
     const memberUrl = environment.userApiPath + "/member";
     return this.http.get<any>(memberUrl, { withCredentials: true });
   }
+
+  getTransactionsFromAccountId(accountId: number): Observable<any> {
+    const transactionUrl = environment.transactionsApiPath + "/transaction/fromAccount/" + accountId;
+    return this.http.get<any>(transactionUrl, { withCredentials: true });
+  }
+
   removePaddingZeros(paddedNum: string): string {
     const regex: RegExp  = new RegExp("^0+(?!$)",'g');
     const retNum = paddedNum.replaceAll(regex, "");

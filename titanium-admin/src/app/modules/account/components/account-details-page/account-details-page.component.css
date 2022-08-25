@@ -1,0 +1,109 @@
+.account-type {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.account-color {
+    min-height: 8px;
+    margin-right: 4px;
+    margin-left: 4px;
+    border-radius: 10px;
+}
+
+.detail-title {
+    font-size: 15px;
+    font-weight: 300;
+    margin-bottom: 4px;
+    color: #5E5E5E;
+    margin-top: 10px;
+}
+
+.detail-content {
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: #5E5E5E;
+}
+
+.detail-body {
+    margin-left: 15px;
+}
+
+.detail-line {
+    height: 1px;
+    background-color: lightgray;
+}
+
+#override-bootstrap-account-details-page .account-detail-col {
+    margin-top: 20px;
+    margin-left: 5px;
+    border-right: 1px solid lightgray;
+}
+
+#override-bootstrap-account-details-page .account-transaction-col {
+    margin-right: -5px;
+}
+
+.card {
+    margin-top: 80px;
+}
+
+.date-item {
+    margin-bottom: 4px;
+}
+
+.month {
+    font-weight: 500;
+    color: gray;
+}
+
+.day {
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.year {
+    font-weight: 200;
+    color: gray;
+}
+
+.transaction-content-title {
+    font-weight: 500;
+    color: gray;
+    margin-bottom: 4px;
+}
+
+.transaction-content-title-row {
+    margin-top: 10px;
+}
+
+.spinner {
+    width: 100px;
+    height: 100px;
+}
+
+.transaction-title {
+    background-color: #F1F1F1;
+    padding-left: 12px;
+    margin-top: 20px;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #5E5E5E;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 8px;
+}
+
+.see-transactions-button {
+    margin-top: 15px;
+}
+
+.transaction-description {
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.transaction-amount {
+    font-weight: 500;
+    margin-top: 20px;
+}

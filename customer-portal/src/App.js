@@ -12,7 +12,12 @@ import SignInPage from "./molecules/SignInPage";
 import React from "react";
 import "./styles/bootstrap.css";
 import "@fontsource/bungee-hairline";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import Navbar from './Navbar';
+import RegisterAccount from './RegisterAccount';
+import AccountRegister from './molecules/AccountRegister';
+import AccountRegisterSuccess from './molecules/AccountRegisterSuccess'
 import AuthorizationService from "./services/AuthorizationService";
 import ProtectedRoute from "./molecules/ProtectedRoute";
 import Unauthorized from "./molecules/Unauthorized";
