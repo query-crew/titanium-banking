@@ -45,10 +45,10 @@
                                 <p class="date-item year text-center">{{transaction.transactionDate.getFullYear()}}</p>
                             </div>
                             <div class="col-md-6">
-                                <p>{{transaction.description}}</p>
+                                <p class="transaction-description">{{transaction.description}}</p>
                             </div>
                             <div class="col-md-3">
-                                <p>{{transaction.amount | currency}}</p>
+                                <p class="transaction-amount">{{-transaction.amount / 100 | currency}}</p>
                             </div>
                         </div>
                         <div class="detail-line">

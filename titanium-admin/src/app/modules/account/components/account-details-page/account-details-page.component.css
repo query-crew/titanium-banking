@@ -97,3 +97,13 @@
 .see-transactions-button {
     margin-top: 15px;
 }
+
+.transaction-description {
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.transaction-amount {
+    font-weight: 500;
+    margin-top: 20px;
+}

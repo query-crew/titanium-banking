@@ -10,7 +10,7 @@
                 <h4>{{accountType.accountType}}</h4>
             </div>
             <div class="col-md-4 justify-content-end align-self-center">
-                <p class="account-amount">{{account.balance | currency}}</p>
+                <p class="account-amount">{{account.balance / 100 | currency}}</p>
             </div>
         </div>
     </button>
@@ -24,7 +24,7 @@
                 <p class="account-owner" *ngIf="hasMember">Account Owner: <span class="account-owner-text-small">{{member.firstName + " " + member.lastName}}</span></p>
             </div>
             <div class="col-6 justify-content-end align-self-center">
-                <p class="account-amount">{{account.balance | currency}}</p>
+                <p class="account-amount">{{account.balance / 100 | currency}}</p>
             </div>
         </div>
     </button>
@@ -37,7 +37,7 @@
                 <p class="x-small-account-type">{{accountType.accountTypeAbbr}}</p>
             </div>
             <div class="col-6 justify-content-end align-self-center">
-                <p class="x-small-account-amount">{{account.balance | currency}}</p>
+                <p class="x-small-account-amount">{{account.balance / 100| currency}}</p>
             </div>
         </div>
     </button>
@@ -50,7 +50,7 @@
                 <p class="x-small-account-type">{{accountType.accountTypeAbbr}}</p>
             </div>
             <div class="col-xs-6 justify-content-end align-self-center">
-                <p class="xx-small-account-amount">{{account.balance | currency}}</p>
+                <p class="xx-small-account-amount">{{account.balance / 100 | currency}}</p>
             </div>
         </div>
     </button>
