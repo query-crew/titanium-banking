@@ -17,6 +17,8 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Navbar from './Navbar';
 import RegisterAccount from './RegisterAccount';
+import AccountRegister from './molecules/AccountRegister';
+import AccountRegisterSuccess from './molecules/AccountRegisterSuccess'
 import AuthorizationService from "./services/AuthorizationService";
 import ProtectedRoute from './molecules/ProtectedRoute';
 import Unauthorized from './molecules/Unauthorized';
@@ -33,7 +35,8 @@ function App() {
             <Route path='/signin' element={<SignInPage/>}/>
             <Route path='/enroll' element={<RegistrationPage/>}/>
             <Route path="/accounts" element={<ProtectedRoute element={<Account/>} authorities={["member"]}/>}/>
-            <Route path="/accounts/add" element={<RegisterAccount />}/>
+            <Route path="/accounts/add" element={<AccountRegister />}/>
+            <Route path="/accounts/add/success" element={<AccountRegisterSuccess/>}/>
             <Route path="/password-help" element={<PasswordHelp/>}/>
             <Route path="/branch" element={<BranchPage/>}/>
             <Route path="/unauthorized" element={<Unauthorized/>}/>
