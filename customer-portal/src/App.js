@@ -18,7 +18,6 @@ import ProtectedRoute from "./molecules/ProtectedRoute";
 import Unauthorized from "./molecules/Unauthorized";
 import RegistrationPage from "./molecules/RegistrationPage";
 import AccountPage from "./molecules/AccountPage";
-
 function App() {
   return (
     <div className="App">

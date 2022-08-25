@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
+
 import lombok.*;
 
 
@@ -13,37 +15,44 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name ="Accounts")
+@Table(name="account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="account_id")
+    @Column(name="accountId", unique = true, nullable = false)
     private int accountId;
 
-    @Column(name="accountName")
-    private String accountName;
-
-    @Column(name="accountNumber")
+    @Column(name="accountNumber", unique = true, nullable = false)
     private String accountNumber;
 
     @Column(name="balance")
-    private int balance;
-
-    @Column(name="interest")
-    private int interest;
+    private Long balance;
 
     @Column(name="lastStatementDate")
     private LocalDate lastStatementDate;
 
-    @Column(name="paymentDate")
-    private LocalDate paymentDate;
+    @Column(name="enabled")
+    private int enabled;
 
-    // @ManyToOne(mappedBy="User_Id")
-    // private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "accountType", referencedColumnName = "accountTypeId")
+    private AccountType accountType;
 
-    // @OneToOne
-    // @JoinColumn(name="accountTypeId")
-    // private AccountType accountType;
+    @Column(name="memberId", nullable=false)
+    private int memberId;
+
+    @JsonIgnore
+    public AccountType getAccountType() {
+        return accountType;
+    }
+    @JsonIgnore
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public int getAccountTypeId() {
+        return accountType.getAccountTypeId();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -51,18 +60,22 @@ public class Account {
                 return false;
             }
             Account account = (Account) o;
-            return (accountName.equals(account.getAccountName()) &&
-                    accountNumber.equals(account.getAccountNumber()));
+            return (
+                            accountNumber.equals(account.getAccountNumber()) &&
+                            balance.equals(account.getBalance()) &&
+                                    enabled == account.getEnabled() &&
+                            memberId == account.getMemberId() &&
+                                    accountType.equals(accountType)
+                    );
     }
 
-    public Account(String accountName, String accountNumber, int balance, int interest, LocalDate lastStatementDate, LocalDate paymentDate){
+    public Account(String accountNumber, Long balance, LocalDate lastStatementDate, int enabled, int memberId){
         super();
-        this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.interest = interest;
         this.lastStatementDate = lastStatementDate;
-        this.paymentDate = paymentDate;
+        this.enabled = enabled;
+        this.memberId = memberId;
     }
 
 }

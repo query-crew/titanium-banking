@@ -1,0 +1,78 @@
+version: '3.7'
+
+services:
+  db:
+    image: titanium-sql:0.1
+    ports:
+      - "3306:3306"
+    networks:
+      - db-net
+        #restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Wxvm85k1'
+    volumes:
+      - db_data:/var/lib/mysql:rw
+
+  user:
+    image: titanium/user:0.1
+    ports: 
+      - "8443:8443"
+    networks:
+      - db-net
+        #restart: unless-stopped
+    environment:
+      spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+      server.ssl.key-store: "crts/localhost.p12"
+    volumes:
+      - crts:/crts
+    depends_on:
+    - db
+
+  branch:
+    image: titanium/branch:0.1
+    ports:
+      - "8446:8446"
+    networks:
+      - db-net
+    environment:
+      spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+      server.ssl.key-store: "crts/localhost.p12"
+    volumes:
+      - crts:/crts
+    depends_on:
+    - db
+  transactions:
+    image: titanium/transactions:0.1
+    ports:
+      - "8445:8445"
+    networks:
+      - db-net
+        #environment:
+            #spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+    depends_on:
+    - db
+  account:
+    image: titanium/account:0.1
+    ports:
+      - "8444:8444"
+    networks:
+      - db-net
+    environment:
+      spring.datasource.url: "jdbc:mysql://db:3306/TitaniumBanking"
+      server.ssl.key-store: "crts/localhost.p12"
+    volumes:
+      - crts:/crts
+    depends_on:
+    - db
+
+
+volumes:
+  db_data: 
+  crts:
+    driver_opts:
+      type: none
+      device: ./crts
+      o: bind
+
+networks:
+  db-net:

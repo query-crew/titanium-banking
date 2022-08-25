@@ -1,0 +1,132 @@
+.account-type {
+    text-align: start;
+    color: darkgray;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 200;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.small-account-type {
+    text-align: start;
+    color: darkgray;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 200;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 0px;
+}
+
+.x-small-account-type {
+    text-align: start;
+    color: darkgray;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 200;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+
+.x-small-account-number {
+    text-align: start;
+    margin: 0px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.x-small-account-amount {
+    text-align: end;
+    margin: 0px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.xx-small-account-number {
+    text-align: start;
+    margin: 0px;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.xx-small-account-amount {
+    text-align: end;
+    margin: 0px;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.account-owner {
+    text-align: start;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.account-owner-text {
+    margin-left: 10px;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.account-owner-text-small {
+    margin-left: 4px;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.account-amount {
+    text-align: end;
+    margin: 0px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.account-item {
+    width: 100%;
+    background-color: #e8eaf5;
+    outline: none;
+    border:none;
+    margin-bottom: 15px;
+}
+
+.account-item:hover {
+    background-color: #d2d6e8;
+}
+
+.account-item:active {
+    border: none;
+    background-color: #f1f3ff;
+}
+
+h5 {
+    text-align: start;
+    margin: 0px;
+}
+
+.row {
+    min-height: 89px;
+}
+
+.x-small-row {
+    min-height: 0px;
+}
+
+.xx-small-row {
+    min-height: 0px;
+}
+
+@media screen and (max-width: 768px) { .reg-list-item {
+    display: none;
+}}
+@media screen and (max-width: 492px), (min-width: 768px) { .small-list-item {
+    display: none;
+}}
+
+@media screen and (max-width: 369px), (min-width: 492px) { .x-small-list-item {
+    display: none;
+}}
+
+@media screen and (min-width: 369px) { .xx-small-list-item {
+    display: none;
+}}

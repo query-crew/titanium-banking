@@ -46,7 +46,7 @@ public class JwtUtils {
     StringBuilder builder = new StringBuilder();
     builder.append("jwt-token=");
     builder.append(token);
-    builder.append("; Max-Age=84000; Path=/user; Secure; HttpOnly; SameSite=Strict;");
+    builder.append("; Max-Age=84000; Path=/; Secure; HttpOnly; SameSite=Strict;");
     return builder.toString();
   }
 
@@ -90,7 +90,6 @@ public class JwtUtils {
   public List<GrantedAuthority> getUserAuthorityFromClaim(String token) {
     Claims claims = getClaimFromJWTToken(token);
     List<String> authoritiesStrings = (List<String>) claims.get("authorities");
-    logger.info(authoritiesStrings.toString());
     List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authoritiesStrings.stream()
             .collect(Collectors.joining(",")));
     return authorities;

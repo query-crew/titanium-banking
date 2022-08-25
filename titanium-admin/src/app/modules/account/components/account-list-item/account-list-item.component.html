@@ -1,0 +1,57 @@
+<div class="container-fluid reg-list-item">
+    <button type="button" class="btn account-item">
+        <div class="row">
+            <div class="col-md-4 justify-content-start">
+                <h5>{{account.accountNumber}}</h5>
+                <p class="account-type">{{accountType.accountTypeAbbr}}</p>
+                <p class="account-owner" *ngIf="hasMember">Account Owner: <span class="account-owner-text">{{member.firstName + " " + member.lastName}}</span></p>
+            </div>
+            <div class="col-md-4 align-self-center">
+                <h4>{{accountType.accountType}}</h4>
+            </div>
+            <div class="col-md-4 justify-content-end align-self-center">
+                <p class="account-amount">{{account.balance | currency}}</p>
+            </div>
+        </div>
+    </button>
+</div>
+<div class="container-fluid small-list-item">
+    <button type="button" class="btn account-item">
+        <div class="row">
+            <div class="col-6 justify-content-start">
+                <h5>{{account.accountNumber}}</h5>
+                <p class="small-account-type">{{accountType.accountTypeAbbr}}</p>
+                <p class="account-owner" *ngIf="hasMember">Account Owner: <span class="account-owner-text-small">{{member.firstName + " " + member.lastName}}</span></p>
+            </div>
+            <div class="col-6 justify-content-end align-self-center">
+                <p class="account-amount">{{account.balance | currency}}</p>
+            </div>
+        </div>
+    </button>
+</div>
+<div class="container-fluid x-small-list-item">
+    <button type="button" class="btn account-item">
+        <div class="row x-small-row">
+            <div class="col-6 justify-content-start align-self-center">
+                <p class="x-small-account-number">{{account.accountNumber}}</p>
+                <p class="x-small-account-type">{{accountType.accountTypeAbbr}}</p>
+            </div>
+            <div class="col-6 justify-content-end align-self-center">
+                <p class="x-small-account-amount">{{account.balance | currency}}</p>
+            </div>
+        </div>
+    </button>
+</div>
+<div class="container-fluid xx-small-list-item">
+    <button type="button" class="btn account-item">
+        <div class="row xx-small-row">
+            <div class="col-xs-6 justify-content-start align-self-center">
+                <p class="xx-small-account-number">{{account.accountNumber}}</p>
+                <p class="x-small-account-type">{{accountType.accountTypeAbbr}}</p>
+            </div>
+            <div class="col-xs-6 justify-content-end align-self-center">
+                <p class="xx-small-account-amount">{{account.balance | currency}}</p>
+            </div>
+        </div>
+    </button>
+</div>

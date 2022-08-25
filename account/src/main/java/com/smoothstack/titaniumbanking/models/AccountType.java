@@ -1,33 +1,73 @@
-// package com.smoothstack.titaniumbanking.models;
+package com.smoothstack.titaniumbanking.models;
 
-// import javax.persistence.*;
 
-// import lombok.*;
+import java.time.LocalDate;
+import java.util.List;
 
-// @Entity
-// @Getter
-// @Setter
-// @NoArgsConstructor
-// @ToString
-// @Table(name="Accounts_Types")
-// public class AccountType {
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     @Column(name="account_type_id")
-//     private int accountTypeId;
+import javax.persistence.*;
 
-//     @Column(name="savings")
-//     private boolean savings;
+import com.fasterxml.jackson.annotation.*;
 
-//     @Column(name="investing")
-//     private boolean investing;
+import lombok.*;
 
-//     @OneToOne(mappedBy = "accountTypeId")
-//     private Account account;
 
-//     public AccountType(boolean savings, boolean investing){
-//         super();
-//         this.savings = savings;
-//         this.investing = investing;
-//     }
-// }
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@Table(name ="accountType")
+public class AccountType {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="accountTypeId", unique = true, nullable = false)
+    private int accountTypeId;
+
+    @Column(name="accountType", nullable = false)
+    private String accountType;
+
+    @Column(name="accountAbbr")
+    private String accountTypeAbbr;
+
+    @Column(name="interest")
+    private Integer interest;
+
+    @Column(name="balanceRequirement")
+    private Long balanceRequirement;
+
+    @Column(name="loanId")
+    private Integer loanId;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountType")
+    private List<Account> accounts;
+
+    @JsonIgnore
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+    @JsonIgnore List<Account> getAccounts() {
+        return accounts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(getClass() != o.getClass()){
+            return false;
+        }
+        AccountType accountTypeObj = (AccountType) o;
+        return (
+                accountTypeAbbr.equals(accountTypeObj.getAccountTypeAbbr()) &&
+                        accountType.equals(accountTypeObj.getAccountType()) &&
+                        interest.equals(accountTypeObj.getInterest())
+        );
+    }
+
+    public AccountType(String accountType, String accountAbbr, Integer interest, Long balanceRequirement){
+        super();
+        this.accountType = accountType;
+        this.accountTypeAbbr = accountAbbr;
+        this.interest = interest;
+        this.balanceRequirement = balanceRequirement;
+        this.loanId = 0;
+    }
+}

@@ -6,6 +6,8 @@ import RegistrationPage from './molecules/RegistrationPage';
 import RegistrationService from './services/RegistrationService';
 import AccountPage from './molecules/AccountPage';
 import TransactionService from './services/TransactionService';
+import BranchPage from './molecules/BranchPage';
+import BranchViewService from './services/BranchViewService';
 
 test('renders the landing page', () => {
   render(<App />);
@@ -208,3 +210,44 @@ test('renders the signin page', () => {
     expect(params4.page).toBeNull;
     expect(params4.size).toBeNull;
   })
+   test('checks to see if the branch view page is rendered', () => {
+    render (
+      <BranchPage />
+    );
+   });
+
+   test('checks to see if branch view service returns the correct number of branches', () => {
+    BranchViewService.searchBranches(0,3,(response) => {
+      expect(response.data.totalPages).toEqual(2);
+    });
+   });
+
+   test('checks to see if the branch view service returns the correct number of branches with a different page size', () => {
+    BranchViewService.searchBranches(0,10, (response) => {
+      expect(response.data.totalPages).toEqual(1);
+    });
+   });
+
+   test('checks to see if branches are properly filtered with no criteria', () => {
+    BranchViewService.searchBranches(0,10, (response) => {
+      const filteredBranches = BranchViewService.filterBranches(response.data.branches);
+      expect(filteredBranches.length).toEqual(6);
+    });
+   });
+
+   test('checks to see if branches are properly filtered with criteria', () => {
+    BranchViewService.searchBranches(0,10, (response) => {
+      const filteredBranches = BranchViewService.filterBranches(response.data.branches, {
+        city: "San Francisco"
+      });
+      expect(filteredBranches.length).toEqual(1);
+    });
+   });
+
+   test('checks to see if branch details are properly retreived', () => {
+    BranchViewService.branchDetails(1, (response) => {
+      expect(reponse.addressLine1).toEqual("123 Main Street");
+      expect(response.city).toEqual("San Francisco");
+      expect(response.state).toEqual("California");
+    });
+   });
