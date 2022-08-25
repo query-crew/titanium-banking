@@ -18,7 +18,13 @@ const AccountPanel = () => {
         </Card.Body>
       </Card>
       <Container className="border my-1">
-        <Tabs defaultActiveKey="transactions" className="mb-3 my-1" fill>
+        <Tabs
+          aria-label="account_tabs"
+          defaultActiveKey="transactions"
+          className="mb-3 my-1"
+          fill
+          mountOnEnter
+        >
           <Tab eventKey="transactions" title="Transactions">
             <TransactionTab accountNumber={1} />
           </Tab>

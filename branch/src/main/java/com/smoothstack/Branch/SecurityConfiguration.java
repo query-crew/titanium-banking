@@ -32,10 +32,7 @@ public class SecurityConfiguration {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         //Below line will allow any authenticated user to access any resource within the system
-//        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
-        http.authorizeRequests().antMatchers("/**").permitAll();
-
-        //may have to remove this. not exactly sure how this changes things
+        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
         http.cors().and().csrf().disable();
         return http.build();
     }

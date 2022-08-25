@@ -11,7 +11,7 @@ const TransactionList = (props) => {
           <Transaction
             key={transaction.transactionId}
             transaction={transaction}
-            from={props.from}
+            accountNumber={props.accountNumber}
           />
         ))
       )}

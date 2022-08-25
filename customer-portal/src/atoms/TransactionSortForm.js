@@ -9,11 +9,11 @@ const TransactionSortForm = (props) => {
     props.handleSubmit();
   };
   return (
-    <Accordion defaultActiveKey="0">
+    <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header>Sorting/Filtering options</Accordion.Header>
         <Accordion.Body>
-          <Form>
+          <Form aria-label="transaction_form">
             <Form.Check
               name="sortOptions"
               type="radio"

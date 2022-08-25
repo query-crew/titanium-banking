@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
+@Entity(name = "Transaction")
 @Getter
 @Setter
 @ToString
@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 public class Transaction {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TRANSACTION_ID")
     private int transactionId;
 
@@ -37,8 +38,7 @@ public class Transaction {
     @Column(name = "ACCOUNT_TO_ID")
     private int accountToId;
 
-    public Transaction(int _transactionId, int _transactionType, Timestamp _transactionDate, String _description, int _amount, int _accountFromId, int _accountToId) {
-        this.transactionId = _transactionId;
+    public Transaction(int _transactionType, Timestamp _transactionDate, String _description, int _amount, int _accountFromId, int _accountToId) {
         this.transactionType = _transactionType;
         this.transactionDate = _transactionDate;
         this.description = _description;

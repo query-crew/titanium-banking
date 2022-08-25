@@ -12,6 +12,7 @@ const SearchBar = (props) => {
     <InputGroup className="mb-3">
       <Form.Control
         placeholder="Search Transactions"
+        aria-label="search_transactions"
         onChange={(e) => props.setSearch(e.target.value)}
       />
       <Button variant="outline-secondary" onClick={onSubmit}>

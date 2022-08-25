@@ -3,7 +3,8 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 
 const Transaction = (props) => {
-  const { transaction, from } = props;
+  const { transaction, accountNumber } = props;
+  const from = accountNumber === transaction.accountFromId;
   const transactionDate = new Date(transaction.transactionDate);
   return (
     <Container className="gy-3">

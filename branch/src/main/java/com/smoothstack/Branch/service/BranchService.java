@@ -1,6 +1,7 @@
 package com.smoothstack.Branch.service;
 
 import com.smoothstack.Branch.dto.BranchDto;
+import com.smoothstack.Branch.exception.BranchNotFoundException;
 import com.smoothstack.Branch.model.Address;
 import com.smoothstack.Branch.model.Branch;
 import com.smoothstack.Branch.repository.BranchRepository;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,84 +21,77 @@ public class BranchService {
     @Autowired
     BranchRepository branchRepository;
     //Create
-    public ResponseEntity<Map<String, Object>> addBranch(BranchDto newBranch) {
+    public Map<String, Object> addBranch(BranchDto newBranch) {
         Branch branch = new Branch(newBranch.getBranchName());
         Address newBranchAddress = new Address(newBranch.getAddressLine1(), newBranch.getAddressLine2(), newBranch.getCity(), newBranch.getState(), newBranch.getZipCode());
         branch.setBranchDetails(newBranch.getBranchDetails());
         newBranchAddress.setBranch(branch);
         branch.setAddress(newBranchAddress);
-        try {
-            branchRepository.save(branch);
-            Map<String, Object> response = new HashMap<>();
-            response.put("branch", toDto(branch));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        branchRepository.save(branch);
+        Map<String, Object> response = new HashMap<>();
+        response.put("branch", toDto(branch));
+        return response;
     }
 
     //Read
-    public ResponseEntity<Map<String, Object>> findAllBranches(String branchName, int page, int size) {
-        try {
-            List<BranchDto> branches;
-            Pageable paging = PageRequest.of(page, size);
-            Page<Branch> pageBranch;
-            if (branchName == null || branchName.length() == 0) {
-                pageBranch = branchRepository.findAll(paging);
-            }
-            else {
-                pageBranch = branchRepository.findByBranchName(branchName, paging);
-            }
-                branches = pageBranch.getContent().stream().map(this::toDto).collect(Collectors.toList());
-            Map<String, Object> response = new HashMap<>();
-            response.put("branches", branches);
-            response.put("currentPage", pageBranch.getNumber());
-            response.put("totalItems", pageBranch.getTotalElements());
-            response.put("totalPages", pageBranch.getTotalPages());
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    public Map<String, Object> findAllBranches(String branchName, int page, int size) {
+        List<BranchDto> branches;
+        Pageable paging = PageRequest.of(page, size);
+        Page<Branch> pageBranch;
+        if (branchName == null || branchName.length() == 0) {
+            pageBranch = branchRepository.findAll(paging);
         }
+        else {
+            pageBranch = branchRepository.findByBranchNameContainingIgnoreCase(branchName, paging);
+        }
+            branches = pageBranch.getContent().stream().map(this::toDto).collect(Collectors.toList());
+        Map<String, Object> response = new HashMap<>();
+        response.put("branches", branches);
+        response.put("currentPage", pageBranch.getNumber());
+        response.put("totalItems", pageBranch.getTotalElements());
+        response.put("totalPages", pageBranch.getTotalPages());
+        return response;
     }
     public Branch findBranch(int branchId) {
-        return branchRepository.findByBranchId(branchId);
+        Branch branch = branchRepository.findByBranchId(branchId);
+        if (branch == null) {
+            throw new BranchNotFoundException();
+        }
+        return branch;
     }
-    public ResponseEntity<Map<String, Object>> findBranchDto(int branchId) {
-        try {
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("branch", toDto(findBranch(branchId)));
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public Map<String, Object> findBranchDto(int branchId) throws BranchNotFoundException {
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("branch", toDto(findBranch(branchId)));
+        return response;
     }
     //Update
-    public ResponseEntity<Map<String, Object>> updateBranch(int branchId, BranchDto newBranch) {
-        try {
-            Branch targetBranch = findBranch(branchId);
-            targetBranch.setBranchName(newBranch.getBranchName());
-            targetBranch.setBranchDetails(newBranch.getBranchDetails());
-            Address targetAddress = targetBranch.getAddress();
-            targetAddress.setAddressLine1(newBranch.getAddressLine1());
-            targetAddress.setAddressLine2(newBranch.getAddressLine2());
-            targetAddress.setCity(newBranch.getCity());
-            targetAddress.setState(newBranch.getState());
-            targetAddress.setZipCode(newBranch.getZipCode());
-            branchRepository.save(targetBranch);
-
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("branch", toDto(findBranch(branchId)));
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    public Map<String, Object> updateBranch(int branchId, BranchDto newBranch) {
+        Branch targetBranch = findBranch(branchId);
+        if (targetBranch == null) {
+            throw new BranchNotFoundException();
         }
+        targetBranch.setBranchName(newBranch.getBranchName());
+        targetBranch.setBranchDetails(newBranch.getBranchDetails());
+        Address targetAddress = targetBranch.getAddress();
+        targetAddress.setAddressLine1(newBranch.getAddressLine1());
+        targetAddress.setAddressLine2(newBranch.getAddressLine2());
+        targetAddress.setCity(newBranch.getCity());
+        targetAddress.setState(newBranch.getState());
+        targetAddress.setZipCode(newBranch.getZipCode());
+        branchRepository.save(targetBranch);
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("branch", toDto(findBranch(branchId)));
+
+        return response;
     }
 
     //Delete
     public void removeBranch(int branchId) {
         Branch targetBranch = findBranch(branchId);
+        if (targetBranch == null) {
+            throw new BranchNotFoundException();
+        }
         branchRepository.delete(targetBranch);
     }
     public void removeAllBranches() {

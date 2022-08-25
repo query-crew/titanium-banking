@@ -9,135 +9,68 @@ import CustomPagination from "../atoms/CustomPagination";
 
 const TransactionTab = (props) => {
   const accountNumber = props.accountNumber;
-  const [isLoadingFrom, setLoadingFrom] = useState(true);
-  const [transactionsFrom, setTransactionsFrom] = useState([]);
-  const [isLoadingTo, setLoadingTo] = useState(true);
-  const [transactionsTo, setTransactionsTo] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [transactions, setTransactions] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [sortProp, setSortProp] = useState("");
-  const [fromPage, setFromPage] = useState({});
-  const [toPage, setToPage] = useState({});
-
+  const [pageInfo, setPageInfo] = useState({});
+  const [pageSize, setPageSize] = useState(8);
+  const [params, setParams] = useState(
+    TransactionService.getRequestParams("", "", 0, 8)
+  );
   useEffect(() => {
-    setLoadingFrom(true);
-    setLoadingTo(true);
-    const params = {};
-    TransactionService.getTransactionsFrom(
+    setLoading(true);
+    TransactionService.getTransactions(
       accountNumber,
       params,
-      setTransactionsFrom,
-      setLoadingFrom,
-      setFromPage
+      setTransactions,
+      setLoading,
+      setPageInfo
     );
-    TransactionService.getTransactionsTo(
-      accountNumber,
-      params,
-      setTransactionsTo,
-      setLoadingTo,
-      setToPage
-    );
-  }, [accountNumber]);
+  }, [accountNumber, params]);
 
   const handleSearch = () => {
     //0 to set search to page 1. could be changed to stay on cur page but might cause issue if the cur page does not exist
-    const paramsFrom = TransactionService.getRequestParams(
-      searchInput,
-      sortProp,
-      0
+    const curSortProp = params.sortProp != null ? params.sortProp : "";
+    setSearchInput(searchInput.trim());
+    const newParams = TransactionService.getRequestParams(
+      searchInput.trim(),
+      curSortProp,
+      0,
+      pageSize
     );
-    const paramsTo = TransactionService.getRequestParams(
-      searchInput,
-      sortProp,
-      0
-    );
-    setLoadingFrom(true);
-    setLoadingTo(true);
-    TransactionService.getTransactionsFrom(
-      accountNumber,
-      paramsFrom,
-      setTransactionsFrom,
-      setLoadingFrom,
-      setFromPage
-    );
-    TransactionService.getTransactionsTo(
-      accountNumber,
-      paramsTo,
-      setTransactionsTo,
-      setLoadingTo,
-      setToPage
-    );
+    console.log(newParams, "handle search");
+    setParams(newParams);
   };
 
   const handleSort = () => {
-    const paramsFrom = TransactionService.getRequestParams(
-      searchInput,
+    const curSearch = params.description != null ? params.description : "";
+    const newParams = TransactionService.getRequestParams(
+      curSearch,
       sortProp,
-      0
+      0,
+      pageSize
     );
-    const paramsTo = TransactionService.getRequestParams(
-      searchInput,
-      sortProp,
-      0
-    );
-    setLoadingFrom(true);
-    setLoadingTo(true);
-    TransactionService.getTransactionsFrom(
-      accountNumber,
-      paramsFrom,
-      setTransactionsFrom,
-      setLoadingFrom,
-      setFromPage
-    );
-    TransactionService.getTransactionsTo(
-      accountNumber,
-      paramsTo,
-      setTransactionsTo,
-      setLoadingTo,
-      setToPage
-    );
+    console.log(newParams, "handle sort");
+    setParams(newParams);
   };
 
-  const handleFromPageChange = (newPage) => {
+  const handlePageChange = (newPage) => {
     if (
-      newPage !== fromPage.curPage &&
-      newPage < fromPage.totalPages &&
+      newPage !== pageInfo.curPage &&
+      newPage < pageInfo.totalPages &&
       newPage >= 0
     ) {
-      setLoadingFrom(true);
-      const params = TransactionService.getRequestParams(
-        searchInput,
-        sortProp,
-        newPage
+      console.log(pageInfo);
+      const curSearch = params.description != null ? params.description : "";
+      const curSortProp = params.sortProp != null ? params.sortProp : "";
+      const newParams = TransactionService.getRequestParams(
+        curSearch,
+        curSortProp,
+        newPage,
+        pageSize
       );
-      TransactionService.getTransactionsFrom(
-        accountNumber,
-        params,
-        setTransactionsFrom,
-        setLoadingFrom,
-        setFromPage
-      );
-    }
-  };
-
-  const handleToPageChange = (newPage) => {
-    if (
-      newPage !== toPage.curPage &&
-      newPage < toPage.totalPages &&
-      newPage >= 0
-    ) {
-      setLoadingTo(true);
-      const params = TransactionService.getRequestParams(
-        searchInput,
-        sortProp,
-        newPage
-      );
-      TransactionService.getTransactionsTo(
-        accountNumber,
-        params,
-        setTransactionsTo,
-        setLoadingTo,
-        setToPage
-      );
+      setParams(newParams);
     }
   };
   return (
@@ -148,30 +81,18 @@ const TransactionTab = (props) => {
         handleSubmit={handleSort}
       />
       <div className="d-flex justify-content-between align-items-center">
-        <div className="fs-4">Transactions Made </div>
+        <div className="fs-4">Transactions</div>
       </div>
 
-      {!isLoadingFrom ? (
+      {!isLoading ? (
         <>
-          <TransactionList transactions={transactionsFrom} from={true} />
-          <CustomPagination
-            pageInfo={fromPage}
-            handlePageChange={handleFromPageChange}
+          <TransactionList
+            transactions={transactions}
+            accountNumber={accountNumber}
           />
-        </>
-      ) : (
-        <LoadingSpinner />
-      )}
-      <hr />
-      <div className="d-flex justify-content-between align-items-center">
-        <div className="fs-4">Transactions Received </div>
-      </div>
-      {!isLoadingTo ? (
-        <>
-          <TransactionList transactions={transactionsTo} from={false} />
           <CustomPagination
-            pageInfo={toPage}
-            handlePageChange={handleToPageChange}
+            pageInfo={pageInfo}
+            handlePageChange={handlePageChange}
           />
         </>
       ) : (
