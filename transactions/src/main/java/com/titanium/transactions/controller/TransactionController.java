@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = {"https://localhost:3000", "https://localhost:4200"}, allowCredentials = "true")
 @Api( tags = "Transactions" )
 public class TransactionController {
 
