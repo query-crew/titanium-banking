@@ -1,0 +1,71 @@
+<div id="override-bootstrap-account-details-page" *ngIf="!isLoading">
+    <div class="card">
+        <div class="card-header">
+            {{accountType.accountType}}
+        </div>
+        <div class="card-body">
+            <div class="row account-color" [ngStyle]="{'background-color': colorIsEmpty ? '#14365d' : accountType.accountColor}">
+            </div>
+            <div class="row">
+                <div class="col-md-5 account-detail-col">
+                    <p class="detail-title detail-body" style="margin-top: 0px">Account Number:</p>
+                    <p class="detail-content detail-body">{{account.accountNumber}}</p>
+                    <div class="detail-line"></div>
+                    <p class="detail-title detail-body">Balance:</p>
+                    <p class="detail-content detail-body">{{account.balance | currency}}</p>
+                    <div class="detail-line"></div>
+                    <p class="detail-title detail-body">Interest:</p>
+                    <p class="detail-content detail-body">{{accountType.interest | percent}}</p>
+                    <div class="detail-line"></div>
+                    <p class="detail-title detail-body">Last statement date:</p>
+                    <p class="detail-content detail-body">{{account.lastStatementDate | date}}</p>
+                </div>
+                <div class="col-md-7 account-transaction-col">
+                    <div class="transaction-title">
+                        Transactions
+                    </div>
+                    <div class="row transaction-content-title-row">
+                        <div class="col-md-3">
+                            <p class="transaction-content-title text-center">DATE</p>
+                        </div>
+                        <div class="col-md-6 transaction-content-title">
+                            <p class="transaction-content-title">DESCRIPTION</p>
+                        </div>
+                        <div class="col-md-3 transaction-content-title">
+                            <p class="transaction-content-title">AMOUNT</p>
+                        </div>
+                    </div>
+                    <div class="detail-line">
+                    </div>
+                    <div *ngFor="let transaction of transactions.slice(0, 2)">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="date-item month text-center">{{months[transaction.transactionDate.getMonth() - 1]}}</p>
+                                <p class="date-item day text-center">{{transaction.transactionDate.getDay()}}</p>
+                                <p class="date-item year text-center">{{transaction.transactionDate.getFullYear()}}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{transaction.description}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>{{transaction.amount | currency}}</p>
+                            </div>
+                        </div>
+                        <div class="detail-line">
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary see-transactions-button" [routerLink]="['/account/', account.accountId, '/transactions']">
+                                See all transactions
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+<div class="d-flex vh-100 align-items-center justify-content-center" *ngIf="isLoading">
+  <div class="spinner-border spinner" role="status"></div>
+</div>

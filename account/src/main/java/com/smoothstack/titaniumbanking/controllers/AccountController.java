@@ -3,7 +3,6 @@ package com.smoothstack.titaniumbanking.controllers;
 import com.smoothstack.titaniumbanking.dto.*;
 import com.smoothstack.titaniumbanking.dto.AccountBalanceDto;
 import com.smoothstack.titaniumbanking.exceptions.*;
-import com.smoothstack.titaniumbanking.models.Account;
 import com.smoothstack.titaniumbanking.services.AccountService;
 
 import com.stripe.exception.StripeException;
@@ -65,12 +64,12 @@ public class AccountController {
         }
     }
 
-    @PreAuthorize("hasAuthority('member')")
+    @PreAuthorize("hasAuthority('member') or hasAuthority('admin')")
     @GetMapping(value="/account/{accountId}")
     public ResponseEntity<Map<String, Object>> getAccount(@PathVariable int accountId){
         HashMap map = new HashMap();
         try {
-            map.put("success", accountService.getAccountById(accountId));
+            map.put("account", accountService.getAccountById(accountId));
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
         catch (AccountNotFoundException e) {
@@ -168,7 +167,7 @@ public class AccountController {
             return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('member') or hasAuthority('full_access')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('member') or hasAuthority('management')")
     @GetMapping(value="/accountType/{accountTypeId}")
     public ResponseEntity<Map<String, Object>> getAccountTypeById(@PathVariable int accountTypeId) {
         HashMap<String, Object> map = new HashMap<>();

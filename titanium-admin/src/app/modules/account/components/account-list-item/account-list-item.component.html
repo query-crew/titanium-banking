@@ -1,5 +1,5 @@
 <div class="container-fluid reg-list-item">
-    <button type="button" class="btn account-item">
+    <button type="button" class="btn account-item" [routerLink]="['/account/', account.accountId, 'details']">
         <div class="row">
             <div class="col-md-4 justify-content-start">
                 <h5>{{account.accountNumber}}</h5>
@@ -16,7 +16,7 @@
     </button>
 </div>
 <div class="container-fluid small-list-item">
-    <button type="button" class="btn account-item">
+    <button type="button" class="btn account-item" [routerLink]="['/account/details', account.accountId]">
         <div class="row">
             <div class="col-6 justify-content-start">
                 <h5>{{account.accountNumber}}</h5>
@@ -30,7 +30,7 @@
     </button>
 </div>
 <div class="container-fluid x-small-list-item">
-    <button type="button" class="btn account-item">
+    <button type="button" class="btn account-item" [routerLink]="['/account/details', account.accountId]">
         <div class="row x-small-row">
             <div class="col-6 justify-content-start align-self-center">
                 <p class="x-small-account-number">{{account.accountNumber}}</p>
@@ -43,7 +43,7 @@
     </button>
 </div>
 <div class="container-fluid xx-small-list-item">
-    <button type="button" class="btn account-item">
+    <button type="button" class="btn account-item" [routerLink]="['/account/details', account.accountId]">
         <div class="row xx-small-row">
             <div class="col-xs-6 justify-content-start align-self-center">
                 <p class="xx-small-account-number">{{account.accountNumber}}</p>

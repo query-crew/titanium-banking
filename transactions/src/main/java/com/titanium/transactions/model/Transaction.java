@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 public class Transaction {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TRANSACTION_ID")
     private int transactionId;
 

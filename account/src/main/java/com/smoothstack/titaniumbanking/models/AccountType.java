@@ -29,6 +29,9 @@ public class AccountType {
     @Column(name="accountAbbr")
     private String accountTypeAbbr;
 
+    @Column(name="accountTypeColor")
+    private String accountTypeColor;
+
     @Column(name="interest")
     private Integer interest;
 
@@ -58,14 +61,16 @@ public class AccountType {
         return (
                 accountTypeAbbr.equals(accountTypeObj.getAccountTypeAbbr()) &&
                         accountType.equals(accountTypeObj.getAccountType()) &&
-                        interest.equals(accountTypeObj.getInterest())
+                        interest.equals(accountTypeObj.getInterest()) &&
+                        accountTypeColor.equals(accountTypeObj.getAccountTypeColor())
         );
     }
 
-    public AccountType(String accountType, String accountAbbr, Integer interest, Long balanceRequirement){
+    public AccountType(String accountType, String accountAbbr, String accountTypeColor, Integer interest, Long balanceRequirement){
         super();
         this.accountType = accountType;
         this.accountTypeAbbr = accountAbbr;
+        this.accountTypeColor = accountTypeColor;
         this.interest = interest;
         this.balanceRequirement = balanceRequirement;
         this.loanId = 0;
